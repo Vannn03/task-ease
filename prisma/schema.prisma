@@ -23,12 +23,9 @@ model User {
 }
 
 model Task {
-  taskId          Int       @id @default(autoincrement())
-  taskName        String
-  taskDescription String?
-  dueDate         DateTime?
-  priorityLevel   String?
-  status          String?
+  taskId          Int    @id @default(autoincrement())
+  taskDescription String
+  status          String
 
   category   Category @relation(fields: [categoryId], references: [categoryId])
   categoryId Int
