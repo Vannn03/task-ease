@@ -4,6 +4,7 @@ import DeleteCategoryButton from '@/components/categoryButtons/DeleteCategoryBut
 import EditCategoryButton from '@/components/categoryButtons/EditCategoryButton'
 import TaskCheckbox from '@/components/TaskCheckbox'
 import prisma from '@/libs/db'
+import UpgradeButton from '@/components/UpgradeButton'
 
 interface categoryType {
     categoryId: number
@@ -18,7 +19,7 @@ interface taskType {
 
 const Home = async () => {
     const userDB = await prisma.user.findFirst({
-        where: { userId: 3 },
+        where: { userId: 1 },
     })
 
     const categoryDB: categoryType[] = await prisma.category.findMany({
@@ -83,6 +84,18 @@ const Home = async () => {
             </section>
 
             <AddCategoryButton userId={userDB?.userId} />
+
+            <div className="fixed bottom-12 right-14">
+                <UpgradeButton userId={userDB?.userId} />
+            </div>
+
+            <div className="fixed bottom-12 right-1/2">
+                {userDB?.version == 'Premium' ? (
+                    <div>Premium</div>
+                ) : (
+                    <div>Standard</div>
+                )}
+            </div>
         </main>
     )
 }

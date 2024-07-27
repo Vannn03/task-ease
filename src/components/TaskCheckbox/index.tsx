@@ -20,7 +20,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
 
     const handleCheckboxChange = async () => {
         const newCheckedStatus = !isChecked
-        setIsChecked(newCheckedStatus)
+        setIsChecked(!isChecked)
 
         const newStatus = newCheckedStatus ? 'Completed' : 'Incomplete'
 

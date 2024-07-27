@@ -14,29 +14,29 @@ datasource db {
 }
 
 model User {
-  userId   Int     @id @default(autoincrement())
-  userName String
+  userId   String  @id @default(cuid())
+  userName String?
   email    String
-  password String?
+  version  String
 
   Category Category[]
 }
 
 model Task {
-  taskId          Int    @id @default(autoincrement())
+  taskId          String @id @default(cuid())
   taskDescription String
   status          String
 
-  category   Category @relation(fields: [categoryId], references: [categoryId])
-  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [categoryId], onUpdate: Cascade, onDelete: Cascade)
+  categoryId String
 }
 
 model Category {
-  categoryId   Int    @id @default(autoincrement())
+  categoryId   String @id @default(cuid())
   categoryName String
 
-  user   User @relation(fields: [userId], references: [userId])
-  userId Int
+  user   User   @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
+  userId String
 
   Task Task[]
 }
