@@ -17,6 +17,7 @@ model User {
   userId   String  @id @default(cuid())
   userName String?
   email    String
+  password String?
   version  String
 
   Category Category[]
