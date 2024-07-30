@@ -1,6 +1,7 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FormEvent } from 'react'
 
@@ -23,22 +24,34 @@ const Page = () => {
         if (result?.error) {
             console.error(result.error)
         } else {
-            router.push('/home')
+            router.push('/dashboard')
         }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Email
-                <input name="email" type="email" required />
-            </label>
-            <label>
-                Password
-                <input name="password" type="password" required />
-            </label>
-            <button type="submit">Sign In</button>
-        </form>
+        <div className="flex h-dvh w-full items-center justify-center">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                <input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    className="input input-bordered w-full max-w-xs"
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    className="input input-bordered w-full max-w-xs"
+                />
+                <button type="submit" className="btn btn-primary mt-2">
+                    Sign In
+                </button>
+                <div className="divider">OR</div>
+                <Link href={'/signup'} className="btn btn-ghost">
+                    Sign Up
+                </Link>
+            </form>
+        </div>
     )
 }
 

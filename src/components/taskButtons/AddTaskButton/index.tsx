@@ -1,28 +1,23 @@
 'use client'
 
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-interface AddTaskData {
-    dialogId: string
-    categoryId: number
-    categoryName: string
+interface AddTaskProps {
+    categoryId?: string
 }
 
-const AddTaskButton: React.FC<AddTaskData> = ({
-    dialogId,
-    categoryId,
-    categoryName,
-}) => {
+const AddTaskButton: React.FC<AddTaskProps> = ({ categoryId }) => {
     const [taskDescription, setTaskDescription] = useState('')
-    const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTaskDescription(e.target.value)
     }
 
     const handleAddButton = async () => {
+        setLoading(true)
+
         const response = await axios.post(
             '/api/task',
             {
@@ -36,53 +31,31 @@ const AddTaskButton: React.FC<AddTaskData> = ({
         )
 
         if (response.status === 200) {
+            setLoading(false)
             setTaskDescription('')
-            router.refresh()
-        }
-    }
-
-    const showModal = () => {
-        const modal = document.getElementById(
-            dialogId
-        ) as HTMLDialogElement | null
-        if (modal) {
-            modal.showModal()
+            location.reload()
         }
     }
 
     return (
-        <>
-            <button className="btn btn-outline btn-info" onClick={showModal}>
-                Create New Task
-            </button>
-            <dialog
-                id={dialogId}
-                className="modal modal-bottom sm:modal-middle"
+        <div className="my-4 flex items-center gap-4">
+            <input
+                type="text"
+                placeholder="Enter your task..."
+                className="input input-bordered w-full"
+                onChange={handleInputChange}
+            />
+            <button
+                className={`btn btn-wide ${taskDescription == '' ? 'btn-disabled' : 'btn-outline btn-info'}`}
+                onClick={handleAddButton}
             >
-                <div className="modal-box">
-                    <h3 className="text-lg font-bold">
-                        New Task in "{categoryName}" Category
-                    </h3>
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        className="input input-bordered mt-2 w-full"
-                        onChange={handleInputChange}
-                    />
-                    <div className="modal-action">
-                        <form method="dialog">
-                            <button className="btn">Cancel</button>
-                            <button
-                                className="btn btn-success ml-4"
-                                onClick={handleAddButton}
-                            >
-                                Create
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </dialog>
-        </>
+                {loading ? (
+                    <span className="loading loading-spinner"></span>
+                ) : (
+                    <>Create New Task</>
+                )}
+            </button>
+        </div>
     )
 }
 

@@ -4,17 +4,20 @@ import { useState } from 'react'
 import axios from 'axios'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
+import { MdDragIndicator } from 'react-icons/md'
 
 interface TaskData {
-    taskId: number
+    taskId: string
     taskDescription: string
     status: string
+    dragHandleProps: any
 }
 
 const TaskCheckbox: React.FC<TaskData> = ({
     taskId,
     taskDescription,
     status,
+    dragHandleProps,
 }) => {
     const [isChecked, setIsChecked] = useState(status === 'Completed')
 
@@ -34,18 +37,18 @@ const TaskCheckbox: React.FC<TaskData> = ({
                 headers: { 'Content-Type': 'application/json' },
             }
         )
-
-        if (response.status === 200) {
-            console.log(newStatus)
-        }
     }
 
     return (
         <>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-4">
+                <div {...dragHandleProps}>
+                    <MdDragIndicator className="cursor-grab text-lg" />
+                </div>
                 <input
                     type="checkbox"
-                    className="checkbox-accent checkbox"
+                    aria-label="Checkbox"
+                    className="checkbox-success checkbox"
                     checked={isChecked}
                     onChange={handleCheckboxChange}
                 />
@@ -53,7 +56,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
                     {taskDescription}
                 </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-2">
                 <EditTaskButton
                     taskId={taskId}
                     taskDescription={taskDescription}

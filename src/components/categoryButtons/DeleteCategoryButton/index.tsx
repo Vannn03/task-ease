@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 
 interface DeleteCategoryData {
     dialogId: string
-    categoryId: number
-    categoryName: string
+    categoryId?: string
+    categoryName?: string
 }
 
 const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
@@ -38,7 +38,7 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
 
     return (
         <>
-            <button className="btn btn-outline btn-error" onClick={showModal}>
+            <button className="btn btn-error" onClick={showModal}>
                 Delete Category
             </button>
 
@@ -49,7 +49,7 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
             >
                 <div className="modal-box">
                     <h3 className="text-lg font-bold">
-                        Delete Category "{categoryName}"
+                        Delete Category &apos;{categoryName}&apos;
                     </h3>
                     <p className="py-4">
                         Are you sure you want to delete this category?

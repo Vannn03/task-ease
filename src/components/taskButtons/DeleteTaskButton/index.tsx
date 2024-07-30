@@ -1,11 +1,10 @@
 'use client'
 
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
 import { FaTrash } from 'react-icons/fa6'
 
 interface DeletedTaskData {
-    taskId: number
+    taskId: string
     dialogId: string
     taskDescription: string
 }
@@ -24,8 +23,6 @@ const DeleteTaskButton: React.FC<DeletedTaskData> = ({
         }
     }
 
-    const router = useRouter()
-
     const handleDeleteButton = async () => {
         const response = await axios.delete('/api/task', {
             data: { taskId },
@@ -33,7 +30,7 @@ const DeleteTaskButton: React.FC<DeletedTaskData> = ({
         })
 
         if (response.status === 200) {
-            router.refresh()
+            location.reload()
         }
     }
 
@@ -50,7 +47,7 @@ const DeleteTaskButton: React.FC<DeletedTaskData> = ({
             >
                 <div className="modal-box">
                     <h3 className="text-lg font-bold">
-                        Delete Task "{taskDescription}"
+                        Delete Task &apos;{taskDescription}&apos;
                     </h3>
                     <p className="py-4">
                         Are you sure you want to delete this task?

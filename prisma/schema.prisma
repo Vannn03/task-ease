@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  userId   String  @id @default(cuid())
-  userName String?
-  email    String
-  password String?
-  version  String
+  userId    String  @id @default(cuid())
+  userImage String?
+  userName  String
+  email     String
+  password  String?
+  version   String
 
   Category Category[]
 }
@@ -27,6 +28,7 @@ model Task {
   taskId          String @id @default(cuid())
   taskDescription String
   status          String
+  order           Int?
 
   category   Category @relation(fields: [categoryId], references: [categoryId], onUpdate: Cascade, onDelete: Cascade)
   categoryId String

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 
 interface UpgradePremiumData {
-    userId: number | undefined
+    userId?: string
 }
 
 const UpgradeButton: React.FC<UpgradePremiumData> = ({ userId }) => {

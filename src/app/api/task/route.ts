@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from "next/server"
 export async function POST(request: NextRequest) {
     const { categoryId, taskDescription, status } = await request.json()
 
-    const data = {categoryId, taskDescription, status}
+    const order = await prisma.task.count()
+
+    const data = {categoryId, taskDescription, status, order}
 
     const createTask = await prisma.task.create( {
         data

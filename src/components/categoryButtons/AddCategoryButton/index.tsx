@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface addedCategoryType {
-    userId: number | undefined
+    userId?: string
 }
 
 const AddCategoryButton: React.FC<addedCategoryType> = ({ userId }) => {

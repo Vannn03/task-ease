@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { getUserFromDb } from "@/utils/db"
+import { signInSchema } from "@/libs/zod"
 
 type CredentialsType = {
   email: string;
@@ -20,6 +21,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         const { email, password } = credentials as CredentialsType;
+
+        credentials = await signInSchema.parseAsync(credentials)
+ 
 
         const user = await getUserFromDb(email, password);
  

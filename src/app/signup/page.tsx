@@ -5,19 +5,19 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-const SignUp = () => {
+const Page = () => {
     const [userName, setUserName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
 
-    const handleUserChange = (e: any) => {
+    const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserName(e.target.value)
     }
-    const handleEmailChange = (e: any) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
-    const handlePasswordChange = (e: any) => {
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value)
     }
 
@@ -39,13 +39,13 @@ const SignUp = () => {
             setUserName('')
             setEmail('')
             setPassword('')
-            router.push('/home')
+            router.push('/api/auth/signin')
         }
     }
 
     return (
-        <div>
-            <form onSubmit={handleAddButton}>
+        <div className="flex h-dvh w-full items-center justify-center">
+            <form onSubmit={handleAddButton} className="flex flex-col gap-2">
                 <input
                     type="text"
                     placeholder="Username"
@@ -64,11 +64,16 @@ const SignUp = () => {
                     className="input input-bordered w-full max-w-xs"
                     onChange={handlePasswordChange}
                 />
-                <button type="submit">Sign Up</button>
-                <Link href={'/api/auth/signin'}>Sign In</Link>
+                <button type="submit" className="btn btn-primary mt-2">
+                    Sign Up
+                </button>
+                <div className="divider">OR</div>
+                <Link href={'/api/auth/signin'} className="btn btn-ghost">
+                    Sign In
+                </Link>
             </form>
         </div>
     )
 }
 
-export default SignUp
+export default Page

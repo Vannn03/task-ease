@@ -6,8 +6,8 @@ import { useState } from 'react'
 
 interface EditCategoryData {
     dialogId: string
-    categoryId: number
-    categoryName: string
+    categoryId?: string
+    categoryName?: string
 }
 
 const EditCategoryButton: React.FC<EditCategoryData> = ({
@@ -51,7 +51,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
 
     return (
         <>
-            <button className="btn btn-outline btn-warning" onClick={showModal}>
+            <button className="btn btn-warning" onClick={showModal}>
                 Edit Category
             </button>
             <dialog
@@ -59,14 +59,12 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                 className="modal modal-bottom sm:modal-middle"
             >
                 <div className="modal-box">
-                    <h3 className="text-lg font-bold">
-                        Edit Category "{categoryName}"
-                    </h3>
+                    <h3 className="text-lg font-bold">Edit Category</h3>
                     <input
                         type="text"
-                        placeholder="Description"
                         className="input input-bordered mt-2 w-full"
                         onChange={handleInputChange}
+                        placeholder={categoryName}
                     />
                     <div className="modal-action">
                         <form method="dialog">
@@ -75,7 +73,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                                 className="btn btn-warning ml-4"
                                 onClick={handleEditButton}
                             >
-                                Update Category
+                                Update
                             </button>
                         </form>
                     </div>
