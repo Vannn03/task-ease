@@ -2,6 +2,7 @@
 
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface DeleteCategoryData {
     dialogId: string
@@ -14,6 +15,8 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
     dialogId,
     categoryName,
 }) => {
+    const [loading, setLoading] = useState(false)
+
     const showModal = () => {
         const modal = document.getElementById(
             dialogId
@@ -25,13 +28,27 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
 
     const router = useRouter()
 
-    const handleDeleteButton = async () => {
+    const handleDeleteButton = async (
+        e: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        e.preventDefault()
+
+        setLoading(true)
+
         const response = await axios.delete('/api/category', {
             data: { categoryId },
             headers: { 'Content-Type': 'application/json' },
         })
 
         if (response.status === 200) {
+            setLoading(false)
+            const modal = document.getElementById(
+                dialogId
+            ) as HTMLDialogElement | null
+            if (modal) {
+                modal.close()
+            }
+            router.push('/dashboard')
             router.refresh()
         }
     }
@@ -55,13 +72,17 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
                         Are you sure you want to delete this category?
                     </p>
                     <div className="modal-action">
-                        <form method="dialog">
+                        <form method="dialog" className="flex items-center">
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-error ml-4"
                                 onClick={handleDeleteButton}
                             >
-                                Delete
+                                {loading ? (
+                                    <span className="loading loading-spinner"></span>
+                                ) : (
+                                    <>Delete</>
+                                )}
                             </button>
                         </form>
                     </div>

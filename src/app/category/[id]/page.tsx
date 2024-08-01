@@ -24,7 +24,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
     })
 
     return (
-        <div>
+        <div className="w-full p-8">
             <div className="flex items-center justify-between border-b bg-base-100 pb-4">
                 <h1 className="text-2xl font-semibold">
                     {categoryDB?.categoryName}

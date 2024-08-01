@@ -16,12 +16,15 @@ const Page = async () => {
     })
 
     return (
-        <div>
-            {/* <AddCategoryButton userId={userDB?.userId} />
+        <div className="w-full p-8">
+            <AddCategoryButton
+                userId={userDB?.userId}
+                dialogId={`addCategoryModal-${userDB?.userId}`}
+            />
 
             <div className="fixed bottom-12 right-14">
                 <UpgradeButton userId={userDB?.userId} />
-            </div> */}
+            </div>
         </div>
     )
 }

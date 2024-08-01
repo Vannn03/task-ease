@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 interface EditCategoryData {
     dialogId: string
@@ -16,9 +16,10 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
     categoryName,
 }) => {
     const [newCategoryName, setNewCategoryName] = useState('')
+    const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewCategoryName(e.target.value)
     }
 
@@ -31,7 +32,11 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
         }
     }
 
-    const handleEditButton = async () => {
+    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
+        setLoading(true)
+
         const response = await axios.put(
             '/api/category',
             {
@@ -44,6 +49,13 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
         )
 
         if (response.status === 200) {
+            setLoading(false)
+            const modal = document.getElementById(
+                dialogId
+            ) as HTMLDialogElement | null
+            if (modal) {
+                modal.close()
+            }
             setNewCategoryName('')
             router.refresh()
         }
@@ -67,13 +79,17 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                         placeholder={categoryName}
                     />
                     <div className="modal-action">
-                        <form method="dialog">
+                        <form method="dialog" className="flex items-center">
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-warning ml-4"
                                 onClick={handleEditButton}
                             >
-                                Update
+                                {loading ? (
+                                    <span className="loading loading-spinner"></span>
+                                ) : (
+                                    <>Update</>
+                                )}
                             </button>
                         </form>
                     </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 interface AddTaskProps {
@@ -10,12 +11,15 @@ interface AddTaskProps {
 const AddTaskButton: React.FC<AddTaskProps> = ({ categoryId }) => {
     const [taskDescription, setTaskDescription] = useState('')
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTaskDescription(e.target.value)
     }
 
-    const handleAddButton = async () => {
+    const handleAddButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
         setLoading(true)
 
         const response = await axios.post(
@@ -33,7 +37,7 @@ const AddTaskButton: React.FC<AddTaskProps> = ({ categoryId }) => {
         if (response.status === 200) {
             setLoading(false)
             setTaskDescription('')
-            location.reload()
+            router.refresh()
         }
     }
 

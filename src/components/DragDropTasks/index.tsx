@@ -2,11 +2,15 @@
 
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import TaskCheckbox from '@/components/TaskCheckbox'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const DragDropTasks = ({ taskDB }: any) => {
     const [tasks, updateTasks] = useState(taskDB)
+
+    useEffect(() => {
+        updateTasks(taskDB)
+    }, [taskDB])
 
     const handleOnDragEnd = async (result: any) => {
         if (!result.destination) return

@@ -1,8 +1,31 @@
-import { useState } from 'react'
+'use client'
+
+import { ChangeEvent, useEffect, useState } from 'react'
 import { FaChevronRight } from 'react-icons/fa6'
 
 const ThemeController = () => {
     const [hoverTheme, setHoverTheme] = useState(false)
+    const [theme, setTheme] = useState<string>(
+        localStorage.getItem('theme') || 'light'
+    )
+
+    const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            setTheme(e.target.value)
+        }
+    }
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('theme', theme)
+            const localTheme = localStorage.getItem('theme')
+            if (localTheme) {
+                document
+                    .querySelector('html')
+                    ?.setAttribute('data-theme', localTheme)
+            }
+        }
+    }, [theme])
 
     return (
         <span
@@ -14,7 +37,6 @@ const ThemeController = () => {
                 className={`menu ${hoverTheme ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'} absolute -right-64 w-56 rounded-box bg-base-200 transition-opacity`}
                 onMouseLeave={() => setHoverTheme(false)}
             >
-                <li className="menu-title">Default</li>
                 <li>
                     <input
                         type="radio"
@@ -22,6 +44,8 @@ const ThemeController = () => {
                         className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
                         aria-label="Light"
                         value="light"
+                        checked={theme === 'light'}
+                        onChange={handleRadioChange}
                     />
                 </li>
                 <li>
@@ -31,72 +55,8 @@ const ThemeController = () => {
                         className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
                         aria-label="Dark"
                         value="dark"
-                    />
-                </li>
-                <li className="menu-title">Seasons</li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Autumn"
-                        value="autumn"
-                    />
-                </li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Winter"
-                        value="winter"
-                    />
-                </li>
-                <li className="menu-title">Foods & Drinks</li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Cupcake"
-                        value="cupcake"
-                    />
-                </li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Coffee"
-                        value="coffee"
-                    />
-                </li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Lemonade"
-                        value="lemonade"
-                    />
-                </li>
-                <li className="menu-title">Specials</li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Halloween"
-                        value="halloween"
-                    />
-                </li>
-                <li>
-                    <input
-                        type="radio"
-                        name="theme-dropdown"
-                        className="theme-controller btn btn-ghost btn-sm btn-block justify-start"
-                        aria-label="Valentine"
-                        value="valentine"
+                        checked={theme === 'dark'}
+                        onChange={handleRadioChange}
                     />
                 </li>
             </ul>

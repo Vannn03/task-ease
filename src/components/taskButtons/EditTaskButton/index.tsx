@@ -1,7 +1,8 @@
 'use client'
 
 import axios from 'axios'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, useState } from 'react'
 import { FaRegEdit } from 'react-icons/fa'
 
 interface EditTaskData {
@@ -16,8 +17,10 @@ const EditTaskButton: React.FC<EditTaskData> = ({
     taskDescription,
 }) => {
     const [newtaskDescription, setNewTaskDescription] = useState('')
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTaskDescription(e.target.value)
     }
 
@@ -30,7 +33,11 @@ const EditTaskButton: React.FC<EditTaskData> = ({
         }
     }
 
-    const handleEditButton = async () => {
+    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
+        setLoading(true)
+
         const response = await axios.put(
             '/api/task',
             {
@@ -43,8 +50,15 @@ const EditTaskButton: React.FC<EditTaskData> = ({
         )
 
         if (response.status === 200) {
+            setLoading(false)
+            const modal = document.getElementById(
+                dialogId
+            ) as HTMLDialogElement | null
+            if (modal) {
+                modal.close()
+            }
             setNewTaskDescription('')
-            location.reload()
+            router.refresh()
         }
     }
 
@@ -61,19 +75,22 @@ const EditTaskButton: React.FC<EditTaskData> = ({
                     <h3 className="text-lg font-bold">Edit Task</h3>
                     <input
                         type="text"
-                        placeholder="Description"
+                        placeholder={taskDescription}
                         className="input input-bordered mt-2 w-full"
                         onChange={handleInputChange}
-                        value={taskDescription}
                     />
                     <div className="modal-action">
-                        <form method="dialog">
+                        <form method="dialog" className="flex items-center">
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-warning ml-4"
                                 onClick={handleEditButton}
                             >
-                                Update
+                                {loading ? (
+                                    <span className="loading loading-spinner"></span>
+                                ) : (
+                                    <>Update</>
+                                )}
                             </button>
                         </form>
                     </div>
