@@ -3,6 +3,7 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { IoIosAddCircle } from 'react-icons/io'
 
 interface addedCategoryType {
     userId?: string
@@ -61,12 +62,15 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
 
     return (
         <>
-            <button
-                className="btn btn-outline btn-info w-full"
+            <div
+                className="card w-96 cursor-pointer bg-primary text-primary-content"
                 onClick={showModal}
             >
-                Create New Category
-            </button>
+                <div className="card-body flex flex-col items-center justify-center">
+                    <IoIosAddCircle className="text-7xl" />
+                    <h1 className="card-title">Add New</h1>
+                </div>
+            </div>
             <dialog
                 id={dialogId}
                 className="modal modal-bottom sm:modal-middle"
@@ -83,7 +87,7 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
                         <form method="dialog" className="flex items-center">
                             <button className="btn">Cancel</button>
                             <button
-                                className="btn btn-success ml-4"
+                                className={`${categoryName == '' ? 'btn-disabled' : 'btn-primary'} btn ml-4`}
                                 onClick={handleAddButton}
                             >
                                 {loading ? (

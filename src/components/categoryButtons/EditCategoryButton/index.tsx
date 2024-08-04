@@ -64,7 +64,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
     return (
         <>
             <button className="btn btn-warning" onClick={showModal}>
-                Edit Category
+                Edit
             </button>
             <dialog
                 id={dialogId}

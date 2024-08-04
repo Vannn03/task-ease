@@ -42,7 +42,7 @@ const AddTaskButton: React.FC<AddTaskProps> = ({ categoryId }) => {
     }
 
     return (
-        <div className="my-4 flex items-center gap-4">
+        <div className="flex items-center gap-4">
             <input
                 type="text"
                 placeholder="Enter your task..."

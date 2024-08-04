@@ -5,6 +5,7 @@ import axios from 'axios'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
 import { MdDragIndicator } from 'react-icons/md'
+import { useRouter } from 'next/navigation'
 
 interface TaskData {
     taskId: string
@@ -19,6 +20,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
     status,
     dragHandleProps,
 }) => {
+    const router = useRouter()
     const [isChecked, setIsChecked] = useState(status === 'Completed')
 
     const handleCheckboxChange = async () => {
@@ -37,6 +39,10 @@ const TaskCheckbox: React.FC<TaskData> = ({
                 headers: { 'Content-Type': 'application/json' },
             }
         )
+
+        if (response.status === 200) {
+            router.refresh()
+        }
     }
 
     return (
@@ -56,7 +62,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
                     {taskDescription}
                 </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
                 <EditTaskButton
                     taskId={taskId}
                     taskDescription={taskDescription}

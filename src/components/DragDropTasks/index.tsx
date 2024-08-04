@@ -4,8 +4,10 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import TaskCheckbox from '@/components/TaskCheckbox'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const DragDropTasks = ({ taskDB }: any) => {
+    const router = useRouter()
     const [tasks, updateTasks] = useState(taskDB)
 
     useEffect(() => {
@@ -21,6 +23,7 @@ const DragDropTasks = ({ taskDB }: any) => {
         updateTasks(items)
 
         await axios.put('/api/task/updateOrder', { tasks: items })
+        router.refresh()
     }
 
     return (
@@ -28,7 +31,7 @@ const DragDropTasks = ({ taskDB }: any) => {
             <Droppable droppableId="tasks">
                 {(provided: any) => (
                     <div
-                        className="tasks flex flex-col gap-2"
+                        className="tasks hide-scrollbar flex h-[66.5dvh] flex-col gap-4 overflow-y-scroll"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
@@ -40,7 +43,7 @@ const DragDropTasks = ({ taskDB }: any) => {
                             >
                                 {(provided: any) => (
                                     <div
-                                        className="flex items-center justify-between rounded bg-base-200 px-4 py-2"
+                                        className="flex items-center justify-between rounded-lg border p-2"
                                         {...provided.draggableProps}
                                         ref={provided.innerRef}
                                     >

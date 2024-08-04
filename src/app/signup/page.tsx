@@ -3,7 +3,7 @@
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 const Page = () => {
     const [userName, setUserName] = useState('')
@@ -21,7 +21,9 @@ const Page = () => {
         setPassword(e.target.value)
     }
 
-    const handleAddButton = async () => {
+    const handleAddButton = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
         const response = await axios.post(
             '/api/user',
             {

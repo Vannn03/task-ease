@@ -1,5 +1,4 @@
-import DeleteCategoryButton from '@/components/categoryButtons/DeleteCategoryButton'
-import EditCategoryButton from '@/components/categoryButtons/EditCategoryButton'
+import BackButton from '@/components/BackButton'
 import DragDropTasks from '@/components/DragDropTasks'
 import AddTaskButton from '@/components/taskButtons/AddTaskButton'
 import prisma from '@/libs/prisma'
@@ -19,33 +18,65 @@ const Page: React.FC<PageProps> = async ({ params }) => {
         orderBy: { order: 'asc' },
     })
 
+    const finishedTaskDB: Task[] = await prisma.task.findMany({
+        where: { categoryId: params.id, status: 'Completed' },
+        orderBy: { order: 'asc' },
+    })
+
     const categoryDB = await prisma.category.findFirst({
         where: { categoryId: params.id },
     })
 
     return (
-        <div className="w-full p-8">
-            <div className="flex items-center justify-between border-b bg-base-100 pb-4">
-                <h1 className="text-2xl font-semibold">
+        <div className="flex w-full flex-col gap-6 p-8">
+            <div className="flex flex-col gap-4">
+                <BackButton />
+                <h1 className="text-3xl font-bold">
                     {categoryDB?.categoryName}
                 </h1>
-                <div className="flex gap-2">
-                    <EditCategoryButton
-                        categoryId={categoryDB?.categoryId}
-                        categoryName={categoryDB?.categoryName}
-                        dialogId={`editCategoryModal-${categoryDB?.categoryId}`}
-                    />
-                    <DeleteCategoryButton
-                        categoryId={categoryDB?.categoryId}
-                        categoryName={categoryDB?.categoryName}
-                        dialogId={`deleteCategoryModal-${categoryDB?.categoryId}`}
-                    />
-                </div>
             </div>
 
-            <div className="hide-scrollbar h-[86.4dvh] overflow-y-scroll">
-                <AddTaskButton categoryId={categoryDB?.categoryId} />
-                <DragDropTasks taskDB={taskDB} />
+            <AddTaskButton categoryId={categoryDB?.categoryId} />
+
+            <div role="tablist" className="tabs tabs-lifted">
+                <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    className="tab"
+                    aria-label="All"
+                    defaultChecked
+                />
+                <div
+                    role="tabpanel"
+                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
+                >
+                    {taskDB.length == 0 ? (
+                        <p>
+                            <p>No task found</p>
+                        </p>
+                    ) : (
+                        <DragDropTasks taskDB={taskDB} />
+                    )}
+                </div>
+
+                <input
+                    type="radio"
+                    name="my_tabs_2"
+                    role="tab"
+                    className="tab"
+                    aria-label="Completed"
+                />
+                <div
+                    role="tabpanel"
+                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
+                >
+                    {finishedTaskDB.length == 0 ? (
+                        <p>No completed task found</p>
+                    ) : (
+                        <DragDropTasks taskDB={finishedTaskDB} />
+                    )}
+                </div>
             </div>
         </div>
     )

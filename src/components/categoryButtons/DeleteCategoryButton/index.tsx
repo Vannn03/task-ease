@@ -48,15 +48,15 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
             if (modal) {
                 modal.close()
             }
-            router.push('/dashboard')
+            router.push('/category')
             router.refresh()
         }
     }
 
     return (
         <>
-            <button className="btn btn-error" onClick={showModal}>
-                Delete Category
+            <button className="btn btn-outline btn-error" onClick={showModal}>
+                Delete
             </button>
 
             {/*  */}

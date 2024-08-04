@@ -64,7 +64,7 @@ const EditTaskButton: React.FC<EditTaskData> = ({
 
     return (
         <>
-            <button className="btn btn-outline btn-warning" onClick={showModal}>
+            <button className="btn btn-warning btn-sm" onClick={showModal}>
                 <FaRegEdit />
             </button>
             <dialog

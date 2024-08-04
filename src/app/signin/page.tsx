@@ -8,10 +8,10 @@ import React, { FormEvent } from 'react'
 const Page = () => {
     const router = useRouter()
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
-        const formData = new FormData(event.currentTarget)
+        const formData = new FormData(e.currentTarget)
         const email = formData.get('email') as string
         const password = formData.get('password') as string
 
@@ -25,6 +25,7 @@ const Page = () => {
             console.error(result.error)
         } else {
             router.push('/dashboard')
+            router.refresh()
         }
     }
 

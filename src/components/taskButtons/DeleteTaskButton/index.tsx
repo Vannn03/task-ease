@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { FaTrash } from 'react-icons/fa6'
+import { FaRegTrashCan } from 'react-icons/fa6'
 
 interface DeletedTaskData {
     taskId: string
@@ -54,8 +54,8 @@ const DeleteTaskButton: React.FC<DeletedTaskData> = ({
 
     return (
         <>
-            <button className="btn btn-outline btn-error" onClick={showModal}>
-                <FaTrash />
+            <button className="btn btn-error btn-sm" onClick={showModal}>
+                <FaRegTrashCan />
             </button>
 
             {/*  */}

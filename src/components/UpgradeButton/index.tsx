@@ -1,7 +1,8 @@
 'use client'
 
 import axios from 'axios'
-import { useEffect } from 'react'
+import { MouseEvent, useEffect } from 'react'
+import { GiUpgrade } from 'react-icons/gi'
 
 interface UpgradePremiumData {
     userId?: string
@@ -31,7 +32,9 @@ const UpgradeButton: React.FC<UpgradePremiumData> = ({ userId }) => {
         }
     }, [])
 
-    const upgrade = async () => {
+    const upgrade = async (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+
         const response = await axios.post(
             '/api/token',
             { orderId: userId, grossAmount: 50000 },
@@ -47,8 +50,8 @@ const UpgradeButton: React.FC<UpgradePremiumData> = ({ userId }) => {
 
     return (
         <>
-            <button className="btn btn-primary" onClick={upgrade}>
-                Upgrade to Premium
+            <button className="font-medium text-primary" onClick={upgrade}>
+                <GiUpgrade /> Premium Upgrade
             </button>
         </>
     )

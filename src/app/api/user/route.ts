@@ -16,3 +16,16 @@ export async function POST(request: NextRequest) {
     if (!createTask) return NextResponse.json({ status: 500, isCreated: false })
     else return NextResponse.json({ status: 200, isCreated: true })
 }
+
+export async function PUT(request: NextRequest) {
+    const { userId, userImage } = await request.json()
+
+    const updateTask = await prisma.user.update({
+        where: {userId: userId},
+        data: {userImage: userImage}
+    })
+
+    if (!updateTask)
+        return NextResponse.json({ status: 500, isUpdated: false })
+    else return NextResponse.json({ status: 200, isUpdated: true })
+}
