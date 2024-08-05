@@ -1,16 +1,14 @@
 'use client'
 
-import { useState } from 'react'
-import axios from 'axios'
+import useCheckTask from '@/hooks/useCheckTask'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
 import { MdDragIndicator } from 'react-icons/md'
-import { useRouter } from 'next/navigation'
 
 interface TaskData {
     taskId: string
     taskDescription: string
-    status: string
+    status: 'Completed' | 'Incomplete'
     dragHandleProps: any
 }
 
@@ -20,30 +18,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
     status,
     dragHandleProps,
 }) => {
-    const router = useRouter()
-    const [isChecked, setIsChecked] = useState(status === 'Completed')
-
-    const handleCheckboxChange = async () => {
-        const newCheckedStatus = !isChecked
-        setIsChecked(!isChecked)
-
-        const newStatus = newCheckedStatus ? 'Completed' : 'Incomplete'
-
-        const response = await axios.put(
-            '/api/task/checkbox',
-            {
-                taskId,
-                status: newStatus,
-            },
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
-        )
-
-        if (response.status === 200) {
-            router.refresh()
-        }
-    }
+    const { isChecked, handleCheckboxChange } = useCheckTask({ taskId, status })
 
     return (
         <>

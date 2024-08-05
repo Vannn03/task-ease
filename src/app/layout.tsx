@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
+import { EdgeStoreProvider } from '@/libs/edgestore'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import ClientThemeWrapper from '@/contexts/clientThemeWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,10 +19,16 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en" data-theme="light">
-            <body className={`${inter.className} flex`}>
-                <Sidebar />
-                {children}
+        <html lang="en">
+            <body className={inter.className}>
+                <ThemeProvider>
+                    <ClientThemeWrapper>
+                        <div className="flex">
+                            <Sidebar />
+                            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+                        </div>
+                    </ClientThemeWrapper>
+                </ThemeProvider>
             </body>
         </html>
     )

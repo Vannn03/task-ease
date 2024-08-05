@@ -1,10 +1,10 @@
 'use client'
 
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import TaskCheckbox from '@/components/TaskCheckbox'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import axiosInstance from '@/utils/axiosInstance'
+import TaskCheckbox from '../TaskCheckbox/TaskCheckbox'
 
 const DragDropTasks = ({ taskDB }: any) => {
     const router = useRouter()
@@ -22,7 +22,7 @@ const DragDropTasks = ({ taskDB }: any) => {
 
         updateTasks(items)
 
-        await axios.put('/api/task/updateOrder', { tasks: items })
+        await axiosInstance.put('/api/task/updateOrder', { tasks: items })
         router.refresh()
     }
 
@@ -31,7 +31,7 @@ const DragDropTasks = ({ taskDB }: any) => {
             <Droppable droppableId="tasks">
                 {(provided: any) => (
                     <div
-                        className="tasks hide-scrollbar flex h-[66.5dvh] flex-col gap-4 overflow-y-scroll"
+                        className="tasks flex flex-col gap-4"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >

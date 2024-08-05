@@ -1,8 +1,7 @@
 'use client'
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import useDeleteCategory from '@/hooks/useDeleteCategory'
+import { showModal } from '@/utils/modal'
 
 interface DeleteCategoryData {
     dialogId: string
@@ -15,47 +14,14 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
     dialogId,
     categoryName,
 }) => {
-    const [loading, setLoading] = useState(false)
-
-    const showModal = () => {
-        const modal = document.getElementById(
-            dialogId
-        ) as HTMLDialogElement | null
-        if (modal) {
-            modal.showModal()
-        }
-    }
-
-    const router = useRouter()
-
-    const handleDeleteButton = async (
-        e: React.MouseEvent<HTMLButtonElement>
-    ) => {
-        e.preventDefault()
-
-        setLoading(true)
-
-        const response = await axios.delete('/api/category', {
-            data: { categoryId },
-            headers: { 'Content-Type': 'application/json' },
-        })
-
-        if (response.status === 200) {
-            setLoading(false)
-            const modal = document.getElementById(
-                dialogId
-            ) as HTMLDialogElement | null
-            if (modal) {
-                modal.close()
-            }
-            router.push('/category')
-            router.refresh()
-        }
-    }
+    const { loading, handleDeleteButton } = useDeleteCategory(categoryId)
 
     return (
         <>
-            <button className="btn btn-outline btn-error" onClick={showModal}>
+            <button
+                className="btn btn-outline btn-error"
+                onClick={() => showModal(dialogId)}
+            >
                 Delete
             </button>
 
@@ -76,7 +42,7 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-error ml-4"
-                                onClick={handleDeleteButton}
+                                onClick={(e) => handleDeleteButton(e, dialogId)}
                             >
                                 {loading ? (
                                     <span className="loading loading-spinner"></span>

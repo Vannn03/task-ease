@@ -7,7 +7,7 @@ const BackButton = () => {
     const router = useRouter()
     return (
         <div
-            className="flex cursor-pointer items-center gap-2"
+            className="flex w-fit cursor-pointer items-center gap-2"
             onClick={() => router.back()}
         >
             <IoMdArrowBack /> Go Back

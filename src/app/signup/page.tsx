@@ -1,6 +1,6 @@
 'use client'
 
-import axios from 'axios'
+import axiosInstance from '@/utils/axiosInstance'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
@@ -24,18 +24,12 @@ const Page = () => {
     const handleAddButton = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        const response = await axios.post(
-            '/api/user',
-            {
-                userName,
-                email,
-                password,
-                version: 'Free',
-            },
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
-        )
+        const response = await axiosInstance.post('/api/user', {
+            userName,
+            email,
+            password,
+            version: 'Free',
+        })
 
         if (response.status === 200) {
             setUserName('')

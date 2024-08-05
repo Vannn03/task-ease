@@ -1,9 +1,9 @@
 'use client'
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import useEditTask from '@/hooks/useEditTask'
+import { showModal } from '@/utils/modal'
 import { FaRegEdit } from 'react-icons/fa'
+import SuccessfulToast from '../toasts/SuccessfulToast'
 
 interface EditTaskData {
     taskId: string
@@ -16,55 +16,15 @@ const EditTaskButton: React.FC<EditTaskData> = ({
     dialogId,
     taskDescription,
 }) => {
-    const [newtaskDescription, setNewTaskDescription] = useState('')
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskDescription(e.target.value)
-    }
-
-    const showModal = () => {
-        const modal = document.getElementById(
-            dialogId
-        ) as HTMLDialogElement | null
-        if (modal) {
-            modal.showModal()
-        }
-    }
-
-    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-
-        setLoading(true)
-
-        const response = await axios.put(
-            '/api/task',
-            {
-                taskId,
-                taskDescription: newtaskDescription,
-            },
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
-        )
-
-        if (response.status === 200) {
-            setLoading(false)
-            const modal = document.getElementById(
-                dialogId
-            ) as HTMLDialogElement | null
-            if (modal) {
-                modal.close()
-            }
-            setNewTaskDescription('')
-            router.refresh()
-        }
-    }
+    const { toast, loading, handleInputChange, handleEditButton } =
+        useEditTask(taskId)
 
     return (
         <>
-            <button className="btn btn-warning btn-sm" onClick={showModal}>
+            <button
+                className="btn btn-warning btn-sm"
+                onClick={() => showModal(dialogId)}
+            >
                 <FaRegEdit />
             </button>
             <dialog
@@ -84,7 +44,7 @@ const EditTaskButton: React.FC<EditTaskData> = ({
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-warning ml-4"
-                                onClick={handleEditButton}
+                                onClick={(e) => handleEditButton(e, dialogId)}
                             >
                                 {loading ? (
                                     <span className="loading loading-spinner"></span>
@@ -96,6 +56,12 @@ const EditTaskButton: React.FC<EditTaskData> = ({
                     </div>
                 </div>
             </dialog>
+
+            <SuccessfulToast
+                toast={toast}
+                description="Task updated"
+                alertType="alert-warning"
+            />
         </>
     )
 }

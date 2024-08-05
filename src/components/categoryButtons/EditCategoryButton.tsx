@@ -1,8 +1,8 @@
 'use client'
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import useEditCategory from '@/hooks/useEditCategory'
+import { showModal } from '@/utils/modal'
+import SuccessfulToast from '../toasts/SuccessfulToast'
 
 interface EditCategoryData {
     dialogId: string
@@ -15,55 +15,15 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
     dialogId,
     categoryName,
 }) => {
-    const [newCategoryName, setNewCategoryName] = useState('')
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewCategoryName(e.target.value)
-    }
-
-    const showModal = () => {
-        const modal = document.getElementById(
-            dialogId
-        ) as HTMLDialogElement | null
-        if (modal) {
-            modal.showModal()
-        }
-    }
-
-    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-
-        setLoading(true)
-
-        const response = await axios.put(
-            '/api/category',
-            {
-                categoryId,
-                categoryName: newCategoryName,
-            },
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
-        )
-
-        if (response.status === 200) {
-            setLoading(false)
-            const modal = document.getElementById(
-                dialogId
-            ) as HTMLDialogElement | null
-            if (modal) {
-                modal.close()
-            }
-            setNewCategoryName('')
-            router.refresh()
-        }
-    }
+    const { toast, loading, handleInputChange, handleEditButton } =
+        useEditCategory(categoryId)
 
     return (
         <>
-            <button className="btn btn-warning" onClick={showModal}>
+            <button
+                className="btn btn-warning"
+                onClick={() => showModal(dialogId)}
+            >
                 Edit
             </button>
             <dialog
@@ -83,7 +43,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                             <button className="btn">Cancel</button>
                             <button
                                 className="btn btn-warning ml-4"
-                                onClick={handleEditButton}
+                                onClick={(e) => handleEditButton(e, dialogId)}
                             >
                                 {loading ? (
                                     <span className="loading loading-spinner"></span>
@@ -95,6 +55,12 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                     </div>
                 </div>
             </dialog>
+
+            <SuccessfulToast
+                toast={toast}
+                description="Category updated"
+                alertType="alert-warning"
+            />
         </>
     )
 }

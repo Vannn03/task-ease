@@ -1,9 +1,9 @@
 'use client'
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import useAddCategory from '@/hooks/useAddCategory'
+import { showModal } from '@/utils/modal'
 import { IoIosAddCircle } from 'react-icons/io'
+import SuccessfulToast from '../toasts/SuccessfulToast'
 
 interface addedCategoryType {
     userId?: string
@@ -14,57 +14,14 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
     userId,
     dialogId,
 }) => {
-    const [categoryName, setCategoryName] = useState('')
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
-
-    const handleInputChange = (e: any) => {
-        setCategoryName(e.target.value)
-    }
-
-    const handleAddButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-
-        setLoading(true)
-
-        const response = await axios.post(
-            '/api/category',
-            {
-                userId,
-                categoryName,
-            },
-            {
-                headers: { 'Content-Type': 'application/json' },
-            }
-        )
-
-        if (response.status === 200) {
-            setLoading(false)
-            const modal = document.getElementById(
-                dialogId
-            ) as HTMLDialogElement | null
-            if (modal) {
-                modal.close()
-            }
-            setCategoryName('')
-            router.refresh()
-        }
-    }
-
-    const showModal = () => {
-        const modal = document.getElementById(
-            dialogId
-        ) as HTMLDialogElement | null
-        if (modal) {
-            modal.showModal()
-        }
-    }
+    const { categoryName, toast, loading, handleInputChange, handleAddButton } =
+        useAddCategory(userId)
 
     return (
         <>
             <div
                 className="card w-96 cursor-pointer bg-primary text-primary-content"
-                onClick={showModal}
+                onClick={() => showModal(dialogId)}
             >
                 <div className="card-body flex flex-col items-center justify-center">
                     <IoIosAddCircle className="text-7xl" />
@@ -87,8 +44,8 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
                         <form method="dialog" className="flex items-center">
                             <button className="btn">Cancel</button>
                             <button
-                                className={`${categoryName == '' ? 'btn-disabled' : 'btn-primary'} btn ml-4`}
-                                onClick={handleAddButton}
+                                className={`${categoryName === '' ? 'btn-disabled' : 'btn-primary'} btn ml-4`}
+                                onClick={(e) => handleAddButton(e, dialogId)}
                             >
                                 {loading ? (
                                     <span className="loading loading-spinner"></span>
@@ -100,6 +57,12 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
                     </div>
                 </div>
             </dialog>
+
+            <SuccessfulToast
+                toast={toast}
+                description="Category created"
+                alertType="alert-success"
+            />
         </>
     )
 }

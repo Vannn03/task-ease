@@ -1,6 +1,6 @@
 'use client'
 
-import axios from 'axios'
+import axiosInstance from '@/utils/axiosInstance'
 import { MouseEvent, useEffect } from 'react'
 import { GiUpgrade } from 'react-icons/gi'
 
@@ -35,15 +35,10 @@ const UpgradeButton: React.FC<UpgradePremiumData> = ({ userId }) => {
     const upgrade = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
-        const response = await axios.post(
-            '/api/token',
-            { orderId: userId, grossAmount: 50000 },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
+        const response = await axiosInstance.post('/api/token', {
+            orderId: userId,
+            grossAmount: 50000,
+        })
 
         window.snap.pay(response.data.token)
     }

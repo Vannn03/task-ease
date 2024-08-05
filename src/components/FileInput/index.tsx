@@ -1,56 +1,71 @@
 'use client'
 
-import axios from 'axios'
+import { useEdgeStore } from '@/libs/edgestore'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
+import { SingleImageDropzone } from './SingleImageDropzone'
+import axiosInstance from '@/utils/axiosInstance'
 
-interface FileInputProps {
+interface ProfilePictureInputProps {
     userId?: string
 }
 
-const FileInput = ({ userId }: FileInputProps) => {
-    const [userImage, setUserImage] = useState<File | null>(null)
+const ProfilePictureInput = ({ userId }: ProfilePictureInputProps) => {
+    const [file, setFile] = useState<File>()
+    const [progress, setProgress] = useState(0)
+    const { edgestore } = useEdgeStore()
     const router = useRouter()
 
-    const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setUserImage(e.target.files[0])
-        }
-    }
-
-    const handleSubmitButton = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmitButton = async (
+        e: React.MouseEvent<HTMLButtonElement>
+    ) => {
         e.preventDefault()
 
-        if (!userImage) return
+        if (file) {
+            const res = await edgestore.publicFiles.upload({
+                file,
+                onProgressChange: (progress) => {
+                    setProgress(progress)
+                },
+            })
 
-        const formData = new FormData()
-        formData.append('userId', userId || '')
-        formData.append('userImage', userImage)
+            const userImage = res.url
 
-        const response = await axios.put('/api/user', formData)
+            const response = await axiosInstance.put('/api/user', {
+                userId,
+                userImage,
+            })
 
-        if (response.status === 200) {
-            setUserImage(null)
-            router.refresh()
+            if (response.status === 200) {
+                setProgress(0)
+                router.refresh()
+            }
         }
     }
 
     return (
-        <form
-            onSubmit={handleSubmitButton}
-            className="flex flex-col justify-center gap-2"
-        >
-            <input
-                type="file"
-                className="file-input file-input-bordered w-full max-w-xs"
-                onChange={handleFileInputChange}
+        <div className="flex flex-col justify-center gap-2">
+            <SingleImageDropzone
+                width={200}
+                height={200}
+                value={file}
+                dropzoneOptions={{
+                    maxSize: 1024 * 1024 * 1, // 1 MB
+                }}
+                onChange={(file) => setFile(file)}
             />
 
-            <button className="btn btn-success" type="submit">
-                Save Profile Image
+            <progress
+                className="progress w-full"
+                value={progress}
+                max="100"
+            ></progress>
+
+            <button className="btn btn-success" onClick={handleSubmitButton}>
+                Upload
             </button>
-        </form>
+        </div>
     )
 }
 
-export default FileInput
+export default ProfilePictureInput
