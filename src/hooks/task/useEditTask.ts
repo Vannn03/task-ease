@@ -24,19 +24,19 @@ const useEditTask = (taskId?: string) => {
         })
 
         if (response.status === 200) {
-            setLoading(false)
             closeModal(dialogId)
             setNewTaskDescription('')
             router.refresh()
-
+            
             setToast(true)
             setTimeout(() => {
                 setToast(false)
             }, 3000);
         }
+        setLoading(false)
     }
   return {
-    toast, loading, handleInputChange, handleEditButton
+    newtaskDescription, toast, loading, handleInputChange, handleEditButton
   }
 }
 

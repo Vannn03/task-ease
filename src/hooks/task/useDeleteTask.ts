@@ -20,10 +20,10 @@ const useDeleteTask = (taskId?: string) => {
         })
 
         if (response.status === 200) {
-            setLoading(false)
             closeModal(dialogId)
             router.refresh()
         }
+        setLoading(false)
     }
   return {
     loading, handleDeleteButton

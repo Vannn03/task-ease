@@ -15,8 +15,13 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
     dialogId,
     categoryName,
 }) => {
-    const { toast, loading, handleInputChange, handleEditButton } =
-        useEditCategory(categoryId)
+    const {
+        newCategoryName,
+        toast,
+        loading,
+        handleInputChange,
+        handleEditButton,
+    } = useEditCategory(categoryId)
 
     return (
         <>
@@ -37,6 +42,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
                         className="input input-bordered mt-2 w-full"
                         onChange={handleInputChange}
                         placeholder={categoryName}
+                        value={newCategoryName}
                     />
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">

@@ -23,22 +23,19 @@ const useEditCategory = (categoryId?: string) => {
             categoryName: newCategoryName,
         })
 
-        if (response.status === 200) {
-            setLoading(false)
-
-            closeModal(dialogId)
-            
-            setNewCategoryName('')
-
-            router.refresh()
-
+        if (response.status === 200) { 
+            closeModal(dialogId)  
+            setNewCategoryName('') 
+            router.refresh() 
             setToast(true)
             setTimeout(() => {
                 setToast(false)
             }, 3000)
         }
+        setLoading(false)
     }
   return {
+    newCategoryName,
     toast,
     loading,
     handleInputChange,

@@ -16,13 +16,18 @@ const EditTaskButton: React.FC<EditTaskData> = ({
     dialogId,
     taskDescription,
 }) => {
-    const { toast, loading, handleInputChange, handleEditButton } =
-        useEditTask(taskId)
+    const {
+        newtaskDescription,
+        toast,
+        loading,
+        handleInputChange,
+        handleEditButton,
+    } = useEditTask(taskId)
 
     return (
         <>
             <button
-                className="btn btn-ghost btn-sm text-warning"
+                className="btn btn-ghost text-warning"
                 onClick={() => showModal(dialogId)}
             >
                 <FaRegEdit />
@@ -38,6 +43,7 @@ const EditTaskButton: React.FC<EditTaskData> = ({
                         placeholder={taskDescription}
                         className="input input-bordered mt-2 w-full"
                         onChange={handleInputChange}
+                        value={newtaskDescription}
                     />
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">

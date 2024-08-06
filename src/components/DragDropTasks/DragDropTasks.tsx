@@ -56,6 +56,7 @@ const DragDropTasks = ({ taskDB }: any) => {
                                                 data.taskDescription
                                             }
                                             status={data.status}
+                                            deadline={data.deadline}
                                         />
                                     </div>
                                 )}

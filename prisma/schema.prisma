@@ -14,29 +14,36 @@ datasource db {
 }
 
 model User {
-  userId    String  @id @default(cuid())
+  userId    String   @id @default(cuid())
   userImage String?
   userName  String
   email     String
   password  String?
   version   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Category Category[]
 }
 
 model Task {
-  taskId          String @id @default(cuid())
+  taskId          String    @id @default(cuid())
   taskDescription String
   status          String
   order           Int?
+  deadline        DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   category   Category @relation(fields: [categoryId], references: [categoryId], onUpdate: Cascade, onDelete: Cascade)
   categoryId String
 }
 
 model Category {
-  categoryId   String @id @default(cuid())
+  categoryId   String   @id @default(cuid())
   categoryName String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   user   User   @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
   userId String

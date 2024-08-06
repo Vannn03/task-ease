@@ -19,15 +19,15 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
 
     return (
         <>
-            <div
-                className="card w-96 cursor-pointer bg-primary text-primary-content"
+            <button
+                className="btn card btn-outline btn-primary h-full w-96 cursor-pointer"
                 onClick={() => showModal(dialogId)}
             >
                 <div className="card-body flex flex-col items-center justify-center">
                     <IoIosAddCircle className="text-7xl" />
                     <h1 className="card-title">Add New</h1>
                 </div>
-            </div>
+            </button>
             <dialog
                 id={dialogId}
                 className="modal modal-bottom sm:modal-middle"
@@ -39,6 +39,7 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
                         placeholder="Category name"
                         className="input input-bordered mt-2 w-full"
                         onChange={handleInputChange}
+                        value={categoryName}
                     />
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">

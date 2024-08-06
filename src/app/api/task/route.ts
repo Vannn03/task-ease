@@ -2,11 +2,11 @@ import prisma from "@/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
-    const { categoryId, taskDescription, status } = await request.json()
+    const { categoryId, taskDescription, status, deadline } = await request.json()
 
     const order = await prisma.task.count()
 
-    const data = {categoryId, taskDescription, status, order}
+    const data = {categoryId, taskDescription, status, order, deadline}
 
     const createTask = await prisma.task.create( {
         data

@@ -4,11 +4,16 @@ import useCheckTask from '@/hooks/task/useCheckTask'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
 import { MdDragIndicator } from 'react-icons/md'
+import {
+    getDateFromISODateTimeLocale,
+    getTimeFromISODateTimeLocale,
+} from '@/utils/datetime'
 
 interface TaskData {
     taskId: string
     taskDescription: string
     status: 'Completed' | 'Incomplete'
+    deadline: string
     dragHandleProps: any
 }
 
@@ -16,6 +21,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
     taskId,
     taskDescription,
     status,
+    deadline,
     dragHandleProps,
 }) => {
     const { isChecked, handleCheckboxChange } = useCheckTask({ taskId, status })
@@ -33,9 +39,15 @@ const TaskCheckbox: React.FC<TaskData> = ({
                     checked={isChecked}
                     onChange={handleCheckboxChange}
                 />
-                <p className={`${isChecked && 'line-through'}`}>
-                    {taskDescription}
-                </p>
+                <div className="flex flex-col">
+                    <p className={`${isChecked && 'line-through'}`}>
+                        {taskDescription}
+                    </p>
+                    <p className="text-sm">
+                        {getDateFromISODateTimeLocale(deadline)} |{' '}
+                        {getTimeFromISODateTimeLocale(deadline)}
+                    </p>
+                </div>
             </div>
             <div className="flex items-center">
                 <EditTaskButton

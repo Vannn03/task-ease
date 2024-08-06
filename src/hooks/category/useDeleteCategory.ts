@@ -16,13 +16,11 @@ const useDeleteCategory = (categoryId?: string) => {
             data: { categoryId },
         })
 
-        if (response.status === 200) {
-            setLoading(false)
-            
+        if (response.status === 200) {    
             closeModal(dialogId)
-            
             router.refresh()
         }
+        setLoading(false)
     }
 
     return {

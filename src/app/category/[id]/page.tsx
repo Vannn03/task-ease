@@ -28,7 +28,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
     })
 
     return (
-        <div className="flex h-dvh w-full flex-col gap-6 p-8">
+        <div className="flex w-full flex-col gap-6 p-8">
             <div className="flex flex-col gap-4">
                 <BackButton />
                 <h1 className="text-3xl font-bold">
@@ -38,10 +38,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
 
             <AddTaskButton categoryId={categoryDB?.categoryId} />
 
-            <div
-                role="tablist"
-                className="tabs tabs-lifted h-fit overflow-y-hidden"
-            >
+            <div role="tablist" className="tabs tabs-lifted h-fit">
                 <input
                     type="radio"
                     name="my_tabs_2"
@@ -52,7 +49,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
                 />
                 <div
                     role="tabpanel"
-                    className="hide-scrollbar tab-content h-full overflow-y-scroll rounded-box border-base-300 bg-base-100 p-6"
+                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
                 >
                     {taskDB.length == 0 ? (
                         <p>No task found</p>
@@ -70,7 +67,7 @@ const Page: React.FC<PageProps> = async ({ params }) => {
                 />
                 <div
                     role="tabpanel"
-                    className="hide-scrollbar tab-content h-full overflow-y-scroll rounded-box border-base-300 bg-base-100 p-6"
+                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
                 >
                     {finishedTaskDB.length == 0 ? (
                         <p>No completed task found</p>
