@@ -1,6 +1,6 @@
 'use client'
 
-import useDeleteTask from '@/hooks/useDeleteTask'
+import useDeleteTask from '@/hooks/task/useDeleteTask'
 import { showModal } from '@/utils/modal'
 import { FaRegTrashCan } from 'react-icons/fa6'
 
@@ -20,7 +20,7 @@ const DeleteTaskButton: React.FC<DeletedTaskData> = ({
     return (
         <>
             <button
-                className="btn btn-error btn-sm"
+                className="btn btn-ghost btn-sm text-error"
                 onClick={() => showModal(dialogId)}
             >
                 <FaRegTrashCan />

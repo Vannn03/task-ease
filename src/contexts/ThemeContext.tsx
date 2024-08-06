@@ -14,25 +14,27 @@ const defaultContextValue: ThemeContextType = {
 
 export const ThemeContext = createContext(defaultContextValue)
 
-export const ThemeProvider = ({ children }: any) => {
-    const [theme, setTheme] = useState('light')
-    const [isMounted, setIsMounted] = useState(false)
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+    const [theme, setTheme] = useState<string>('light')
+    const [isMounted, setIsMounted] = useState<boolean>(false)
 
     useEffect(() => {
-        setIsMounted(true)
-
         const storedTheme = localStorage.getItem('theme') || 'light'
-
         setTheme(storedTheme)
+        setIsMounted(true)
     }, [])
 
-    if (!isMounted) {
-        return <div>Loading...</div>
+    const changeTheme = (newTheme: string) => {
+        setTheme(newTheme)
+        localStorage.setItem('theme', newTheme)
     }
 
-    const changeTheme = (theme: string) => {
-        setTheme(theme)
-        localStorage.setItem('theme', theme)
+    if (!isMounted) {
+        return (
+            <div className="flex h-dvh items-center justify-center">
+                <span className="loading loading-ball loading-lg"></span>
+            </div>
+        )
     }
 
     return (

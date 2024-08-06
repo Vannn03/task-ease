@@ -1,6 +1,6 @@
 'use client'
 
-import useDeleteCategory from '@/hooks/useDeleteCategory'
+import useDeleteCategory from '@/hooks/category/useDeleteCategory'
 import { showModal } from '@/utils/modal'
 
 interface DeleteCategoryData {
@@ -19,7 +19,7 @@ const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
     return (
         <>
             <button
-                className="btn btn-outline btn-error"
+                className="btn btn-ghost btn-sm text-error"
                 onClick={() => showModal(dialogId)}
             >
                 Delete

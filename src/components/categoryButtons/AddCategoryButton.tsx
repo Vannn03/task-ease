@@ -1,9 +1,9 @@
 'use client'
 
-import useAddCategory from '@/hooks/useAddCategory'
 import { showModal } from '@/utils/modal'
 import { IoIosAddCircle } from 'react-icons/io'
 import SuccessfulToast from '../toasts/SuccessfulToast'
+import useAddCategory from '@/hooks/category/useAddCategory'
 
 interface addedCategoryType {
     userId?: string

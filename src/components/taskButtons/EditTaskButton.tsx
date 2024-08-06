@@ -1,6 +1,6 @@
 'use client'
 
-import useEditTask from '@/hooks/useEditTask'
+import useEditTask from '@/hooks/task/useEditTask'
 import { showModal } from '@/utils/modal'
 import { FaRegEdit } from 'react-icons/fa'
 import SuccessfulToast from '../toasts/SuccessfulToast'
@@ -22,7 +22,7 @@ const EditTaskButton: React.FC<EditTaskData> = ({
     return (
         <>
             <button
-                className="btn btn-warning btn-sm"
+                className="btn btn-ghost btn-sm text-warning"
                 onClick={() => showModal(dialogId)}
             >
                 <FaRegEdit />

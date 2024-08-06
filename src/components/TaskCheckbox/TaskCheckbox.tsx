@@ -1,6 +1,6 @@
 'use client'
 
-import useCheckTask from '@/hooks/useCheckTask'
+import useCheckTask from '@/hooks/task/useCheckTask'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
 import { MdDragIndicator } from 'react-icons/md'
@@ -37,7 +37,7 @@ const TaskCheckbox: React.FC<TaskData> = ({
                     {taskDescription}
                 </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
                 <EditTaskButton
                     taskId={taskId}
                     taskDescription={taskDescription}

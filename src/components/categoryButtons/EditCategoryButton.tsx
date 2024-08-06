@@ -1,6 +1,6 @@
 'use client'
 
-import useEditCategory from '@/hooks/useEditCategory'
+import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
 import SuccessfulToast from '../toasts/SuccessfulToast'
 
@@ -21,7 +21,7 @@ const EditCategoryButton: React.FC<EditCategoryData> = ({
     return (
         <>
             <button
-                className="btn btn-warning"
+                className="btn btn-warning btn-sm"
                 onClick={() => showModal(dialogId)}
             >
                 Edit

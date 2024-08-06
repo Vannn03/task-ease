@@ -1,6 +1,6 @@
 'use client'
 
-import useAddTask from '@/hooks/useAddTask'
+import useAddTask from '@/hooks/task/useAddTask'
 import SuccessfulToast from '../toasts/SuccessfulToast'
 
 interface AddTaskProps {
