@@ -1,19 +1,16 @@
 'use client'
 
 import { showModal } from '@/utils/modal'
-import { IoIosAddCircle } from 'react-icons/io'
 import SuccessfulToast from '../toasts/SuccessfulToast'
 import useAddCategory from '@/hooks/category/useAddCategory'
+import { CirclePlus } from 'lucide-react'
 
-interface addedCategoryType {
+interface addCategoryProps {
     userId?: string
     dialogId: string
 }
 
-const AddCategoryButton: React.FC<addedCategoryType> = ({
-    userId,
-    dialogId,
-}) => {
+const AddCategoryButton = ({ userId, dialogId }: addCategoryProps) => {
     const { categoryName, toast, loading, handleInputChange, handleAddButton } =
         useAddCategory(userId)
 
@@ -24,7 +21,7 @@ const AddCategoryButton: React.FC<addedCategoryType> = ({
                 onClick={() => showModal(dialogId)}
             >
                 <div className="card-body flex flex-col items-center justify-center">
-                    <IoIosAddCircle className="text-7xl" />
+                    <CirclePlus />
                     <h1 className="card-title">Add New</h1>
                 </div>
             </button>

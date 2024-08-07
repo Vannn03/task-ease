@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 interface UseCheckTaskProps {
     taskId: string
-    status: "Completed" | "Incomplete"
+    status: string
 }
 
 const useCheckTask = ({taskId, status}: UseCheckTaskProps) => {

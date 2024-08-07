@@ -1,8 +1,8 @@
 import BackButton from '@/components/BackButton/BackButton'
 import DragDropTasks from '@/components/DragDropTasks/DragDropTasks'
 import AddTaskButton from '@/components/taskButtons/AddTaskButton'
+import DeleteCompletedTaskButton from '@/components/taskButtons/DeleteCompletedTaskButton'
 import prisma from '@/libs/prisma'
-import { Task } from '@prisma/client'
 
 interface Params {
     id: string
@@ -12,13 +12,13 @@ interface PageProps {
     params: Params
 }
 
-const Page: React.FC<PageProps> = async ({ params }) => {
-    const taskDB: Task[] = await prisma.task.findMany({
+const Page = async ({ params }: PageProps) => {
+    const taskDB = await prisma.task.findMany({
         where: { categoryId: params.id },
         orderBy: { order: 'asc' },
     })
 
-    const finishedTaskDB: Task[] = await prisma.task.findMany({
+    const finishedTaskDB = await prisma.task.findMany({
         where: { categoryId: params.id, status: 'Completed' },
         orderBy: { order: 'asc' },
     })
@@ -31,9 +31,15 @@ const Page: React.FC<PageProps> = async ({ params }) => {
         <div className="flex w-full flex-col gap-6 p-8">
             <div className="flex flex-col gap-4">
                 <BackButton />
-                <h1 className="text-3xl font-bold">
-                    {categoryDB?.categoryName}
-                </h1>
+                <div className="flex items-center justify-between">
+                    <h1 className="text-3xl font-bold">
+                        {categoryDB?.categoryName}
+                    </h1>
+                    <DeleteCompletedTaskButton
+                        categoryId={categoryDB?.categoryId}
+                        dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
+                    />
+                </div>
             </div>
 
             <AddTaskButton categoryId={categoryDB?.categoryId} />

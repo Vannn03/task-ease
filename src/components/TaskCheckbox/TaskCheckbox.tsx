@@ -3,34 +3,34 @@
 import useCheckTask from '@/hooks/task/useCheckTask'
 import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
 import EditTaskButton from '../taskButtons/EditTaskButton'
-import { MdDragIndicator } from 'react-icons/md'
 import {
     getDateFromISODateTimeLocale,
     getTimeFromISODateTimeLocale,
 } from '@/utils/datetime'
+import { GripVertical } from 'lucide-react'
 
-interface TaskData {
+interface TaskCheckboxProps {
     taskId: string
     taskDescription: string
-    status: 'Completed' | 'Incomplete'
-    deadline: string
+    status: string
+    deadline: Date
     dragHandleProps: any
 }
 
-const TaskCheckbox: React.FC<TaskData> = ({
+const TaskCheckbox = ({
     taskId,
     taskDescription,
     status,
     deadline,
     dragHandleProps,
-}) => {
+}: TaskCheckboxProps) => {
     const { isChecked, handleCheckboxChange } = useCheckTask({ taskId, status })
 
     return (
         <>
             <div className="flex items-center gap-4">
                 <div {...dragHandleProps}>
-                    <MdDragIndicator className="cursor-grab text-lg" />
+                    <GripVertical className="cursor grab" />
                 </div>
                 <input
                     type="checkbox"

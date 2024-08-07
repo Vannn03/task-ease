@@ -2,20 +2,20 @@
 
 import useEditTask from '@/hooks/task/useEditTask'
 import { showModal } from '@/utils/modal'
-import { FaRegEdit } from 'react-icons/fa'
 import SuccessfulToast from '../toasts/SuccessfulToast'
+import { Pencil } from 'lucide-react'
 
-interface EditTaskData {
+interface EditTaskProps {
     taskId: string
     dialogId: string
     taskDescription: string
 }
 
-const EditTaskButton: React.FC<EditTaskData> = ({
+const EditTaskButton = ({
     taskId,
     dialogId,
     taskDescription,
-}) => {
+}: EditTaskProps) => {
     const {
         newtaskDescription,
         toast,
@@ -30,7 +30,7 @@ const EditTaskButton: React.FC<EditTaskData> = ({
                 className="btn btn-ghost text-warning"
                 onClick={() => showModal(dialogId)}
             >
-                <FaRegEdit />
+                <Pencil />
             </button>
             <dialog
                 id={dialogId}

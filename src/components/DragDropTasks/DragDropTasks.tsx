@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axiosInstance from '@/utils/axiosInstance'
 import TaskCheckbox from '../TaskCheckbox/TaskCheckbox'
+import { Task } from '@prisma/client'
 
 const DragDropTasks = ({ taskDB }: any) => {
     const router = useRouter()
@@ -35,7 +36,7 @@ const DragDropTasks = ({ taskDB }: any) => {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
-                        {tasks.map((data: any, index: number) => (
+                        {tasks.map((data: Task, index: number) => (
                             <Draggable
                                 key={data.taskId}
                                 draggableId={data.taskId}

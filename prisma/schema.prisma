@@ -19,21 +19,21 @@ model User {
   userName  String
   email     String
   password  String?
-  version   String
+  version   String   @default("Free")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Category Category[]
+  categories Category[]
 }
 
 model Task {
-  taskId          String    @id @default(cuid())
+  taskId          String   @id @default(cuid())
   taskDescription String
-  status          String
-  order           Int?
-  deadline        DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  status          String   @default("Incomplete")
+  order           Int
+  deadline        DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   category   Category @relation(fields: [categoryId], references: [categoryId], onUpdate: Cascade, onDelete: Cascade)
   categoryId String
@@ -48,5 +48,5 @@ model Category {
   user   User   @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
   userId String
 
-  Task Task[]
+  tasks Task[]
 }

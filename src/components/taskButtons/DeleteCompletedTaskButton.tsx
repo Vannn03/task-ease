@@ -1,42 +1,36 @@
 'use client'
 
-import useDeleteTask from '@/hooks/task/useDeleteTask'
+import useDeleteCompletedTask from '@/hooks/task/useDeleteCompletedTask'
 import { showModal } from '@/utils/modal'
-import { Trash2 } from 'lucide-react'
 
-interface DeletedTaskProps {
-    taskId: string
+interface DeleteCompletedTaskProps {
+    categoryId?: string
     dialogId: string
-    taskDescription: string
 }
 
-const DeleteTaskButton = ({
-    taskId,
+const DeleteCompletedTaskButton = ({
+    categoryId,
     dialogId,
-    taskDescription,
-}: DeletedTaskProps) => {
-    const { loading, handleDeleteButton } = useDeleteTask(taskId)
+}: DeleteCompletedTaskProps) => {
+    const { loading, handleDeleteButton } = useDeleteCompletedTask(categoryId)
 
     return (
         <>
             <button
-                className="btn btn-ghost text-error"
+                className="btn btn-outline btn-error"
                 onClick={() => showModal(dialogId)}
             >
-                <Trash2 />
+                Delete Completed Task
             </button>
 
-            {/*  */}
             <dialog
                 id={dialogId}
                 className="modal modal-bottom sm:modal-middle"
             >
                 <div className="modal-box">
-                    <h3 className="text-lg font-bold">
-                        Delete Task &apos;{taskDescription}&apos;
-                    </h3>
+                    <h3 className="text-lg font-bold">Delete Completed Task</h3>
                     <p className="py-4">
-                        Are you sure you want to delete this task?
+                        Are you sure you want to delete all completed task?
                     </p>
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">
@@ -59,4 +53,4 @@ const DeleteTaskButton = ({
     )
 }
 
-export default DeleteTaskButton
+export default DeleteCompletedTaskButton

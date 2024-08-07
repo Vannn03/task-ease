@@ -7,7 +7,7 @@ interface AddTaskProps {
     categoryId?: string
 }
 
-const AddTaskButton: React.FC<AddTaskProps> = ({ categoryId }) => {
+const AddTaskButton = ({ categoryId }: AddTaskProps) => {
     const {
         taskDate,
         taskTime,

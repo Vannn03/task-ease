@@ -1,7 +1,7 @@
 'use client'
 
+import { CircleArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { IoMdArrowBack } from 'react-icons/io'
 
 const BackButton = () => {
     const router = useRouter()
@@ -10,7 +10,7 @@ const BackButton = () => {
             className="flex w-fit cursor-pointer items-center gap-2"
             onClick={() => router.back()}
         >
-            <IoMdArrowBack /> Go Back
+            <CircleArrowLeft /> Go Back
         </div>
     )
 }

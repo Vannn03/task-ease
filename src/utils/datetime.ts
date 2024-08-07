@@ -4,14 +4,26 @@ export const getISODateTime = (date: string, time: string): string => {
     return isoString;
 };
 
-export const getTimeFromISODateTimeLocale = (isoString: string): string => {
-    const date = new Date(isoString);
-    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+export const getTimeFromISODateTimeLocale = (iso: Date | null) => {
+    return iso?.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
 };
 
-export const getDateFromISODateTimeLocale = (isoString: string): string => {
-    const date = new Date(isoString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+export const getDateFromISODateTimeLocale = (iso: Date | null) => {
+    return iso?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+};
+
+export const getFullDateFromISODateTimeLocale = (iso: Date | null) => {
+    if (!iso) return null;
+    
+    const dateString = iso.toLocaleDateString('en-GB', { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+    });
+
+    const parts = dateString.split(' ');
+    return `${parts[0]}, ${parts[1]} ${parts[2]} ${parts[3]}`;
 };
 
 // import { formatDistanceToNow, parseISO } from 'date-fns';

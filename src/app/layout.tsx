@@ -5,6 +5,8 @@ import Sidebar from '@/components/Sidebar/Sidebar'
 import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { LocalizationProvider } from '@/libs/mui'
+import { AdapterDayjs } from '@/libs/mui'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,12 +22,27 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <link
+                    rel="icon"
+                    href="/logo.svg"
+                    type="image/svg"
+                    sizes="32x32"
+                />
+            </head>
             <body className={inter.className}>
                 <ThemeProvider>
                     <ClientThemeWrapper>
                         <div className="flex">
-                            <Sidebar />
-                            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                                adapterLocale="en-gb"
+                            >
+                                <Sidebar />
+                                <EdgeStoreProvider>
+                                    {children}
+                                </EdgeStoreProvider>
+                            </LocalizationProvider>
                         </div>
                     </ClientThemeWrapper>
                 </ThemeProvider>

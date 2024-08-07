@@ -4,11 +4,7 @@ import axiosInstance from '@/utils/axiosInstance'
 import { MouseEvent, useEffect } from 'react'
 import { GiUpgrade } from 'react-icons/gi'
 
-interface UpgradePremiumData {
-    userId?: string
-}
-
-const UpgradeButton: React.FC<UpgradePremiumData> = ({ userId }) => {
+const UpgradeButton = (userId?: string) => {
     useEffect(() => {
         const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js'
         const clientKey = process.env.NEXT_PUBLIC_CLIENT

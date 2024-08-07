@@ -3,17 +3,17 @@
 import useDeleteCategory from '@/hooks/category/useDeleteCategory'
 import { showModal } from '@/utils/modal'
 
-interface DeleteCategoryData {
+interface DeleteCategoryProps {
     dialogId: string
     categoryId?: string
     categoryName?: string
 }
 
-const DeleteCategoryButton: React.FC<DeleteCategoryData> = ({
+const DeleteCategoryButton = ({
     categoryId,
     dialogId,
     categoryName,
-}) => {
+}: DeleteCategoryProps) => {
     const { loading, handleDeleteButton } = useDeleteCategory(categoryId)
 
     return (

@@ -4,17 +4,17 @@ import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
 import SuccessfulToast from '../toasts/SuccessfulToast'
 
-interface EditCategoryData {
+interface EditCategoryProps {
     dialogId: string
     categoryId?: string
     categoryName?: string
 }
 
-const EditCategoryButton: React.FC<EditCategoryData> = ({
+const EditCategoryButton = ({
     categoryId,
     dialogId,
     categoryName,
-}) => {
+}: EditCategoryProps) => {
     const {
         newCategoryName,
         toast,
