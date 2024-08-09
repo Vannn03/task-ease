@@ -1,14 +1,22 @@
 'use client'
 
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState, useMemo } from 'react'
+import { createTheme, Theme } from '@mui/material/styles'
+import { PaletteMode } from '@mui/material'
 
 interface ThemeContextType {
     theme: string
+    muiTheme: Theme
     changeTheme: (theme: string) => void
 }
 
 const defaultContextValue: ThemeContextType = {
     theme: 'light',
+    muiTheme: createTheme({
+        palette: {
+            mode: 'light',
+        },
+    }),
     changeTheme: () => {},
 }
 
@@ -24,6 +32,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         setIsMounted(true)
     }, [])
 
+    const muiTheme = useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: theme as PaletteMode | undefined,
+                },
+            }),
+        [theme]
+    )
+
     const changeTheme = (newTheme: string) => {
         setTheme(newTheme)
         localStorage.setItem('theme', newTheme)
@@ -38,7 +56,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <ThemeContext.Provider value={{ theme, changeTheme }}>
+        <ThemeContext.Provider value={{ theme, muiTheme, changeTheme }}>
             {children}
         </ThemeContext.Provider>
     )

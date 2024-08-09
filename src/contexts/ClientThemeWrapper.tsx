@@ -2,13 +2,18 @@
 
 import { useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 
 export default function ClientThemeWrapper({
     children,
 }: {
     children: React.ReactNode
 }) {
-    const { theme } = useContext(ThemeContext)
+    const { theme, muiTheme } = useContext(ThemeContext)
 
-    return <div data-theme={theme}>{children}</div>
+    return (
+        <MuiThemeProvider theme={muiTheme}>
+            <div data-theme={theme}>{children}</div>
+        </MuiThemeProvider>
+    )
 }
