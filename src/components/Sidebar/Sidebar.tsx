@@ -45,8 +45,8 @@ const Sidebar = () => {
                             <ul className="menu w-full gap-2 rounded-box p-4">
                                 <li>
                                     <Link
-                                        href={'/dashboard'}
-                                        className={`${toggleMenu('/dashboard')}`}
+                                        href={'/users/dashboard'}
+                                        className={`${toggleMenu('/users/dashboard')}`}
                                     >
                                         <LayoutDashboard />
                                         Dashboard
@@ -54,8 +54,8 @@ const Sidebar = () => {
                                 </li>
                                 <li>
                                     <Link
-                                        href={'/category'}
-                                        className={`${toggleMenu('/category')}`}
+                                        href={'/users/category'}
+                                        className={`${toggleMenu('/users/category')}`}
                                     >
                                         <ChartColumnStacked />
                                         Category
@@ -66,8 +66,8 @@ const Sidebar = () => {
                         <ul className="menu w-full gap-2 rounded-box p-4">
                             <li>
                                 <Link
-                                    href={'/settings'}
-                                    className={`${toggleMenu('/settings')}`}
+                                    href={'/users/settings'}
+                                    className={`${toggleMenu('/users/settings')}`}
                                 >
                                     <Settings />
                                     Settings
@@ -79,7 +79,7 @@ const Sidebar = () => {
                                 </li> */}
                             <li>
                                 <Link
-                                    href={'/signout'}
+                                    href={'/api/auth/signout'}
                                     className="font-medium text-error"
                                 >
                                     <LogOut /> Sign out

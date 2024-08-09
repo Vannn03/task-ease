@@ -1,5 +1,5 @@
 import prisma from '@/libs/prisma'
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 export async function getUserFromDb(email: string, password: string) {
     const user = await prisma.user.findFirst({

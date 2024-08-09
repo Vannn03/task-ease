@@ -1,4 +1,4 @@
-import { signOut } from '@/app/auth'
+import { signOut } from '@/auth'
 
 const Page = () => {
     return (
@@ -6,7 +6,7 @@ const Page = () => {
             <form
                 action={async () => {
                     'use server'
-                    await signOut({ redirectTo: '/signup' })
+                    await signOut({ redirectTo: '/' })
                 }}
                 className="w-1/2"
             >

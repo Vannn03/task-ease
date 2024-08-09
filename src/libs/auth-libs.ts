@@ -1,4 +1,4 @@
-import { auth } from '@/app/auth'
+import { auth } from '@/auth'
 import { getSession } from 'next-auth/react'
 
 export const authUserSessionClient = async () => {
