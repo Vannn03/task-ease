@@ -4,7 +4,7 @@ import {
     getFullDateFromISODateTimeLocale,
     getTimeFromISODateTimeLocale,
 } from '@/utils/datetime'
-import { DateCalendar } from '@mui/x-date-pickers'
+import { DateCalendar } from '@/libs/mui'
 import { Task } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useState, useEffect } from 'react'
@@ -39,7 +39,7 @@ const Calendar = ({ dateNow, nearestTaskDB }: CalendarProps) => {
             <DateCalendar
                 value={dayjs(value)}
                 onChange={handleDateChange}
-                className="rounded-lg bg-gray-200"
+                className="glass rounded-lg"
             />
             <div className="mt-4">
                 {everyDayTaskDB.map((data: Task) => (

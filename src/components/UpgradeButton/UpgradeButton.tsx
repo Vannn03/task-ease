@@ -2,7 +2,6 @@
 
 import axiosInstance from '@/utils/axiosInstance'
 import { MouseEvent, useEffect } from 'react'
-import { GiUpgrade } from 'react-icons/gi'
 
 const UpgradeButton = (userId?: string) => {
     useEffect(() => {
@@ -42,7 +41,7 @@ const UpgradeButton = (userId?: string) => {
     return (
         <>
             <button className="font-medium text-primary" onClick={upgrade}>
-                <GiUpgrade /> Premium Upgrade
+                Premium Upgrade
             </button>
         </>
     )
