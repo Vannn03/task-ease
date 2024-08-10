@@ -23,7 +23,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const { email, password } = credentials as CredentialsType;
 
         credentials = await signInSchema.parseAsync(credentials)
- 
 
         const user = await getUserFromDb(email, password);
  
@@ -34,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: '/signin',
     signOut: '/signout',
