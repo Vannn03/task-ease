@@ -6,33 +6,33 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+type FormErrors = {
+    userName?: string
+    email?: string
+    password?: string
+    emailTaken?: boolean
+}
+
 const Page = () => {
     const [userName, setUserName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const [errors, setErrors] = useState<{
-        userName?: string
-        email?: string
-        password?: string
-    }>({})
+    const [errors, setErrors] = useState<FormErrors>({})
     const router = useRouter()
 
-    const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUserName(e.target.value)
-    }
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value)
-    }
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-    }
+    const handleInputChange =
+        (setter: React.Dispatch<React.SetStateAction<string>>) =>
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setter(e.target.value)
+        }
 
     const handleAddButton = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         setLoading(true)
 
+        // Validate input
         const result = signUpSchema.safeParse({ userName, email, password })
 
         if (!result.success) {
@@ -48,17 +48,44 @@ const Page = () => {
 
         setErrors({})
 
-        const response = await axiosInstance.post('/api/user', {
-            userName,
-            email,
-            password,
-            version: 'Free',
-        })
+        // Check if email is taken
+        try {
+            const response = await axiosInstance.post('/api/user/checkEmail', {
+                email,
+            })
 
-        if (response.status === 200) {
-            router.push('/api/auth/signin')
+            if (response.data.isExist) {
+                setErrors({
+                    emailTaken: true,
+                })
+                setLoading(false)
+                return
+            } else {
+                setErrors({})
+            }
+        } catch (error) {
+            console.error('Error checking email:', error)
+            setLoading(false)
+            return
         }
-        setLoading(false)
+
+        // Register the user
+        try {
+            const response = await axiosInstance.post('/api/user', {
+                userName,
+                email,
+                password,
+                version: 'Free',
+            })
+
+            if (response.status === 200) {
+                router.push('/api/auth/signin')
+            }
+        } catch (error) {
+            console.error('Error creating user:', error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -73,7 +100,7 @@ const Page = () => {
                         type="text"
                         placeholder="Username"
                         className={`input input-bordered ${errors.userName ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
-                        onChange={handleUserChange}
+                        onChange={handleInputChange(setUserName)}
                     />
                     <div className="label">
                         {errors.userName && (
@@ -87,13 +114,18 @@ const Page = () => {
                     <input
                         type="email"
                         placeholder="Email"
-                        className={`input input-bordered ${errors.email ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
-                        onChange={handleEmailChange}
+                        className={`input input-bordered ${errors.email || errors.emailTaken ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
+                        onChange={handleInputChange(setEmail)}
                     />
                     <div className="label">
-                        {errors.email && (
+                        {errors.email && !errors.emailTaken && (
                             <span className="label-text-alt text-error">
                                 {errors.email}
+                            </span>
+                        )}
+                        {errors.emailTaken && (
+                            <span className="label-text-alt text-error">
+                                Email is already taken!
                             </span>
                         )}
                     </div>
@@ -103,7 +135,7 @@ const Page = () => {
                         type="password"
                         placeholder="Password"
                         className={`input input-bordered ${errors.password ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
-                        onChange={handlePasswordChange}
+                        onChange={handleInputChange(setPassword)}
                     />
                     <div className="label">
                         {errors.password && (

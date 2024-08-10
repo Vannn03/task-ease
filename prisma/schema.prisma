@@ -17,7 +17,7 @@ model User {
   userId    String   @id @default(cuid())
   userImage String?
   userName  String
-  email     String
+  email     String   @unique
   password  String?
   version   String   @default("Free")
   createdAt DateTime @default(now())
