@@ -5,7 +5,7 @@ import {
 import Link from 'next/link'
 
 const DashboardTable = ({ taskDB }: any) => {
-    const limitedTask = taskDB.slice(0, 5)
+    const limitedTask = taskDB.slice(0, 6)
 
     return (
         <div className="overflow-x-auto">
@@ -19,22 +19,34 @@ const DashboardTable = ({ taskDB }: any) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {limitedTask.map((data: any) => (
-                        <tr key={data.taskId}>
-                            <td>
-                                {getDateFromISODateTimeLocale(data.deadline)}
-                            </td>
-                            <td>{data.taskDescription}</td>
-                            <td className="link-hover link">
-                                <Link href={`/category/${data.categoryId}`}>
-                                    {data.category.categoryName}
-                                </Link>
-                            </td>
-                            <td>
-                                {getTimeFromISODateTimeLocale(data.deadline)}
+                    {limitedTask.length == 0 ? (
+                        <tr>
+                            <td colSpan={4} className="text-center">
+                                No task found
                             </td>
                         </tr>
-                    ))}
+                    ) : (
+                        limitedTask.map((data: any) => (
+                            <tr key={data.taskId}>
+                                <td>
+                                    {getDateFromISODateTimeLocale(
+                                        data.deadline
+                                    )}
+                                </td>
+                                <td>{data.taskDescription}</td>
+                                <td className="link-hover link">
+                                    <Link href={`/category/${data.categoryId}`}>
+                                        {data.category.categoryName}
+                                    </Link>
+                                </td>
+                                <td>
+                                    {getTimeFromISODateTimeLocale(
+                                        data.deadline
+                                    )}
+                                </td>
+                            </tr>
+                        ))
+                    )}
                 </tbody>
             </table>
         </div>

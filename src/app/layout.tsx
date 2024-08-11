@@ -33,7 +33,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ThemeProvider>
                     <ClientThemeWrapper>
-                        <div className="flex">
+                        <div className="flex h-dvh">
                             <LocalizationProvider
                                 dateAdapter={AdapterDayjs}
                                 adapterLocale="en-gb"

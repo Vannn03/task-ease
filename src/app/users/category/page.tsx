@@ -21,10 +21,6 @@ const Page = async () => {
 
     return (
         <div className="w-full p-8">
-            <h1 className="text-3xl">Categories</h1>
-
-            <hr className="mb-6 mt-3" />
-
             <div className="grid grid-cols-4 gap-6">
                 {categoryDB.map((data) => (
                     <div
@@ -36,7 +32,7 @@ const Page = async () => {
                                 <h2 className="card-title w-full overflow-x-hidden text-ellipsis text-nowrap">
                                     {data.categoryName}
                                 </h2>
-                                <Link href={`/category/${data.categoryId}`}>
+                                <Link href={`category/${data.categoryId}`}>
                                     <ArrowRight />
                                 </Link>
                             </div>

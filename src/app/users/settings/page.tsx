@@ -36,8 +36,6 @@ const Page = async () => {
 
     return (
         <div className="mx-auto w-[800px]">
-            <h1 className="text-3xl font-semibold">Settings</h1>
-            <hr className="mt-2" />
             <div className="flex flex-col items-center justify-center gap-2 py-4">
                 <ProfilePictureInput userId={userDB?.userId} />
             </div>

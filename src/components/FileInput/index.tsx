@@ -55,11 +55,7 @@ const ProfilePictureInput = ({ userId }: ProfilePictureInputProps) => {
                 onChange={(file) => setFile(file)}
             />
 
-            <progress
-                className="progress w-full"
-                value={progress}
-                max="100"
-            ></progress>
+            {progress > 0 && <progress className="progress w-full"></progress>}
 
             <button className="btn btn-success" onClick={handleSubmitButton}>
                 Upload

@@ -21,7 +21,7 @@ const AddCategoryButton = ({ userId, dialogId }: addCategoryProps) => {
                 onClick={() => showModal(dialogId)}
             >
                 <div className="card-body flex flex-col items-center justify-center">
-                    <CirclePlus />
+                    <CirclePlus className="size-16" />
                     <h1 className="card-title">Add New</h1>
                 </div>
             </button>

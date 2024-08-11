@@ -1,22 +1,13 @@
-import { NextResponse } from 'next/server';
+export { auth as middleware } from "@/auth"
 import { auth } from '@/auth';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-// This function can be marked `async` if using `await` inside
-export async function middleware(req: NextApiRequest, res: NextApiResponse) {
-  const session = await auth(req, res)
-
-  // If no token is found, redirect to /signin
-  if (!session) {
-    return NextResponse.redirect(new URL('/signin', req.url));
+export default auth((req) => {
+  if (!req.auth && req.nextUrl.pathname !== "/signin") {
+    const newUrl = new URL("/signin", req.nextUrl.origin)
+    return Response.redirect(newUrl)
   }
-
-  // Allow the request to proceed if a token exists
-  return NextResponse.next();
-}
-
+})
  
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: '/users/:path*',
 }
