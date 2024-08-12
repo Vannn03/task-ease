@@ -55,34 +55,37 @@ const Calendar = ({ dateNow, nearestTaskDB }: CalendarProps) => {
             <DateCalendar
                 value={dayjs(value)}
                 onChange={handleDateChange}
-                className="rounded-lg bg-base-200"
+                className="glass rounded-lg"
             />
             <div className="mt-4 flex flex-col gap-4">
                 <p>
                     Current time: <LiveClock />
                 </p>
-                {everyDayTaskDB.map((data: Task) => (
-                    <>
-                        <div
-                            key={data.taskId}
-                            className={`flex gap-2 rounded-lg border p-4 ${getDeadlineColor(
-                                data.deadline
-                            )}`}
-                        >
-                            <Clock className="mt-[2px] size-4" />
-                            <span className="flex flex-col">
-                                <p className="text-sm font-medium">
-                                    {getTimeFromISODateTimeLocale(
-                                        data.deadline
-                                    )}
-                                </p>
-                                <p className="text-sm text-base-content">
-                                    {data.taskDescription}
-                                </p>
-                            </span>
-                        </div>
-                    </>
-                ))}
+                {everyDayTaskDB
+                    .map((data: Task) => (
+                        <>
+                            <div
+                                key={data.taskId}
+                                className={`flex gap-2 rounded-lg border p-4 ${getDeadlineColor(
+                                    data.deadline
+                                )}`}
+                            >
+                                <Clock className="mt-[2px] size-4" />
+                                <span className="flex flex-col">
+                                    <p className="text-sm font-medium">
+                                        {getTimeFromISODateTimeLocale(
+                                            data.deadline
+                                        )}
+                                    </p>
+                                    <p className="text-sm text-base-content">
+                                        {data.taskDescription}
+                                    </p>
+                                </span>
+                            </div>
+                        </>
+                    ))
+                    .slice(0, 5)}
+                <button className="btn">View more</button>
             </div>
         </>
     )

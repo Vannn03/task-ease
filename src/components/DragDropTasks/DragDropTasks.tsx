@@ -44,7 +44,7 @@ const DragDropTasks = ({ taskDB }: any) => {
                             >
                                 {(provided: any) => (
                                     <div
-                                        className="flex items-center justify-between rounded-lg border p-2"
+                                        className="flex items-center justify-between rounded-lg border border-primary-content p-2"
                                         {...provided.draggableProps}
                                         ref={provided.innerRef}
                                     >

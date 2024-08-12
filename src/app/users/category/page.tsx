@@ -3,8 +3,9 @@ import DeleteCategoryButton from '@/components/categoryButtons/DeleteCategoryBut
 import EditCategoryButton from '@/components/categoryButtons/EditCategoryButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Settings2 } from 'lucide-react'
 import Link from 'next/link'
+import { CSSProperties } from 'react'
 
 const Page = async () => {
     const user = await authUserSessionServer()
@@ -21,50 +22,75 @@ const Page = async () => {
 
     return (
         <div className="w-full p-8">
-            <div className="grid grid-cols-4 gap-6">
-                {categoryDB.map((data) => (
-                    <div
-                        key={data.categoryId}
-                        className="card w-96 bg-base-200"
-                    >
-                        <div className="card-body">
-                            <div className="flex items-center justify-between">
-                                <h2 className="card-title w-full overflow-x-hidden text-ellipsis text-nowrap">
-                                    {data.categoryName}
-                                </h2>
-                                <Link href={`category/${data.categoryId}`}>
-                                    <ArrowRight />
-                                </Link>
-                            </div>
-                            <p>
-                                {
-                                    data.tasks.filter(
-                                        (task) => task.status === 'Completed'
-                                    ).length
-                                }
-                                /
-                                {
-                                    data.tasks.filter(
-                                        (task) => task.status === 'Incomplete'
-                                    ).length
-                                }{' '}
-                                Task Completed
-                            </p>
-                            <div className="card-actions justify-end">
-                                <DeleteCategoryButton
-                                    categoryId={data.categoryId}
-                                    categoryName={data.categoryName}
-                                    dialogId={`deleteCategoryModal-${data.categoryId}`}
-                                />
-                                <EditCategoryButton
-                                    categoryId={data.categoryId}
-                                    categoryName={data.categoryName}
-                                    dialogId={`editCategoryModal-${data.categoryId}`}
-                                />
+            <div className="grid grid-cols-4 gap-12">
+                {categoryDB.map((data) => {
+                    const completedTasks = data.tasks.filter(
+                        (task) => task.status === 'Completed'
+                    ).length
+
+                    const completedTaskPercentage = data.tasks.length
+                        ? (completedTasks * 100) / data.tasks.length
+                        : 0
+                    return (
+                        <div
+                            key={data.categoryId}
+                            className="card w-96 bg-base-100 shadow-md transition-all hover:-translate-y-2 hover:shadow-xl"
+                        >
+                            <div className="card-body">
+                                <div className="flex items-center justify-between">
+                                    <h2 className="card-title w-full overflow-x-hidden text-ellipsis text-nowrap">
+                                        {data.categoryName}
+                                    </h2>
+
+                                    <div className="dropdown dropdown-end dropdown-bottom">
+                                        <div
+                                            tabIndex={0}
+                                            role="button"
+                                            className="btn btn-ghost m-1"
+                                        >
+                                            <Settings2 />
+                                        </div>
+                                        <ul
+                                            tabIndex={0}
+                                            className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+                                        >
+                                            <EditCategoryButton
+                                                categoryId={data.categoryId}
+                                                categoryName={data.categoryName}
+                                                dialogId={`editCategoryModal-${data.categoryId}`}
+                                            />
+                                            <DeleteCategoryButton
+                                                categoryId={data.categoryId}
+                                                categoryName={data.categoryName}
+                                                dialogId={`deleteCategoryModal-${data.categoryId}`}
+                                            />
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div className="card-actions mt-4 items-end justify-between">
+                                    <div
+                                        className="radial-progress text-accent"
+                                        style={
+                                            {
+                                                '--value':
+                                                    completedTaskPercentage,
+                                            } as CSSProperties
+                                        }
+                                        role="progressbar"
+                                    >
+                                        {completedTaskPercentage.toFixed(0)}%
+                                    </div>
+                                    <Link
+                                        href={`category/${data.categoryId}`}
+                                        className="btn btn-outline"
+                                    >
+                                        View Tasks
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )
+                })}
 
                 <AddCategoryButton
                     userId={userDB?.userId}

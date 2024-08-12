@@ -25,12 +25,12 @@ const EditCategoryButton = ({
 
     return (
         <>
-            <button
-                className="btn btn-warning btn-sm"
+            <a
+                className="btn btn-ghost text-warning"
                 onClick={() => showModal(dialogId)}
             >
                 Edit
-            </button>
+            </a>
             <dialog
                 id={dialogId}
                 className="modal modal-bottom sm:modal-middle"

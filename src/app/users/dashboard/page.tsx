@@ -109,7 +109,7 @@ const Page = async () => {
                     <BarChartCompletion datasets={datasets} />
                 </section>
             </main>
-            <aside className="h-full rounded-xl">
+            <aside className="flex flex-col justify-between rounded-xl">
                 <Calendar dateNow={dateNow} nearestTaskDB={nearestTaskDB} />
             </aside>
         </div>

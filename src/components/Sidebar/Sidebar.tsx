@@ -12,15 +12,11 @@ const Sidebar = async () => {
     return (
         <>
             {!user ? null : (
-                <aside className="sticky left-0 top-3 m-3 min-w-64 rounded-xl bg-base-300">
-                    <div className="flex h-full flex-col justify-between">
-                        <Navlinks
-                            userImage={userDB?.userImage as string}
-                            userName={userDB?.userName}
-                            version={userDB?.version}
-                        />
-                    </div>
-                </aside>
+                <Navlinks
+                    userImage={userDB?.userImage as string}
+                    userName={userDB?.userName}
+                    version={userDB?.version}
+                />
             )}
         </>
     )

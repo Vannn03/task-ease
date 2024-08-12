@@ -44,7 +44,10 @@ const Page = async ({ params }: PageProps) => {
 
             <AddTaskButton categoryId={categoryDB?.categoryId} />
 
-            <div role="tablist" className="tabs tabs-lifted h-fit">
+            <div
+                role="tablist"
+                className="tabs tabs-lifted h-fit overflow-y-hidden"
+            >
                 <input
                     type="radio"
                     name="my_tabs_2"
@@ -55,7 +58,7 @@ const Page = async ({ params }: PageProps) => {
                 />
                 <div
                     role="tabpanel"
-                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
+                    className="hide-scrollbar tab-content h-full overflow-y-scroll rounded-box border-base-300 bg-base-100 p-6"
                 >
                     {taskDB.length == 0 ? (
                         <p>No task found</p>
