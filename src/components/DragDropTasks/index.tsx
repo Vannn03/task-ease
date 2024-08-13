@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axiosInstance from '@/utils/axiosInstance'
-import TaskCheckbox from '../TaskCheckbox/TaskCheckbox'
+import TaskCheckbox from './TaskCheckbox'
 import { Task } from '@prisma/client'
 
 const DragDropTasks = ({ taskDB }: any) => {

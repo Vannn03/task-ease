@@ -1,5 +1,6 @@
 'use client'
 
+import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import { signUpSchema } from '@/libs/zod'
 import axiosInstance from '@/utils/axiosInstance'
 import Link from 'next/link'
@@ -146,11 +147,7 @@ const Page = () => {
                     </div>
                 </label>
                 <button type="submit" className="btn btn-primary mt-2">
-                    {loading ? (
-                        <span className="loading loading-infinity loading-lg"></span>
-                    ) : (
-                        <>Sign Up</>
-                    )}
+                    {loading ? <ButtonLoader /> : <>Sign Up</>}
                 </button>
                 <div className="divider">OR</div>
                 <Link href={'/api/auth/signin'} className="btn btn-ghost">

@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Sidebar from '@/components/Sidebar/Sidebar'
+import Sidebar from '@/components/utilities/Sidebar'
 import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
-import { LocalizationProvider } from '@/libs/mui'
-import { AdapterDayjs } from '@/libs/mui'
+import { LocalizationProvider, AdapterDayjs } from '@/libs/mui'
 
 const inter = Inter({ subsets: ['latin'] })
 

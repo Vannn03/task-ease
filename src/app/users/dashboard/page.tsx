@@ -1,10 +1,8 @@
-import Calendar from '@/components/Calendar/Calendar'
-import DashboardTable from '@/components/DashboardTable/DashboardTable'
-import LiveClock from '@/components/LiveClock/LiveClock'
+import Calendar from '@/components/data-display/Calendar/Calendar'
+import DashboardTable from '@/components/data-display/DashboardTable/DashboardTable'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
-import { getFullDateFromISODateTimeLocale } from '@/utils/datetime'
-import BarChartCompletion from '@/components/BarChartCompletion/BarChartCompletion'
+import BarChartCompletion from '@/components/data-display/BarChartCompletion/BarChartCompletion'
 
 const Page = async () => {
     const dateNow = new Date()
@@ -100,16 +98,10 @@ const Page = async () => {
                     </div>
                 </section>
                 <section className="flex gap-6">
-                    {/* <div className="flex w-fit flex-col gap-2 rounded bg-base-100 p-6 shadow-xl">
-                        <LiveClock />
-                        <p className="text-nowrap">
-                            {getFullDateFromISODateTimeLocale(dateNow)}
-                        </p>
-                    </div> */}
                     <BarChartCompletion datasets={datasets} />
                 </section>
             </main>
-            <aside className="flex flex-col justify-between rounded-xl">
+            <aside className="flex flex-col justify-start rounded-xl">
                 <Calendar dateNow={dateNow} nearestTaskDB={nearestTaskDB} />
             </aside>
         </div>

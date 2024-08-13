@@ -1,8 +1,8 @@
 'use client'
 
 import useCheckTask from '@/hooks/task/useCheckTask'
-import DeleteTaskButton from '../taskButtons/DeleteTaskButton'
-import EditTaskButton from '../taskButtons/EditTaskButton'
+import DeleteTaskButton from '../buttons/taskButtons/DeleteTaskButton'
+import EditTaskButton from '../buttons/taskButtons/EditTaskButton'
 import {
     getDateFromISODateTimeLocale,
     getTimeFromISODateTimeLocale,

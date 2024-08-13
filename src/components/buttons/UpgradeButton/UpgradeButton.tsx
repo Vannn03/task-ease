@@ -3,7 +3,11 @@
 import axiosInstance from '@/utils/axiosInstance'
 import { MouseEvent, useEffect } from 'react'
 
-const UpgradeButton = (userId?: string) => {
+interface UpgradeButtonProps {
+    userId?: string
+}
+
+const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
     useEffect(() => {
         const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js'
         const clientKey = process.env.NEXT_PUBLIC_CLIENT
@@ -40,8 +44,11 @@ const UpgradeButton = (userId?: string) => {
 
     return (
         <>
-            <button className="font-medium text-primary" onClick={upgrade}>
-                Premium Upgrade
+            <button
+                className="btn btn-ghost font-medium text-primary"
+                onClick={upgrade}
+            >
+                Upgrade to Premium
             </button>
         </>
     )

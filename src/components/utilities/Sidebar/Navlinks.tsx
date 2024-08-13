@@ -10,7 +10,7 @@ import {
     Settings,
 } from 'lucide-react'
 import Link from 'next/link'
-import UpgradeButton from '@/components/UpgradeButton/UpgradeButton'
+import UpgradeButton from '@/components/buttons/UpgradeButton/UpgradeButton'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
@@ -44,7 +44,7 @@ const Navlinks = ({ userImage, userName, version }: NavlinksProps) => {
         {
             menuName: 'Calendar',
             menuIcon: <Calendar />,
-            menuLink: '/users/category',
+            menuLink: '/users/calendar',
         },
         {
             menuName: 'Settings',
@@ -125,18 +125,6 @@ const Navlinks = ({ userImage, userName, version }: NavlinksProps) => {
                         <LogOut />
                     </Link>
                 </div>
-
-                {/* <li>
-                                    <UpgradeButton userId={userDB.userId} />
-                                </li> */}
-                {/* <li>
-                                <Link
-                                    href={'/api/auth/signout'}
-                                    className="font-medium text-error"
-                                >
-                                    <LogOut /> Sign out
-                                </Link>
-                            </li> */}
             </div>
         </aside>
     )

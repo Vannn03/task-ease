@@ -1,7 +1,7 @@
-import BackButton from '@/components/BackButton/BackButton'
-import DragDropTasks from '@/components/DragDropTasks/DragDropTasks'
-import AddTaskButton from '@/components/taskButtons/AddTaskButton'
-import DeleteCompletedTaskButton from '@/components/taskButtons/DeleteCompletedTaskButton'
+import BackButton from '@/components/buttons/BackButton/BackButton'
+import DragDropTasks from '@/components/DragDropTasks'
+import AddTaskButton from '@/components/buttons/taskButtons/AddTaskButton'
+import DeleteCompletedTaskButton from '@/components/buttons/taskButtons/DeleteCompletedTaskButton'
 import prisma from '@/libs/prisma'
 
 interface Params {

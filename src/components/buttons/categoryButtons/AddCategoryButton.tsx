@@ -1,9 +1,11 @@
 'use client'
 
 import { showModal } from '@/utils/modal'
-import SuccessfulToast from '../toasts/SuccessfulToast'
+import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
 import useAddCategory from '@/hooks/category/useAddCategory'
-import { CirclePlus } from 'lucide-react'
+import { Plus } from 'lucide-react'
+import { Fab } from '@/libs/mui'
+import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 
 interface addCategoryProps {
     userId?: string
@@ -16,15 +18,13 @@ const AddCategoryButton = ({ userId, dialogId }: addCategoryProps) => {
 
     return (
         <>
-            <button
-                className="btn card btn-outline btn-primary h-full w-96 cursor-pointer"
+            <Fab
+                color="primary"
+                aria-label="add"
                 onClick={() => showModal(dialogId)}
             >
-                <div className="card-body flex flex-col items-center justify-center">
-                    <CirclePlus className="size-16" />
-                    <h1 className="card-title">Add New</h1>
-                </div>
-            </button>
+                <Plus />
+            </Fab>
             <dialog
                 id={dialogId}
                 className="modal modal-bottom sm:modal-middle"
@@ -40,16 +40,14 @@ const AddCategoryButton = ({ userId, dialogId }: addCategoryProps) => {
                     />
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">
-                            <button className="btn">Cancel</button>
+                            <button className="btn btn-ghost text-error">
+                                Cancel
+                            </button>
                             <button
-                                className={`${categoryName === '' ? 'btn-disabled' : 'btn-primary'} btn ml-4`}
+                                className={`${categoryName === '' ? 'btn-disabled' : 'btn-info'} btn ml-4`}
                                 onClick={(e) => handleAddButton(e, dialogId)}
                             >
-                                {loading ? (
-                                    <span className="loading loading-spinner"></span>
-                                ) : (
-                                    <>Create</>
-                                )}
+                                {loading ? <ButtonLoader /> : <>Create</>}
                             </button>
                         </form>
                     </div>

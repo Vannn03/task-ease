@@ -1,11 +1,13 @@
 import ProfilePictureInput from '@/components/FileInput'
 import ThemeController from '@/components/ThemeController/ThemeController'
+import UpgradeButton from '@/components/buttons/UpgradeButton/UpgradeButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
 
 interface SettingsDataProps {
     title: string
-    description: any
+    description: string
+    action: any
 }
 
 const Page = async () => {
@@ -17,40 +19,40 @@ const Page = async () => {
 
     const settingsData: SettingsDataProps[] = [
         {
-            title: 'Username',
-            description: userDB?.userName,
-        },
-        {
-            title: 'Email',
-            description: userDB?.email,
+            title: 'User profile',
+            description: 'Update your profile.',
+            action: (
+                <ProfilePictureInput
+                    userId={userDB?.userId}
+                    userName={userDB?.userName}
+                    email={userDB?.email as string}
+                />
+            ),
         },
         {
             title: 'Version',
-            description: userDB?.version,
+            description: 'Upgrade your version for additional features.',
+            action: <UpgradeButton userId={userDB?.userId} />,
         },
         {
-            title: 'Themes',
-            description: <ThemeController />,
+            title: 'Interface themes',
+            description: 'Select or customize your UI theme.',
+            action: <ThemeController />,
         },
     ]
 
     return (
-        <div className="mx-auto w-[800px]">
-            <div className="flex flex-col items-center justify-center gap-2 py-4">
-                <ProfilePictureInput userId={userDB?.userId} />
-            </div>
-            <div className="rounded-xl bg-base-200 p-4">
-                {settingsData.map((data, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center justify-between py-2"
-                    >
+        <main className="mx-auto w-[50vw] p-8">
+            {settingsData.map((data, index) => (
+                <section key={index} className="flex justify-between py-4">
+                    <div>
                         <h1 className="font-medium">{data.title}</h1>
-                        <div>{data.description}</div>
+                        <p className="opacity-50">{data.description}</p>
                     </div>
-                ))}
-            </div>
-        </div>
+                    <div>{data.action}</div>
+                </section>
+            ))}
+        </main>
     )
 }
 

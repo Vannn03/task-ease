@@ -1,6 +1,6 @@
-import AddCategoryButton from '@/components/categoryButtons/AddCategoryButton'
-import DeleteCategoryButton from '@/components/categoryButtons/DeleteCategoryButton'
-import EditCategoryButton from '@/components/categoryButtons/EditCategoryButton'
+import AddCategoryButton from '@/components/buttons/categoryButtons/AddCategoryButton'
+import DeleteCategoryButton from '@/components/buttons/categoryButtons/DeleteCategoryButton'
+import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
 import { ArrowRight, Settings2 } from 'lucide-react'
@@ -69,11 +69,12 @@ const Page = async () => {
                                 </div>
                                 <div className="card-actions mt-4 items-end justify-between">
                                     <div
-                                        className="radial-progress text-accent"
+                                        className="radial-progress bg-base-200 text-success"
                                         style={
                                             {
                                                 '--value':
                                                     completedTaskPercentage,
+                                                '--thickness': '.5rem',
                                             } as CSSProperties
                                         }
                                         role="progressbar"
@@ -82,7 +83,7 @@ const Page = async () => {
                                     </div>
                                     <Link
                                         href={`category/${data.categoryId}`}
-                                        className="btn btn-outline"
+                                        className="btn"
                                     >
                                         View Tasks
                                     </Link>
@@ -91,7 +92,8 @@ const Page = async () => {
                         </div>
                     )
                 })}
-
+            </div>
+            <div className="fixed bottom-12 right-12">
                 <AddCategoryButton
                     userId={userDB?.userId}
                     dialogId={`addCategoryModal-${userDB?.userId}`}

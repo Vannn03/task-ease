@@ -8,8 +8,9 @@ import { DateCalendar } from '@/libs/mui'
 import { Task } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useState, useEffect } from 'react'
-import { Clock } from 'lucide-react'
-import LiveClock from '../LiveClock/LiveClock'
+import { CalendarClock, Clock } from 'lucide-react'
+import LiveClock from '../../LiveClock/LiveClock'
+import DeleteTaskButton from '../../buttons/taskButtons/DeleteTaskButton'
 
 interface CalendarProps {
     dateNow: Date
@@ -37,16 +38,15 @@ const Calendar = ({ dateNow, nearestTaskDB }: CalendarProps) => {
     }
 
     const getDeadlineColor = (deadline: Date) => {
-        const now = dayjs()
         const taskTime = dayjs(deadline)
-        const diffInMinutes = taskTime.diff(now, 'minute')
+        const diffInMinutes = taskTime.diff(dateNow, 'minute')
 
         if (diffInMinutes < 0) {
-            return 'border-error text-error' // Deadline has passed
+            return 'border-error text-error'
         } else if (diffInMinutes <= 60) {
-            return 'border-warning text-warning' // Deadline is near (within the next hour)
+            return 'border-warning text-warning'
         } else {
-            return 'border-info text-info' // Default color
+            return 'border-info text-info'
         }
     }
 
@@ -58,34 +58,47 @@ const Calendar = ({ dateNow, nearestTaskDB }: CalendarProps) => {
                 className="glass rounded-lg"
             />
             <div className="mt-4 flex flex-col gap-4">
-                <p>
-                    Current time: <LiveClock />
-                </p>
+                <div className="flex justify-between">
+                    <p>Today&apos;s Task</p>
+                    <span className="flex items-center gap-2">
+                        <LiveClock />
+                        <Clock className="size-4" />
+                    </span>
+                </div>
                 {everyDayTaskDB
                     .map((data: Task) => (
                         <>
                             <div
                                 key={data.taskId}
-                                className={`flex gap-2 rounded-lg border p-4 ${getDeadlineColor(
+                                className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineColor(
                                     data.deadline
                                 )}`}
                             >
-                                <Clock className="mt-[2px] size-4" />
-                                <span className="flex flex-col">
-                                    <p className="text-sm font-medium">
-                                        {getTimeFromISODateTimeLocale(
-                                            data.deadline
-                                        )}
-                                    </p>
-                                    <p className="text-sm text-base-content">
-                                        {data.taskDescription}
-                                    </p>
+                                <span className="flex gap-2">
+                                    <CalendarClock className="mt-[2px] size-4" />
+                                    <span className="flex flex-col">
+                                        <p className="text-sm font-medium">
+                                            {getTimeFromISODateTimeLocale(
+                                                data.deadline
+                                            )}
+                                        </p>
+                                        <p className="text-sm text-base-content">
+                                            {data.taskDescription}
+                                        </p>
+                                    </span>
                                 </span>
+                                <DeleteTaskButton
+                                    taskId={data.taskId}
+                                    taskDescription={data.taskDescription}
+                                    dialogId={`deleteTaskModal-${data.taskId}`}
+                                />
                             </div>
                         </>
                     ))
                     .slice(0, 5)}
-                <button className="btn">View more</button>
+                {everyDayTaskDB.length != 0 && (
+                    <button className="btn">View more</button>
+                )}
             </div>
         </>
     )

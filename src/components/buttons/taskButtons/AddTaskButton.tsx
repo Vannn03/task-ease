@@ -1,7 +1,8 @@
 'use client'
 
 import useAddTask from '@/hooks/task/useAddTask'
-import SuccessfulToast from '../toasts/SuccessfulToast'
+import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
+import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 
 interface AddTaskProps {
     categoryId?: string
@@ -47,11 +48,7 @@ const AddTaskButton = ({ categoryId }: AddTaskProps) => {
                 className={`btn btn-wide ${taskDescription == '' ? 'btn-disabled' : 'btn-outline btn-info'}`}
                 onClick={(e) => handleAddButton(e)}
             >
-                {loading ? (
-                    <span className="loading loading-spinner"></span>
-                ) : (
-                    <>Create New Task</>
-                )}
+                {loading ? <ButtonLoader /> : <>Create New Task</>}
             </button>
 
             <SuccessfulToast
