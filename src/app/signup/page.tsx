@@ -3,6 +3,7 @@
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import { signUpSchema } from '@/libs/zod'
 import axiosInstance from '@/utils/axiosInstance'
+import { Alert } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -94,7 +95,7 @@ const Page = () => {
             <form
                 onSubmit={handleAddButton}
                 noValidate
-                className="flex flex-col gap-1"
+                className="flex flex-col gap-2"
             >
                 <label className="form-control w-full max-w-xs">
                     <input
@@ -103,33 +104,28 @@ const Page = () => {
                         className={`input input-bordered ${errors.userName ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
                         onChange={handleInputChange(setUserName)}
                     />
-                    <div className="label">
-                        {errors.userName && (
+                    {errors.userName && (
+                        <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.userName}
                             </span>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <input
                         type="email"
                         placeholder="Email"
-                        className={`input input-bordered ${errors.email || errors.emailTaken ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
+                        className={`input input-bordered ${errors.email ? 'input-error' : 'input-bordered'} ${errors.emailTaken ? 'input-warning' : 'input-bordered'} w-full max-w-xs`}
                         onChange={handleInputChange(setEmail)}
                     />
-                    <div className="label">
-                        {errors.email && !errors.emailTaken && (
+                    {errors.email && !errors.emailTaken && (
+                        <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.email}
                             </span>
-                        )}
-                        {errors.emailTaken && (
-                            <span className="label-text-alt text-error">
-                                Email is already taken!
-                            </span>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </label>
                 <label className="form-control w-full max-w-xs">
                     <input
@@ -138,14 +134,21 @@ const Page = () => {
                         className={`input input-bordered ${errors.password ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
                         onChange={handleInputChange(setPassword)}
                     />
-                    <div className="label">
-                        {errors.password && (
+                    {errors.password && (
+                        <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.password}
                             </span>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </label>
+                {errors.emailTaken && (
+                    <div className="block">
+                        <Alert severity="warning">
+                            Email is already taken!
+                        </Alert>
+                    </div>
+                )}
                 <button type="submit" className="btn btn-primary mt-2">
                     {loading ? <ButtonLoader /> : <>Sign Up</>}
                 </button>

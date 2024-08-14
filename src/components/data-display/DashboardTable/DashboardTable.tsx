@@ -5,11 +5,11 @@ import {
 import Link from 'next/link'
 
 const DashboardTable = ({ taskDB }: any) => {
-    const limitedTask = taskDB.slice(0, 6)
+    const limitedTask = taskDB.slice(0, 5)
 
     return (
         <div className="overflow-x-auto">
-            <table className="table">
+            <table className="table table-zebra">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -22,7 +22,7 @@ const DashboardTable = ({ taskDB }: any) => {
                     {limitedTask.length == 0 ? (
                         <tr>
                             <td colSpan={4} className="text-center">
-                                No task found
+                                No task to display.
                             </td>
                         </tr>
                     ) : (
@@ -35,7 +35,7 @@ const DashboardTable = ({ taskDB }: any) => {
                                 </td>
                                 <td>{data.taskDescription}</td>
                                 <td className="link-hover link">
-                                    <Link href={`/category/${data.categoryId}`}>
+                                    <Link href={`category/${data.categoryId}`}>
                                         {data.category.categoryName}
                                     </Link>
                                 </td>

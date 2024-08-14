@@ -52,50 +52,49 @@ const Calendar = ({ dateNow, nearestTaskDB }: CalendarProps) => {
 
     return (
         <>
-            <DateCalendar
-                value={dayjs(value)}
-                onChange={handleDateChange}
-                className="glass rounded-lg"
-            />
-            <div className="mt-4 flex flex-col gap-4">
-                <div className="flex justify-between">
-                    <p>Today&apos;s Task</p>
-                    <span className="flex items-center gap-2">
-                        <LiveClock />
-                        <Clock className="size-4" />
-                    </span>
+            <DateCalendar value={dayjs(value)} onChange={handleDateChange} />
+            <div className="flex flex-col gap-4 border-t pt-4">
+                <div className="flex flex-col items-center justify-center gap-2">
+                    <Clock className="size-6" />
+                    <LiveClock />
                 </div>
-                {everyDayTaskDB
-                    .map((data: Task) => (
-                        <>
-                            <div
-                                key={data.taskId}
-                                className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineColor(
-                                    data.deadline
-                                )}`}
-                            >
-                                <span className="flex gap-2">
-                                    <CalendarClock className="mt-[2px] size-4" />
-                                    <span className="flex flex-col">
-                                        <p className="text-sm font-medium">
-                                            {getTimeFromISODateTimeLocale(
-                                                data.deadline
-                                            )}
-                                        </p>
-                                        <p className="text-sm text-base-content">
-                                            {data.taskDescription}
-                                        </p>
+                {everyDayTaskDB.length == 0 ? (
+                    <p className="text-center font-medium opacity-35">
+                        No task to display.
+                    </p>
+                ) : (
+                    everyDayTaskDB
+                        .map((data: Task) => (
+                            <>
+                                <div
+                                    key={data.taskId}
+                                    className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineColor(
+                                        data.deadline
+                                    )}`}
+                                >
+                                    <span className="flex gap-2">
+                                        <CalendarClock className="mt-[2px] size-4" />
+                                        <span className="flex flex-col">
+                                            <p className="text-sm font-medium">
+                                                {getTimeFromISODateTimeLocale(
+                                                    data.deadline
+                                                )}
+                                            </p>
+                                            <p className="text-sm text-base-content">
+                                                {data.taskDescription}
+                                            </p>
+                                        </span>
                                     </span>
-                                </span>
-                                <DeleteTaskButton
-                                    taskId={data.taskId}
-                                    taskDescription={data.taskDescription}
-                                    dialogId={`deleteTaskModal-${data.taskId}`}
-                                />
-                            </div>
-                        </>
-                    ))
-                    .slice(0, 5)}
+                                    <DeleteTaskButton
+                                        taskId={data.taskId}
+                                        taskDescription={data.taskDescription}
+                                        dialogId={`deleteTaskModal-${data.taskId}`}
+                                    />
+                                </div>
+                            </>
+                        ))
+                        .slice(0, 3)
+                )}
                 {everyDayTaskDB.length != 0 && (
                     <button className="btn">View more</button>
                 )}

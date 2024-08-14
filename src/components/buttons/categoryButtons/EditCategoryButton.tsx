@@ -27,7 +27,7 @@ const EditCategoryButton = ({
     return (
         <>
             <a
-                className="btn btn-ghost text-warning"
+                className="btn btn-ghost btn-sm text-warning"
                 onClick={() => showModal(dialogId)}
             >
                 Edit

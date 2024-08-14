@@ -3,7 +3,7 @@ import DeleteCategoryButton from '@/components/buttons/categoryButtons/DeleteCat
 import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
-import { ArrowRight, Settings2 } from 'lucide-react'
+import { Settings2 } from 'lucide-react'
 import Link from 'next/link'
 import { CSSProperties } from 'react'
 
@@ -21,8 +21,8 @@ const Page = async () => {
     })
 
     return (
-        <div className="w-full p-8">
-            <div className="grid grid-cols-4 gap-12">
+        <div className="w-full p-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {categoryDB.map((data) => {
                     const completedTasks = data.tasks.filter(
                         (task) => task.status === 'Completed'
@@ -34,7 +34,7 @@ const Page = async () => {
                     return (
                         <div
                             key={data.categoryId}
-                            className="card w-96 bg-base-100 shadow-md transition-all hover:-translate-y-2 hover:shadow-xl"
+                            className="card w-full bg-base-100 transition-all hover:-translate-y-2 hover:shadow-xl"
                         >
                             <div className="card-body">
                                 <div className="flex items-center justify-between">
@@ -52,7 +52,7 @@ const Page = async () => {
                                         </div>
                                         <ul
                                             tabIndex={0}
-                                            className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+                                            className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow-xl"
                                         >
                                             <EditCategoryButton
                                                 categoryId={data.categoryId}

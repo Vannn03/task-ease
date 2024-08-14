@@ -3,6 +3,7 @@ import DashboardTable from '@/components/data-display/DashboardTable/DashboardTa
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
 import BarChartCompletion from '@/components/data-display/BarChartCompletion/BarChartCompletion'
+import { CalendarRange, ListPlus, SquareKanban } from 'lucide-react'
 
 const Page = async () => {
     const dateNow = new Date()
@@ -68,40 +69,35 @@ const Page = async () => {
     )
 
     return (
-        <div className="z-40 flex h-dvh w-full gap-6 p-8">
-            <main className="flex w-full flex-col justify-between gap-6">
-                <section
-                    role="tablist"
-                    className="tabs tabs-bordered relative bg-base-100"
-                >
-                    <input
-                        type="radio"
-                        name="my_tabs_1"
-                        role="tab"
-                        className="tab"
-                        aria-label="Nearest"
-                        defaultChecked
-                    />
-                    <div role="tabpanel" className="tab-content p-2">
-                        <DashboardTable taskDB={nearestTaskDB} />
+        <div className="z-40 flex w-full flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
+            <main className="flex w-full flex-col gap-4 sm:gap-6">
+                <section className="relative flex flex-col gap-4 rounded-2xl bg-base-100 p-4">
+                    <div className="flex items-center gap-2">
+                        <ListPlus className="size-7" />
+                        <h1 className="text-xl font-medium">Newest Task</h1>
                     </div>
-
-                    <input
-                        type="radio"
-                        name="my_tabs_1"
-                        role="tab"
-                        className="tab"
-                        aria-label="Latest"
-                    />
-                    <div role="tabpanel" className="tab-content p-2">
-                        <DashboardTable taskDB={latestTaskDB} />
-                    </div>
+                    <DashboardTable taskDB={latestTaskDB} />
                 </section>
-                <section className="flex gap-6">
+                <section className="rounded-2xl bg-base-100 p-4">
+                    <div className="flex items-center gap-2">
+                        <SquareKanban className="size-7" />
+                        <h1 className="text-xl font-medium">
+                            Category Overview
+                        </h1>
+                    </div>
                     <BarChartCompletion datasets={datasets} />
                 </section>
             </main>
-            <aside className="flex flex-col justify-start rounded-xl">
+            <aside className="relative flex flex-col justify-start rounded-2xl bg-base-100 p-4">
+                <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                        <CalendarRange className="size-7" />
+                        <h1 className="text-xl font-medium">Calendar</h1>
+                    </span>
+                    <div className="flex xl:hidden">
+                        <button className="btn btn-sm">View more</button>
+                    </div>
+                </div>
                 <Calendar dateNow={dateNow} nearestTaskDB={nearestTaskDB} />
             </aside>
         </div>

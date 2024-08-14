@@ -20,7 +20,7 @@ const DeleteCategoryButton = ({
     return (
         <>
             <button
-                className="btn btn-ghost text-error"
+                className="btn btn-ghost btn-sm text-error"
                 onClick={() => showModal(dialogId)}
             >
                 Delete

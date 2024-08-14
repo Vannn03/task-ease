@@ -28,26 +28,23 @@ const Page = async ({ params }: PageProps) => {
     })
 
     return (
-        <div className="flex w-full flex-col gap-6 p-8">
-            <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-col gap-6 p-6">
+            <div className="flex items-center gap-4">
                 <BackButton />
                 <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-3xl font-semibold">
                         {categoryDB?.categoryName}
                     </h1>
-                    <DeleteCompletedTaskButton
+                    {/* <DeleteCompletedTaskButton
                         categoryId={categoryDB?.categoryId}
                         dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
-                    />
+                    /> */}
                 </div>
             </div>
 
             <AddTaskButton categoryId={categoryDB?.categoryId} />
 
-            <div
-                role="tablist"
-                className="tabs tabs-lifted h-fit overflow-y-hidden"
-            >
+            <div role="tablist" className="tabs tabs-lifted">
                 <input
                     type="radio"
                     name="my_tabs_2"
@@ -58,7 +55,7 @@ const Page = async ({ params }: PageProps) => {
                 />
                 <div
                     role="tabpanel"
-                    className="hide-scrollbar tab-content h-full overflow-y-scroll rounded-box border-base-300 bg-base-100 p-6"
+                    className="tab-content rounded-box border-base-300 bg-base-100 p-6"
                 >
                     {taskDB.length == 0 ? (
                         <p>No task found</p>

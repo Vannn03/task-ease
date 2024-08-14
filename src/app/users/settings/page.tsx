@@ -3,11 +3,12 @@ import ThemeController from '@/components/ThemeController/ThemeController'
 import UpgradeButton from '@/components/buttons/UpgradeButton/UpgradeButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
+import { ReactElement } from 'react'
 
 interface SettingsDataProps {
-    title: string
+    title: string | ReactElement
     description: string
-    action: any
+    action: ReactElement
 }
 
 const Page = async () => {
@@ -30,8 +31,15 @@ const Page = async () => {
             ),
         },
         {
-            title: 'Version',
-            description: 'Upgrade your version for additional features.',
+            title: (
+                <>
+                    <p>Version</p>
+                    <span className="badge badge-neutral text-xs">
+                        {userDB?.version}
+                    </span>
+                </>
+            ),
+            description: 'Upgrade your account for more features.',
             action: <UpgradeButton userId={userDB?.userId} />,
         },
         {
@@ -42,14 +50,20 @@ const Page = async () => {
     ]
 
     return (
-        <main className="mx-auto w-[50vw] p-8">
+        <main className="mx-auto w-full p-6 lg:w-[75dvw] 2xl:w-[50dvw]">
+            <hr />
             {settingsData.map((data, index) => (
-                <section key={index} className="flex justify-between py-4">
+                <section
+                    key={index}
+                    className="flex flex-col justify-between gap-4 border-t py-8 md:flex-row"
+                >
                     <div>
-                        <h1 className="font-medium">{data.title}</h1>
-                        <p className="opacity-50">{data.description}</p>
+                        <h1 className="flex items-center gap-2 font-medium">
+                            {data.title}
+                        </h1>
+                        <p className="text-sm opacity-75">{data.description}</p>
                     </div>
-                    <div>{data.action}</div>
+                    {data.action}
                 </section>
             ))}
         </main>

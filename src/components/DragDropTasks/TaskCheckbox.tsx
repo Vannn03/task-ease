@@ -43,7 +43,7 @@ const TaskCheckbox = ({
                     <p className={`${isChecked && 'line-through'}`}>
                         {taskDescription}
                     </p>
-                    <p className="text-sm">
+                    <p className="text-sm font-medium opacity-75">
                         {getDateFromISODateTimeLocale(deadline)} |{' '}
                         {getTimeFromISODateTimeLocale(deadline)}
                     </p>

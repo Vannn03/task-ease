@@ -1,17 +1,17 @@
 'use client'
 
-import { CircleArrowLeft } from 'lucide-react'
+import { ChevronLeft, CircleArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 const BackButton = () => {
     const router = useRouter()
     return (
-        <div
-            className="flex w-fit cursor-pointer items-center gap-2"
+        <button
+            className="btn btn-square btn-outline"
             onClick={() => router.back()}
         >
-            <CircleArrowLeft /> Go Back
-        </div>
+            <ChevronLeft />
+        </button>
     )
 }
 

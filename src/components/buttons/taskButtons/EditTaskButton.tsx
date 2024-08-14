@@ -19,9 +19,13 @@ const EditTaskButton = ({
 }: EditTaskProps) => {
     const {
         newtaskDescription,
+        newTaskDate,
+        newTaskTime,
         toast,
         loading,
         handleInputChange,
+        handleDateChange,
+        handleTimeChange,
         handleEditButton,
     } = useEditTask(taskId)
 
@@ -41,7 +45,20 @@ const EditTaskButton = ({
                 value={newtaskDescription}
                 handleEditButton={handleEditButton}
                 loading={loading}
-            />
+            >
+                <input
+                    type="date"
+                    className="input input-bordered mt-2 w-full"
+                    onChange={handleDateChange}
+                    placeholder={newTaskDate}
+                />
+                <input
+                    type="time"
+                    className="input input-bordered mt-2 w-full"
+                    onChange={handleTimeChange}
+                    placeholder={newTaskTime}
+                />
+            </EditModal>
 
             <SuccessfulToast
                 toast={toast}

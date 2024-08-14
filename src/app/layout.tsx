@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import Sidebar from '@/components/utilities/Sidebar'
 import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LocalizationProvider, AdapterDayjs } from '@/libs/mui'
+import Navbar from '@/components/utilities/Navbar/Navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['300', '400', '500', '600', '700'],
+})
 
 export const metadata: Metadata = {
     title: 'TaskEase',
@@ -29,18 +33,21 @@ export default function RootLayout({
                     sizes="32x32"
                 />
             </head>
-            <body className={inter.className}>
+            <body className={poppins.className}>
                 <ThemeProvider>
                     <ClientThemeWrapper>
-                        <div className="flex h-dvh">
+                        <div className="flex min-h-dvh bg-base-200">
                             <LocalizationProvider
                                 dateAdapter={AdapterDayjs}
                                 adapterLocale="en-gb"
                             >
                                 <Sidebar />
-                                <EdgeStoreProvider>
-                                    {children}
-                                </EdgeStoreProvider>
+                                <div className="w-full">
+                                    <Navbar />
+                                    <EdgeStoreProvider>
+                                        {children}
+                                    </EdgeStoreProvider>
+                                </div>
                             </LocalizationProvider>
                         </div>
                     </ClientThemeWrapper>

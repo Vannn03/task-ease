@@ -18,11 +18,11 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-    const { taskId, taskDescription } = await request.json()
+    const { taskId, taskDescription, deadline } = await request.json()
 
     const updateTask = await prisma.task.update({
         where: {taskId: taskId},
-        data: {taskDescription: taskDescription}
+        data: {taskDescription: taskDescription, deadline: deadline}
     })
 
     if (!updateTask)
