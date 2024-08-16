@@ -19,8 +19,8 @@ const Page = async () => {
     })
 
     return (
-        <div className="w-full p-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <>
+            <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {categoryDB.map((data) => {
                     const completedTasks = data.tasks.filter(
                         (task) => task.status === 'Completed'
@@ -97,7 +97,7 @@ const Page = async () => {
                     dialogId={`addCategoryModal-${loggedUser?.userId}`}
                 />
             </div>
-        </div>
+        </>
     )
 }
 

@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './globals.css'
-import Sidebar from '@/components/utilities/Sidebar'
 import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LocalizationProvider, AdapterDayjs } from '@/libs/mui'
-import Navbar from '@/components/utilities/Navbar'
+import NavSideBar from '@/components/utilities/NavSideBar'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -36,14 +35,13 @@ export default function RootLayout({
             <body className={poppins.className}>
                 <ThemeProvider>
                     <ClientThemeWrapper>
-                        <div className="flex min-h-dvh bg-base-200">
+                        <div className="">
                             <LocalizationProvider
                                 dateAdapter={AdapterDayjs}
                                 adapterLocale="en-gb"
                             >
-                                <Sidebar />
-                                <div className="w-full">
-                                    <Navbar />
+                                <NavSideBar />
+                                <div className="min-h-[calc(100dvh-56px)] w-full bg-base-200 sm:min-h-[calc(100dvh-72px)]">
                                     <EdgeStoreProvider>
                                         {children}
                                     </EdgeStoreProvider>

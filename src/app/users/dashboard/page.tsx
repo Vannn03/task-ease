@@ -52,7 +52,7 @@ const Page = async () => {
     )
 
     return (
-        <div className="z-40 flex w-full flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
+        <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
             <main className="flex w-full flex-col gap-4 sm:gap-6">
                 <section className="relative flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
                     <div className="flex items-center gap-2">

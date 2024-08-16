@@ -28,7 +28,7 @@ const Page = async ({ params }: PageProps) => {
     })
 
     return (
-        <div className="flex w-full flex-col gap-6 p-6">
+        <div className="flex flex-col gap-6 p-6">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <BackButton />

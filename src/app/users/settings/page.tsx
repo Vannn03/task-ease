@@ -46,7 +46,7 @@ const Page = async () => {
     ]
 
     return (
-        <main className="mx-auto w-full p-6 lg:w-[75dvw] 2xl:w-[50dvw]">
+        <main className="mx-auto flex w-full flex-col p-6 lg:w-[75dvw] 2xl:w-[50dvw]">
             <hr />
             {settingsData.map((data, index) => (
                 <section
