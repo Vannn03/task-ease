@@ -3,7 +3,7 @@
 import useDeleteTask from '@/hooks/task/useDeleteTask'
 import { showModal } from '@/utils/modal'
 import { Trash2 } from 'lucide-react'
-import DeleteModal from '../../utilities/Modals/DeleteModal'
+import DeleteModal from '@/components/utilities/Modals/DeleteModal'
 
 interface DeletedTaskProps {
     taskId: string

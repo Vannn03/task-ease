@@ -11,11 +11,11 @@ import {
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ReactElement, useState } from 'react'
+import { useState } from 'react'
 
 type MenuDataType = {
     menuName: string
-    menuIcon: ReactElement
+    menuIcon: React.ReactElement
     menuLink: string
 }
 

@@ -1,8 +1,7 @@
 'use client'
 
 import { createContext, useEffect, useState, useMemo } from 'react'
-import { createTheme, Theme } from '@mui/material/styles'
-import { PaletteMode } from '@mui/material'
+import { createTheme, Theme, PaletteMode } from '@/libs/mui'
 
 interface ThemeContextType {
     theme: string

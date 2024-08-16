@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronLeft, CircleArrowLeft } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 const BackButton = () => {

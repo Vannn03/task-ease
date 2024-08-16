@@ -1,7 +1,7 @@
 'use client'
 
 import axiosInstance from '@/utils/axiosInstance'
-import { MouseEvent, useEffect } from 'react'
+import { useEffect } from 'react'
 
 interface UpgradeButtonProps {
     userId?: string
@@ -31,7 +31,7 @@ const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
         }
     }, [])
 
-    const upgrade = async (e: MouseEvent<HTMLButtonElement>) => {
+    const upgrade = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
         const response = await axiosInstance.post('/api/token', {

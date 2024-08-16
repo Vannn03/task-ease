@@ -1,21 +1,14 @@
+import dayjs from 'dayjs'
 import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
-import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
-import {
-    getDayFromISODateTimeLocale,
-    getDeadlineColor,
-    getMonthFromISODateTimeLocale,
-    getTimeFromISODateTimeLocale,
-} from '@/utils/datetime'
-import { findLoggedUser } from '@/utils/prisma-utils'
+import { getDeadlineColor, getISODateTimeLocale } from '@/utils/datetime'
+import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { CalendarClock } from 'lucide-react'
 
 const Page = async () => {
-    const dateNow = new Date()
+    const dateNow = dayjs() // Using dayjs for current date
     const next7Days = Array.from({ length: 7 }).map((_, index) => {
-        const date = new Date(dateNow)
-        date.setDate(dateNow.getDate() + index)
-        return date
+        return dateNow.add(index, 'day') // Adding days using dayjs
     })
 
     const user = await authUserSessionServer()
@@ -24,8 +17,8 @@ const Page = async () => {
 
     const tasksPerDay = await Promise.all(
         next7Days.map(async (date) => {
-            const startOfDay = new Date(date.setHours(0, 0, 0, 0))
-            const endOfDay = new Date(date.setHours(23, 59, 59, 999))
+            const startOfDay = date.startOf('day').toDate() // Start of the day using dayjs
+            const endOfDay = date.endOf('day').toDate() // End of the day using dayjs
 
             const taskDB = await prisma.task.findMany({
                 where: {
@@ -48,10 +41,10 @@ const Page = async () => {
                         <div className="stats shadow">
                             <div className="stat text-center">
                                 <div className="stat-value">
-                                    {getDayFromISODateTimeLocale(date)}
+                                    {getISODateTimeLocale(date.toDate(), 'D')}
                                 </div>
                                 <div className="stat-title">
-                                    {getMonthFromISODateTimeLocale(date)}
+                                    {getISODateTimeLocale(date.toDate(), 'MMM')}
                                 </div>
                             </div>
                         </div>
@@ -62,7 +55,7 @@ const Page = async () => {
                                     <div key={task.taskId}>
                                         <div
                                             className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineColor(
-                                                dateNow,
+                                                dateNow.toDate(),
                                                 task.deadline
                                             )}`}
                                         >
@@ -70,8 +63,9 @@ const Page = async () => {
                                                 <CalendarClock className="mt-[2px] size-4" />
                                                 <span className="flex flex-col">
                                                     <p className="text-sm font-medium">
-                                                        {getTimeFromISODateTimeLocale(
-                                                            task.deadline
+                                                        {getISODateTimeLocale(
+                                                            task.deadline,
+                                                            'HH:mm'
                                                         )}
                                                     </p>
                                                     <p className="text-sm text-base-content">

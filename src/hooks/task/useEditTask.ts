@@ -2,7 +2,7 @@ import axiosInstance from '@/utils/axiosInstance'
 import { getISODateTime } from '@/utils/datetime'
 import { closeModal } from '@/utils/modal'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 
 const useEditTask = (taskId?: string) => {
     const [newtaskDescription, setNewTaskDescription] = useState('')
@@ -12,7 +12,7 @@ const useEditTask = (taskId?: string) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTaskDescription(e.target.value)
     }
 

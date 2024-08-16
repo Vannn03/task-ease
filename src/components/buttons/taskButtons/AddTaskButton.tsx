@@ -1,7 +1,7 @@
 'use client'
 
 import useAddTask from '@/hooks/task/useAddTask'
-import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 
 interface AddTaskProps {

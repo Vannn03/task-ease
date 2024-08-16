@@ -1,9 +1,7 @@
-import ProfilePictureInput from '@/components/FileInput'
-import ThemeController from '@/components/ThemeController/ThemeController'
-import UpgradeButton from '@/components/buttons/UpgradeButton/UpgradeButton'
-import { authUserSessionServer } from '@/libs/auth-libs'
-import prisma from '@/libs/prisma'
-import { findLoggedUser } from '@/utils/prisma-utils'
+import ProfileUpdate from '@/components/ProfileUpdate'
+import ThemeController from '@/components/ThemeController'
+import UpgradeButton from '@/components/buttons/UpgradeButton'
+import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { ReactElement } from 'react'
 
 interface SettingsDataProps {
@@ -22,10 +20,9 @@ const Page = async () => {
             title: 'User profile',
             description: 'Update your profile.',
             action: (
-                <ProfilePictureInput
+                <ProfileUpdate
                     userId={loggedUser?.userId}
                     userName={loggedUser?.userName}
-                    email={loggedUser?.email as string}
                 />
             ),
         },

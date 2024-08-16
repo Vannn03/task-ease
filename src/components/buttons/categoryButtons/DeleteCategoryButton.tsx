@@ -2,7 +2,7 @@
 
 import useDeleteCategory from '@/hooks/category/useDeleteCategory'
 import { showModal } from '@/utils/modal'
-import DeleteModal from '../../utilities/Modals/DeleteModal'
+import DeleteModal from '@/components/utilities/Modals/DeleteModal'
 
 interface DeleteCategoryProps {
     dialogId: string

@@ -1,9 +1,8 @@
 import AddCategoryButton from '@/components/buttons/categoryButtons/AddCategoryButton'
 import DeleteCategoryButton from '@/components/buttons/categoryButtons/DeleteCategoryButton'
 import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
-import { authUserSessionServer } from '@/libs/auth-libs'
+import { authUserSessionServer, findLoggedUser } from '@/utils/auth-utils'
 import prisma from '@/libs/prisma'
-import { findLoggedUser } from '@/utils/prisma-utils'
 import { Settings2 } from 'lucide-react'
 import Link from 'next/link'
 

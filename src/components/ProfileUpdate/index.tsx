@@ -8,21 +8,16 @@ import axiosInstance from '@/utils/axiosInstance'
 import { updateProfileSchema } from '@/libs/zod'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 
-interface ProfilePictureInputProps {
+interface ProfileUpdateProps {
     userId?: string
     userName?: string
-    email: string
 }
 
 type FormErrors = {
     userNameValidation?: string
 }
 
-const ProfilePictureInput = ({
-    userId,
-    userName,
-    email,
-}: ProfilePictureInputProps) => {
+const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
     const [newUserName, setNewUserName] = useState('')
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState<FormErrors>({})
@@ -122,4 +117,4 @@ const ProfilePictureInput = ({
     )
 }
 
-export default ProfilePictureInput
+export default ProfileUpdate

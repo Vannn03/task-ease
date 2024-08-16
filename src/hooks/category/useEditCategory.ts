@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInstance"
 import { closeModal } from "@/utils/modal"
 import { useRouter } from "next/navigation"
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
 
 const useEditCategory = (categoryId?: string) => {
     const [newCategoryName, setNewCategoryName] = useState('')
@@ -9,7 +9,7 @@ const useEditCategory = (categoryId?: string) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewCategoryName(e.target.value)
     }
 

@@ -1,12 +1,9 @@
 'use client'
 
 import useCheckTask from '@/hooks/task/useCheckTask'
-import DeleteTaskButton from '../buttons/taskButtons/DeleteTaskButton'
-import EditTaskButton from '../buttons/taskButtons/EditTaskButton'
-import {
-    getDateFromISODateTimeLocale,
-    getTimeFromISODateTimeLocale,
-} from '@/utils/datetime'
+import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
+import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
+import { getISODateTimeLocale } from '@/utils/datetime'
 import { GripVertical } from 'lucide-react'
 
 interface TaskCheckboxProps {
@@ -44,8 +41,8 @@ const TaskCheckbox = ({
                         {taskDescription}
                     </p>
                     <p className="text-sm font-medium opacity-75">
-                        {getDateFromISODateTimeLocale(deadline)} |{' '}
-                        {getTimeFromISODateTimeLocale(deadline)}
+                        {getISODateTimeLocale(deadline, 'D MMM')} |{' '}
+                        {getISODateTimeLocale(deadline, 'HH:mm')}
                     </p>
                 </div>
             </div>

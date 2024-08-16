@@ -1,4 +1,4 @@
-import BackButton from '@/components/buttons/BackButton/BackButton'
+import BackButton from '@/components/buttons/BackButton'
 import DragDropTasks from '@/components/DragDropTasks'
 import AddTaskButton from '@/components/buttons/taskButtons/AddTaskButton'
 import DeleteCompletedTaskButton from '@/components/buttons/taskButtons/DeleteCompletedTaskButton'

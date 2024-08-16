@@ -1,6 +1,4 @@
-import { authUserSessionServer } from '@/libs/auth-libs'
-import prisma from '@/libs/prisma'
-import { findLoggedUser } from '@/utils/prisma-utils'
+import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 
 const Navbar = async () => {
     const user = await authUserSessionServer()

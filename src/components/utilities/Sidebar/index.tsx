@@ -1,4 +1,4 @@
-import { authUserSessionServer } from '@/libs/auth-libs'
+import { authUserSessionServer } from '@/utils/auth-utils'
 import Navlinks from './Navlinks'
 
 const Sidebar = async () => {

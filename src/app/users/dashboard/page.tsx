@@ -1,10 +1,9 @@
-import Calendar from '@/components/data-display/Calendar/Calendar'
-import DashboardTable from '@/components/data-display/DashboardTable/DashboardTable'
-import { authUserSessionServer } from '@/libs/auth-libs'
+import Calendar from '@/components/data-display/Calendar'
+import DashboardTable from '@/components/data-display/DashboardTable'
 import prisma from '@/libs/prisma'
-import BarChartCompletion from '@/components/data-display/BarChartCompletion/BarChartCompletion'
+import BarChartCompletion from '@/components/data-display/BarChartCompletion'
 import { CalendarRange, ListTodo, SquareKanban } from 'lucide-react'
-import { findLoggedUser } from '@/utils/prisma-utils'
+import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 
 const Page = async () => {
     const user = await authUserSessionServer()

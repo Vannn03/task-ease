@@ -2,8 +2,8 @@
 
 import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
-import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
-import EditModal from '../../utilities/Modals/EditModal'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
+import EditModal from '@/components/utilities/Modals/EditModal'
 
 interface EditCategoryProps {
     dialogId: string

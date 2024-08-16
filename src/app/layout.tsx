@@ -6,7 +6,7 @@ import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LocalizationProvider, AdapterDayjs } from '@/libs/mui'
-import Navbar from '@/components/utilities/Navbar/Navbar'
+import Navbar from '@/components/utilities/Navbar'
 
 const poppins = Poppins({
     subsets: ['latin'],

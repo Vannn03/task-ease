@@ -1,8 +1,5 @@
 import prisma from '@/libs/prisma'
-import {
-    getDateFromISODateTimeLocale,
-    getTimeFromISODateTimeLocale,
-} from '@/utils/datetime'
+import { getISODateTimeLocale } from '@/utils/datetime'
 import Link from 'next/link'
 
 interface DashboardTableProps {
@@ -48,8 +45,9 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                         limitedTask.map((data: any) => (
                             <tr key={data.taskId}>
                                 <td>
-                                    {getDateFromISODateTimeLocale(
-                                        data.deadline
+                                    {getISODateTimeLocale(
+                                        data.deadline,
+                                        'D MMM'
                                     )}
                                 </td>
                                 <td>{data.taskDescription}</td>
@@ -59,8 +57,9 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                                     </Link>
                                 </td>
                                 <td>
-                                    {getTimeFromISODateTimeLocale(
-                                        data.deadline
+                                    {getISODateTimeLocale(
+                                        data.deadline,
+                                        'HH:mm'
                                     )}
                                 </td>
                             </tr>

@@ -1,7 +1,7 @@
 'use client'
 
 import { showModal } from '@/utils/modal'
-import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import useAddCategory from '@/hooks/category/useAddCategory'
 import { Plus } from 'lucide-react'
 import { Fab } from '@/libs/mui'
