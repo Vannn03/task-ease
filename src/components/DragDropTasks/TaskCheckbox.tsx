@@ -30,7 +30,7 @@ const TaskCheckbox = ({
         <>
             <div className="flex items-center gap-4">
                 <div {...dragHandleProps}>
-                    <GripVertical className="cursor grab" />
+                    <GripVertical className="cursor-grab" />
                 </div>
                 <input
                     type="checkbox"

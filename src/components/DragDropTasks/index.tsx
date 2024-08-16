@@ -23,7 +23,7 @@ const DragDropTasks = ({ taskDB }: any) => {
 
         updateTasks(items)
 
-        await axiosInstance.put('/api/task/updateOrder', { tasks: items })
+        await axiosInstance.put('/api/task/update-order', { tasks: items })
         router.refresh()
     }
 
@@ -44,7 +44,7 @@ const DragDropTasks = ({ taskDB }: any) => {
                             >
                                 {(provided: any) => (
                                     <div
-                                        className="flex items-center justify-between rounded-lg border-primary-content p-2 shadow"
+                                        className="flex items-center justify-between rounded bg-base-100 px-4 py-3"
                                         {...provided.draggableProps}
                                         ref={provided.innerRef}
                                     >

@@ -3,6 +3,7 @@ import ThemeController from '@/components/ThemeController/ThemeController'
 import UpgradeButton from '@/components/buttons/UpgradeButton/UpgradeButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
+import { findLoggedUser } from '@/utils/prisma-utils'
 import { ReactElement } from 'react'
 
 interface SettingsDataProps {
@@ -14,9 +15,7 @@ interface SettingsDataProps {
 const Page = async () => {
     const user = await authUserSessionServer()
 
-    const userDB = await prisma.user.findFirst({
-        where: { email: user?.email as string },
-    })
+    const loggedUser = await findLoggedUser(user)
 
     const settingsData: SettingsDataProps[] = [
         {
@@ -24,9 +23,9 @@ const Page = async () => {
             description: 'Update your profile.',
             action: (
                 <ProfilePictureInput
-                    userId={userDB?.userId}
-                    userName={userDB?.userName}
-                    email={userDB?.email as string}
+                    userId={loggedUser?.userId}
+                    userName={loggedUser?.userName}
+                    email={loggedUser?.email as string}
                 />
             ),
         },
@@ -35,12 +34,12 @@ const Page = async () => {
                 <>
                     <p>Version</p>
                     <span className="badge badge-neutral text-xs">
-                        {userDB?.version}
+                        {loggedUser?.version}
                     </span>
                 </>
             ),
             description: 'Upgrade your account for more features.',
-            action: <UpgradeButton userId={userDB?.userId} />,
+            action: <UpgradeButton userId={loggedUser?.userId} />,
         },
         {
             title: 'Interface themes',

@@ -6,18 +6,20 @@ import { showModal } from '@/utils/modal'
 interface DeleteCompletedTaskProps {
     categoryId?: string
     dialogId: string
+    finishedTaskLength: number
 }
 
 const DeleteCompletedTaskButton = ({
     categoryId,
     dialogId,
+    finishedTaskLength,
 }: DeleteCompletedTaskProps) => {
     const { loading, handleDeleteButton } = useDeleteCompletedTask(categoryId)
 
     return (
         <>
             <button
-                className="btn btn-outline btn-error"
+                className={`btn ${finishedTaskLength == 0 ? 'btn-disabled' : 'btn-error'}`}
                 onClick={() => showModal(dialogId)}
             >
                 Delete Completed Task

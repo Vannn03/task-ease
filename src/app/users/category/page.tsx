@@ -3,18 +3,17 @@ import DeleteCategoryButton from '@/components/buttons/categoryButtons/DeleteCat
 import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
+import { findLoggedUser } from '@/utils/prisma-utils'
 import { Settings2 } from 'lucide-react'
 import Link from 'next/link'
-import { CSSProperties } from 'react'
 
 const Page = async () => {
     const user = await authUserSessionServer()
-    const userDB = await prisma.user.findFirst({
-        where: { email: user?.email as string },
-    })
+
+    const loggedUser = await findLoggedUser(user)
 
     const categoryDB = await prisma.category.findMany({
-        where: { userId: userDB?.userId },
+        where: { userId: loggedUser?.userId },
         include: {
             tasks: true,
         },
@@ -75,7 +74,7 @@ const Page = async () => {
                                                 '--value':
                                                     completedTaskPercentage,
                                                 '--thickness': '.5rem',
-                                            } as CSSProperties
+                                            } as React.CSSProperties
                                         }
                                         role="progressbar"
                                     >
@@ -95,8 +94,8 @@ const Page = async () => {
             </div>
             <div className="fixed bottom-12 right-12">
                 <AddCategoryButton
-                    userId={userDB?.userId}
-                    dialogId={`addCategoryModal-${userDB?.userId}`}
+                    userId={loggedUser?.userId}
+                    dialogId={`addCategoryModal-${loggedUser?.userId}`}
                 />
             </div>
         </div>

@@ -15,7 +15,7 @@ const useDeleteCompletedTask = (categoryId?: string) => {
 
         setLoading(true)
 
-        const response = await axiosInstance.delete('/api/task/checkbox', {
+        const response = await axiosInstance.delete('/api/task/check-box', {
             data: { categoryId, status: "Completed" },
         })
 

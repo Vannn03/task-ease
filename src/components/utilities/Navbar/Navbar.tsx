@@ -1,16 +1,15 @@
 import { authUserSessionServer } from '@/libs/auth-libs'
 import prisma from '@/libs/prisma'
+import { findLoggedUser } from '@/utils/prisma-utils'
 
 const Navbar = async () => {
     const user = await authUserSessionServer()
 
     if (!user) return null
 
-    const userDB = await prisma.user.findFirst({
-        where: { email: user?.email as string },
-    })
+    const loggedUser = await findLoggedUser(user)
 
-    const getCharName = userDB?.userName
+    const getCharName = loggedUser?.userName
         ?.split(' ')
         .map((word) => word.slice(0, 1))
         .join('')
@@ -33,7 +32,7 @@ const Navbar = async () => {
                 </svg>
             </label>
 
-            {userDB?.userImage == null ? (
+            {loggedUser?.userImage == null ? (
                 <div className="avatar placeholder">
                     <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">
                         <span>{getCharName}</span>
@@ -42,7 +41,7 @@ const Navbar = async () => {
             ) : (
                 <div className="avatar">
                     <div className="w-10 rounded-full sm:w-14">
-                        <img src={userDB.userImage} alt="..." />
+                        <img src={loggedUser.userImage} alt="..." />
                     </div>
                 </div>
             )}

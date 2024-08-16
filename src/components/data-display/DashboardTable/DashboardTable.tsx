@@ -1,11 +1,30 @@
+import prisma from '@/libs/prisma'
 import {
     getDateFromISODateTimeLocale,
     getTimeFromISODateTimeLocale,
 } from '@/utils/datetime'
 import Link from 'next/link'
 
-const DashboardTable = ({ taskDB }: any) => {
-    const limitedTask = taskDB.slice(0, 5)
+interface DashboardTableProps {
+    userId?: string
+}
+
+const DashboardTable = async ({ userId }: DashboardTableProps) => {
+    const latestTaskDB = await prisma.task.findMany({
+        where: {
+            category: {
+                userId: userId,
+            },
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
+        include: {
+            category: true,
+        },
+    })
+
+    const limitedTask = latestTaskDB.slice(0, 5)
 
     return (
         <div className="overflow-x-auto">

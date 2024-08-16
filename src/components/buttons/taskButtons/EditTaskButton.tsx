@@ -2,9 +2,9 @@
 
 import useEditTask from '@/hooks/task/useEditTask'
 import { showModal } from '@/utils/modal'
-import SuccessfulToast from '../../utilities/toasts/SuccessfulToast'
-import { Pencil } from 'lucide-react'
-import EditModal from '../../utilities/Modals/EditModal'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
+import { SquarePen } from 'lucide-react'
+import EditModal from '@/components/utilities/Modals/EditModal'
 
 interface EditTaskProps {
     taskId: string
@@ -35,7 +35,7 @@ const EditTaskButton = ({
                 className="btn btn-ghost text-warning"
                 onClick={() => showModal(dialogId)}
             >
-                <Pencil />
+                <SquarePen className="size-5" />
             </button>
             <EditModal
                 dialogId={dialogId}
@@ -46,18 +46,20 @@ const EditTaskButton = ({
                 handleEditButton={handleEditButton}
                 loading={loading}
             >
-                <input
-                    type="date"
-                    className="input input-bordered mt-2 w-full"
-                    onChange={handleDateChange}
-                    placeholder={newTaskDate}
-                />
-                <input
-                    type="time"
-                    className="input input-bordered mt-2 w-full"
-                    onChange={handleTimeChange}
-                    placeholder={newTaskTime}
-                />
+                <div className="flex gap-2">
+                    <input
+                        type="date"
+                        className="input input-bordered mt-2 w-full"
+                        onChange={handleDateChange}
+                        placeholder={newTaskDate}
+                    />
+                    <input
+                        type="time"
+                        className="input input-bordered mt-2 w-full"
+                        onChange={handleTimeChange}
+                        placeholder={newTaskTime}
+                    />
+                </div>
             </EditModal>
 
             <SuccessfulToast

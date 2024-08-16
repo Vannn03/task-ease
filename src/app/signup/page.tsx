@@ -3,7 +3,7 @@
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import { signUpSchema } from '@/libs/zod'
 import axiosInstance from '@/utils/axiosInstance'
-import { Alert } from '@mui/material'
+import { Alert } from '@/libs/mui'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -52,7 +52,7 @@ const Page = () => {
 
         // Check if email is taken
         try {
-            const response = await axiosInstance.post('/api/user/checkEmail', {
+            const response = await axiosInstance.post('/api/user/check-email', {
                 email,
             })
 

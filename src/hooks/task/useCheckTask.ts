@@ -17,7 +17,7 @@ const useCheckTask = ({taskId, status}: UseCheckTaskProps) => {
 
         const newStatus = newCheckedStatus ? 'Completed' : 'Incomplete'
 
-        const response = await axiosInstance.put('/api/task/checkbox', {
+        const response = await axiosInstance.put('/api/task/check-box', {
             taskId,
             status: newStatus,
         })

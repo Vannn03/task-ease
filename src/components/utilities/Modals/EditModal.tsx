@@ -8,7 +8,7 @@ interface EditModalProps {
     value: string
     handleEditButton: any
     loading: boolean
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 const EditModal: React.FC<EditModalProps> = ({
@@ -25,6 +25,7 @@ const EditModal: React.FC<EditModalProps> = ({
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
                 <h3 className="text-lg font-bold">{title}</h3>
+                {children}
                 <input
                     type="text"
                     className="input input-bordered mt-2 w-full"
@@ -32,7 +33,6 @@ const EditModal: React.FC<EditModalProps> = ({
                     placeholder={placeholder}
                     value={value}
                 />
-                {children}
                 <div className="modal-action">
                     <form method="dialog" className="flex items-center">
                         <button className="btn">Cancel</button>

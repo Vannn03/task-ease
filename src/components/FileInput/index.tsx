@@ -34,18 +34,16 @@ const ProfilePictureInput = ({
         setNewUserName(e.target.value)
     }
 
-    const handleSubmitButton = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
         setLoading(true)
 
         // Validate input
         const result = updateProfileSchema.safeParse({ userName: newUserName })
 
         if (!result.success) {
-            const fieldErrors = result.error.format()
             setErrors({
-                userNameValidation: fieldErrors.userName?._errors[0],
+                userNameValidation: result.error.format().userName?._errors[0],
             })
             setLoading(false)
             return
@@ -53,45 +51,27 @@ const ProfilePictureInput = ({
 
         setErrors({})
 
-        if (file) {
-            const res = await edgestore.publicFiles.upload({
-                file,
+        try {
+            let userImage
+            if (file) {
+                const res = await edgestore.publicFiles.upload({ file })
+                userImage = res.url
+            }
+
+            const response = await axiosInstance.put('/api/user', {
+                userId,
+                userName: newUserName,
+                userImage,
             })
 
-            const userImage = res.url
-
-            try {
-                const response = await axiosInstance.put('/api/user', {
-                    userId,
-                    userName: newUserName,
-                    userImage,
-                })
-
-                if (response.status === 200) {
-                    router.refresh()
-                }
-            } catch (error) {
-                console.error('Error updating profile:', error)
-            } finally {
-                setLoading(false)
+            if (response.status === 200) {
+                router.refresh()
             }
-        } else {
-            try {
-                const response = await axiosInstance.put('/api/user', {
-                    userId,
-                    userName: newUserName,
-                })
-
-                if (response.status === 200) {
-                    router.refresh()
-                }
-            } catch (error) {
-                console.error('Error updating profile:', error)
-            } finally {
-                setLoading(false)
-            }
+        } catch (error) {
+            console.error('Error updating profile:', error)
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     return (
@@ -100,19 +80,19 @@ const ProfilePictureInput = ({
                 width={250}
                 height={250}
                 value={file}
-                dropzoneOptions={{
-                    maxSize: 1024 * 1024 * 1, // 1 MB
-                }}
-                onChange={(file) => setFile(file)}
+                dropzoneOptions={{ maxSize: 1024 * 1024 }} // 1 MB
+                onChange={setFile}
             />
 
             <form
-                onSubmit={handleSubmitButton}
+                onSubmit={handleSubmit}
                 noValidate
                 className="flex w-full flex-col gap-2"
             >
                 <label
-                    className={`input input-bordered ${errors.userNameValidation ? 'input-error' : 'input-bordered'} flex items-center gap-2`}
+                    className={`input input-bordered flex items-center gap-2 ${
+                        errors.userNameValidation ? 'input-error' : ''
+                    }`}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +109,13 @@ const ProfilePictureInput = ({
                         onChange={handleInputChange}
                     />
                 </label>
+                {errors.userNameValidation && (
+                    <p className="text-sm text-red-500">
+                        {errors.userNameValidation}
+                    </p>
+                )}
                 <button type="submit" className="btn btn-success mt-2">
-                    {loading ? <ButtonLoader /> : <>Update profile</>}
+                    {loading ? <ButtonLoader /> : 'Update profile'}
                 </button>
             </form>
         </div>
