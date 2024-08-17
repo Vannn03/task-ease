@@ -31,6 +31,7 @@ const DeleteTaskButton = ({
                 dialogId={dialogId}
                 title="Delete task"
                 value={taskDescription}
+                description="task?"
                 handleDeleteButton={handleDeleteButton}
                 loading={loading}
             />

@@ -45,7 +45,7 @@ const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
     return (
         <>
             <button
-                className="btn btn-ghost font-medium text-primary"
+                className="btn btn-disabled btn-ghost font-medium text-primary"
                 onClick={upgrade}
             >
                 Upgrade to Premium

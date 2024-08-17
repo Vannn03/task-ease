@@ -22,25 +22,25 @@ const AddTaskButton = ({ categoryId }: AddTaskProps) => {
     } = useAddTask(categoryId)
 
     return (
-        <div className="flex flex-col items-center gap-4 lg:flex-row lg:flex-wrap">
+        <div className="flex flex-row flex-wrap items-center gap-2 lg:gap-4">
             <input
                 type="date"
                 placeholder="Type here"
-                className="input input-bordered w-full lg:flex-auto lg:basis-1/5"
+                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
                 onChange={handleDateChange}
                 value={taskDate}
             />
             <input
                 type="time"
                 placeholder="Type here"
-                className="input input-bordered w-full lg:flex-auto lg:basis-1/5"
+                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
                 onChange={handleTimeChange}
                 value={taskTime}
             />
             <input
                 type="text"
                 placeholder="Enter your task..."
-                className="input input-bordered w-full lg:flex-auto lg:basis-1/2"
+                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/2"
                 onChange={handleInputChange}
                 value={taskDescription}
             />

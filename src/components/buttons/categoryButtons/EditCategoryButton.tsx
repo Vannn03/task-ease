@@ -22,7 +22,7 @@ const EditCategoryButton = ({
         loading,
         handleInputChange,
         handleEditButton,
-    } = useEditCategory(categoryId)
+    } = useEditCategory({ categoryId, categoryName })
 
     return (
         <>
@@ -34,7 +34,7 @@ const EditCategoryButton = ({
             </a>
             <EditModal
                 dialogId={dialogId}
-                title="Edit category"
+                title="Edit category name"
                 handleInputChange={handleInputChange}
                 placeholder={categoryName}
                 value={newCategoryName}

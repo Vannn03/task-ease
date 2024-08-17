@@ -92,16 +92,24 @@ const Page = () => {
 
     return (
         <div className="flex h-dvh w-full items-center justify-center">
+            <div
+                className="fixed left-1/2 top-8 flex -translate-x-1/2 cursor-pointer items-center gap-2"
+                onClick={() => router.push('/')}
+            >
+                <img src="/logo.svg" alt="..." className="size-8" />
+                <h1 className="text-2xl font-semibold">TaskEase</h1>
+            </div>
+
             <form
                 onSubmit={handleAddButton}
                 noValidate
-                className="flex flex-col gap-2"
+                className="flex w-64 flex-col items-center gap-2"
             >
                 <label className="form-control w-full max-w-xs">
                     <input
                         type="text"
                         placeholder="Username"
-                        className={`input input-bordered ${errors.userName ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
+                        className={`input input-md ${errors.userName ? 'input-error' : 'input-bordered'} w-full`}
                         onChange={handleInputChange(setUserName)}
                     />
                     {errors.userName && (
@@ -112,11 +120,11 @@ const Page = () => {
                         </div>
                     )}
                 </label>
-                <label className="form-control w-full max-w-xs">
+                <label className="form-control w-full">
                     <input
                         type="email"
                         placeholder="Email"
-                        className={`input input-bordered ${errors.email ? 'input-error' : 'input-bordered'} ${errors.emailTaken ? 'input-warning' : 'input-bordered'} w-full max-w-xs`}
+                        className={`input input-md ${errors.email ? 'input-error' : 'input-bordered'} ${errors.emailTaken ? 'input-warning' : 'input-bordered'} w-full`}
                         onChange={handleInputChange(setEmail)}
                     />
                     {errors.email && !errors.emailTaken && (
@@ -127,11 +135,11 @@ const Page = () => {
                         </div>
                     )}
                 </label>
-                <label className="form-control w-full max-w-xs">
+                <label className="form-control w-full">
                     <input
                         type="password"
                         placeholder="Password"
-                        className={`input input-bordered ${errors.password ? 'input-error' : 'input-bordered'} w-full max-w-xs`}
+                        className={`input input-md ${errors.password ? 'input-error' : 'input-bordered'} w-full`}
                         onChange={handleInputChange(setPassword)}
                     />
                     {errors.password && (
@@ -149,12 +157,18 @@ const Page = () => {
                         </Alert>
                     </div>
                 )}
-                <button type="submit" className="btn btn-primary mt-2">
-                    {loading ? <ButtonLoader /> : <>Sign Up</>}
+                <button
+                    type="submit"
+                    className="btn btn-primary btn-block mt-2"
+                >
+                    {loading ? <ButtonLoader /> : <>Sign up</>}
                 </button>
                 <div className="divider">OR</div>
-                <Link href={'/api/auth/signin'} className="btn btn-ghost">
-                    Sign In
+                <Link
+                    href={'/api/auth/signin'}
+                    className="btn btn-ghost btn-block"
+                >
+                    Sign in
                 </Link>
             </form>
         </div>

@@ -3,24 +3,27 @@ import { BookText, Calendar, ClipboardList, Clock, Eye } from 'lucide-react'
 import { useState } from 'react'
 import DeleteTaskButton from './buttons/taskButtons/DeleteTaskButton'
 import EditTaskButton from './buttons/taskButtons/EditTaskButton'
+import Link from 'next/link'
 
 interface TaskDrawerProps {
     taskId?: string
     taskDescription: string
     deadline: Date
-    categoryName: string
+    categoryId?: string
+    categoryName?: string
 }
 
 type TaskDrawerDataType = {
     icon: React.ReactElement
     title: string
-    content: string
+    content: string | React.ReactElement
 }
 
 const TaskDrawer = ({
     taskId,
     taskDescription,
     deadline,
+    categoryId,
     categoryName,
 }: TaskDrawerProps) => {
     const [toggleDrawer, setToggleDrawer] = useState(false)
@@ -29,7 +32,14 @@ const TaskDrawer = ({
         {
             icon: <BookText className="size-5" />,
             title: 'Category',
-            content: `${categoryName}`,
+            content: (
+                <Link
+                    href={`/users/category/${categoryId}`}
+                    className="link-hover link"
+                >
+                    {categoryName}
+                </Link>
+            ),
         },
         {
             icon: <ClipboardList className="size-5" />,
@@ -63,7 +73,7 @@ const TaskDrawer = ({
             </button>
 
             <aside
-                className={`fixed top-0 z-50 h-full w-[24rem] bg-base-100 sm:w-[28rem] ${toggleDrawer ? 'right-0' : '-right-[28rem]'} p-6 transition-all`}
+                className={`fixed top-0 z-50 h-full w-[20rem] bg-base-100 sm:w-[28rem] ${toggleDrawer ? 'right-0' : '-right-[28rem]'} p-6 transition-all`}
             >
                 <div className="flex h-full flex-col justify-between">
                     <div className="text-base-content">
@@ -89,6 +99,7 @@ const TaskDrawer = ({
                         <EditTaskButton
                             taskId={taskId}
                             taskDescription={taskDescription}
+                            deadline={deadline}
                             dialogId={`editTaskModal-${taskId}`}
                         />
                         <DeleteTaskButton

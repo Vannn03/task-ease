@@ -40,7 +40,9 @@ const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
                             <h1 className="-translate-x-1 text-sm font-medium sm:text-base">
                                 {userName}
                             </h1>
-                            <span className="badge text-xs">{version}</span>
+                            <span className="badge badge-neutral text-xs">
+                                {version}
+                            </span>
                         </div>
                         {userImage == null ? (
                             <div className="avatar placeholder">

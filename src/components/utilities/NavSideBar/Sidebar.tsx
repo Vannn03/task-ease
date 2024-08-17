@@ -79,15 +79,13 @@ const Sidebar = ({ toggle, setToggle }: SidebarProps) => {
         <aside
             className={`h-dvh bg-base-100 transition-all ${isFixed && `fixed ${toggle ? 'left-0' : '-left-28'} top-14 float-none sm:top-[71.5px]`}`}
         >
-            <div className={`flex items-center justify-center gap-2 px-4 py-3`}>
-                <button className="btn btn-ghost">
-                    <img src="/logo.svg" alt="TaskEase Logo" className="w-6" />
-                    <h1
-                        className={`overflow-hidden whitespace-nowrap transition-all ${toggle ? 'w-24' : 'w-0'} text-lg font-semibold`}
-                    >
-                        TaskEase
-                    </h1>
-                </button>
+            <div className={`flex items-center justify-center gap-2 px-4 py-5`}>
+                <img src="/logo.svg" alt="..." className="size-8" />
+                <h1
+                    className={`overflow-hidden whitespace-nowrap transition-all ${toggle ? 'w-32' : 'w-0'} text-2xl font-semibold`}
+                >
+                    TaskEase
+                </h1>
             </div>
             <ul className="menu w-full gap-3 rounded-box px-4 py-3">
                 {menuData.map((data, index) => (

@@ -23,7 +23,7 @@ const Page = async () => {
     })
 
     return (
-        <div className="flex flex-col gap-6 p-6 md:flex-row">
+        <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 md:flex-row">
             <Calendar nearestTaskDB={nearestTaskDB} />
         </div>
     )

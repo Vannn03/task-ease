@@ -31,24 +31,24 @@ const Page = async ({ params }: PageProps) => {
     })
 
     return (
-        <div className="flex flex-col gap-6 p-6">
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6">
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between gap-4">
                     <BackButton />
-                    <h1 className="text-3xl font-semibold">
-                        {categoryDB?.categoryName}
-                    </h1>
+                    <DeleteCompletedTaskButton
+                        categoryId={categoryDB?.categoryId}
+                        dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
+                        finishedTaskLength={finishedTaskDB.length}
+                    />
                 </div>
-                <DeleteCompletedTaskButton
-                    categoryId={categoryDB?.categoryId}
-                    dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
-                    finishedTaskLength={finishedTaskDB.length}
-                />
+                <h1 className="text-xl font-semibold sm:text-2xl lg:text-3xl">
+                    {categoryDB?.categoryName}
+                </h1>
             </div>
 
             <AddTaskButton categoryId={categoryDB?.categoryId} />
 
-            <div role="tablist" className="tabs tabs-bordered">
+            <div role="tablist" className="tabs tabs-bordered relative">
                 <input
                     type="radio"
                     name="my_tabs_1"

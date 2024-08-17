@@ -3,7 +3,7 @@ import axiosInstance from '@/utils/axiosInstance'
 import { useState } from 'react'
 
 interface UseCheckTaskProps {
-    taskId: string
+    taskId?: string
     status: string
 }
 

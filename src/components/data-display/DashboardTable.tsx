@@ -50,10 +50,10 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                                         'D MMM'
                                     )}
                                 </td>
-                                <td className="max-w-60 overflow-x-hidden text-ellipsis whitespace-nowrap">
+                                <td className="max-w-28 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-60">
                                     {data.taskDescription}
                                 </td>
-                                <td className="link-hover link max-w-48 overflow-x-hidden text-ellipsis whitespace-nowrap">
+                                <td className="link-hover link max-w-20 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-48">
                                     <Link href={`category/${data.categoryId}`}>
                                         {data.category.categoryName}
                                     </Link>

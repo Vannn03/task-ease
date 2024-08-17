@@ -32,7 +32,7 @@ const BarChartCompletion = ({ datasets }: BarChartCompletionProps) => {
                 {
                     scaleType: 'band',
                     dataKey: 'category',
-                    label: 'Category Name',
+                    label: 'Category',
                 },
             ]}
             yAxis={[

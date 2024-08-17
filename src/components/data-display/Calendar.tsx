@@ -6,14 +6,16 @@ import dayjs from 'dayjs'
 import { useState, useEffect } from 'react'
 import { CalendarClock, Clock } from 'lucide-react'
 import LiveClock from '@/components/LiveClock'
-import TaskDrawer from '../TaskDrawer'
+import TaskDrawer from '@/components/TaskDrawer'
 import { Task } from '@prisma/client'
+import { usePathname } from 'next/navigation'
 
 interface CalendarProps {
     nearestTaskDB: any
 }
 
 const Calendar = ({ nearestTaskDB }: CalendarProps) => {
+    const pathname = usePathname()
     const dateNow = dayjs()
     const fullDateFormat = 'dddd, D MMMM YYYY'
 
@@ -21,6 +23,9 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
         getISODateTimeLocale(dateNow.toDate(), fullDateFormat)
     )
     const [dailyTasks, setDailyTasks] = useState([])
+
+    const filteredDailyTasks =
+        pathname == '/users/dashboard' ? dailyTasks.slice(0, 3) : dailyTasks
 
     useEffect(() => {
         const filteredTasks = nearestTaskDB.filter(
@@ -67,10 +72,11 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
 
     return (
         <>
-            <div className="sticky top-0">
+            <div className="">
                 <DateCalendar
                     value={dayjs(selectedDate)}
                     onChange={handleDateChange}
+                    className="sticky top-20"
                 />
             </div>
             <div className="flex w-full flex-col gap-4 border-t pt-4">
@@ -83,7 +89,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                         No task to display.
                     </p>
                 ) : (
-                    dailyTasks.slice(0, 3).map((task: any) => (
+                    filteredDailyTasks.map((task: any) => (
                         <div
                             key={task.taskId}
                             className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineBorderColor(task.deadline)}`}
@@ -110,12 +116,13 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                                 taskId={task.taskId}
                                 taskDescription={task.taskDescription}
                                 deadline={task.deadline}
+                                categoryId={task.category.categoryId}
                                 categoryName={task.category.categoryName}
                             />
                         </div>
                     ))
                 )}
-                {dailyTasks.length > 3 && (
+                {dailyTasks.length > 3 && pathname == '/users/dashboard' && (
                     <button className="btn">View more</button>
                 )}
             </div>

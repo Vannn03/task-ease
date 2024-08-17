@@ -8,11 +8,12 @@ import { GripVertical } from 'lucide-react'
 import TaskDrawer from '../TaskDrawer'
 
 interface TaskCheckboxProps {
-    taskId: string
+    taskId?: string
     taskDescription: string
     status: string
     deadline: Date
-    categoryName: string
+    categoryId?: string
+    categoryName?: string
     dragHandleProps: any
 }
 
@@ -21,6 +22,7 @@ const TaskCheckbox = ({
     taskDescription,
     status,
     deadline,
+    categoryId,
     categoryName,
     dragHandleProps,
 }: TaskCheckboxProps) => {
@@ -41,7 +43,7 @@ const TaskCheckbox = ({
                 />
                 <div className="flex flex-col">
                     <p
-                        className={`${isChecked && 'line-through'} max-w-52 overflow-x-hidden text-ellipsis whitespace-nowrap md:max-w-96`}
+                        className={`${isChecked && 'line-through'} max-w-40 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-52 md:max-w-96`}
                     >
                         {taskDescription}
                     </p>
@@ -55,6 +57,7 @@ const TaskCheckbox = ({
                 taskId={taskId}
                 taskDescription={taskDescription}
                 deadline={deadline}
+                categoryId={categoryId}
                 categoryName={categoryName}
             />
         </>

@@ -30,6 +30,9 @@ const DeleteCategoryButton = ({
                 dialogId={dialogId}
                 title="Delete category"
                 value={categoryName}
+                description={
+                    'category? All tasks in this category will also be deleted.'
+                }
                 handleDeleteButton={handleDeleteButton}
                 loading={loading}
             />

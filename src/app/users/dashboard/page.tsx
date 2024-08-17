@@ -2,7 +2,6 @@ import Calendar from '@/components/data-display/Calendar'
 import DashboardTable from '@/components/data-display/DashboardTable'
 import prisma from '@/libs/prisma'
 import BarChartCompletion from '@/components/data-display/BarChartCompletion'
-import { CalendarRange, ListTodo, SquareKanban } from 'lucide-react'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 
 const Page = async () => {
@@ -56,15 +55,13 @@ const Page = async () => {
             <main className="flex w-full flex-col gap-4 sm:gap-6">
                 <section className="relative flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
                     <div className="flex items-center gap-2">
-                        <ListTodo />
-                        <h1 className="text-xl font-medium">Newest Task</h1>
+                        <h1 className="text-lg font-medium">Latest Task</h1>
                     </div>
                     <DashboardTable userId={loggedUser?.userId} />
                 </section>
                 <section className="flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
                     <div className="flex items-center gap-2">
-                        <SquareKanban />
-                        <h1 className="text-xl font-medium">
+                        <h1 className="text-lg font-medium">
                             Category Overview
                         </h1>
                     </div>
@@ -75,8 +72,7 @@ const Page = async () => {
             </main>
             <aside className="relative flex flex-col rounded-2xl bg-base-100 p-4">
                 <div className="mb-2 flex items-center gap-2">
-                    <CalendarRange />
-                    <h1 className="text-xl font-medium">Calendar</h1>
+                    <h1 className="text-lg font-medium">Calendar</h1>
                 </div>
                 <Calendar nearestTaskDB={nearestTaskDB} />
             </aside>

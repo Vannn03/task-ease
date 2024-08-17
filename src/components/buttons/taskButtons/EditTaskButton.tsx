@@ -10,24 +10,27 @@ interface EditTaskProps {
     taskId?: string
     dialogId: string
     taskDescription: string
+    deadline: Date
 }
 
 const EditTaskButton = ({
     taskId,
     dialogId,
     taskDescription,
+    deadline,
 }: EditTaskProps) => {
     const {
         newtaskDescription,
+        setNewTaskDescription,
         newTaskDate,
+        setNewTaskDate,
         newTaskTime,
+        setNewTaskTime,
         toast,
         loading,
         handleInputChange,
-        handleDateChange,
-        handleTimeChange,
         handleEditButton,
-    } = useEditTask(taskId)
+    } = useEditTask({ taskId, taskDescription, deadline })
 
     return (
         <>
@@ -40,24 +43,26 @@ const EditTaskButton = ({
             <EditModal
                 dialogId={dialogId}
                 title="Edit task"
-                handleInputChange={handleInputChange}
+                handleInputChange={handleInputChange(setNewTaskDescription)}
                 placeholder={taskDescription}
                 value={newtaskDescription}
+                newTaskDate={newTaskDate}
+                newTaskTime={newTaskTime}
                 handleEditButton={handleEditButton}
                 loading={loading}
             >
                 <div className="flex gap-2">
                     <input
                         type="date"
-                        className="input input-bordered mt-2 w-full"
-                        onChange={handleDateChange}
-                        placeholder={newTaskDate}
+                        className="input input-md input-bordered mt-2 w-full"
+                        onChange={handleInputChange(setNewTaskDate)}
+                        value={newTaskDate}
                     />
                     <input
                         type="time"
-                        className="input input-bordered mt-2 w-full"
-                        onChange={handleTimeChange}
-                        placeholder={newTaskTime}
+                        className="input input-md input-bordered mt-2 w-full"
+                        onChange={handleInputChange(setNewTaskTime)}
+                        value={newTaskTime}
                     />
                 </div>
             </EditModal>

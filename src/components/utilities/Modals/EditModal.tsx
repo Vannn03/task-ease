@@ -6,6 +6,8 @@ interface EditModalProps {
     handleInputChange: any
     placeholder?: string
     value: string
+    newTaskDate?: string
+    newTaskTime?: string
     handleEditButton: any
     loading: boolean
     children?: React.ReactNode
@@ -17,10 +19,25 @@ const EditModal: React.FC<EditModalProps> = ({
     handleInputChange,
     placeholder,
     value,
+    newTaskDate,
+    newTaskTime,
     handleEditButton,
     loading,
     children,
 }) => {
+    const isTask = !!newTaskDate && !!newTaskTime // Checks if it's a task
+    const isCategory = !newTaskDate && !newTaskTime // Checks if it's a category
+
+    const isTaskButtonDisabled =
+        isTask && (value === '' || newTaskDate === '' || newTaskTime === '')
+    const isCategoryButtonDisabled =
+        isCategory && (value.length < 3 || value.length > 20)
+
+    const buttonClass =
+        isTaskButtonDisabled || isCategoryButtonDisabled
+            ? 'btn-disabled'
+            : 'btn-warning'
+
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
@@ -28,16 +45,18 @@ const EditModal: React.FC<EditModalProps> = ({
                 {children}
                 <input
                     type="text"
-                    className="input input-bordered mt-2 w-full"
+                    className="input input-md input-bordered mt-2 w-full"
                     onChange={handleInputChange}
                     placeholder={placeholder}
                     value={value}
                 />
                 <div className="modal-action">
                     <form method="dialog" className="flex items-center">
-                        <button className="btn">Cancel</button>
+                        <button className="btn btn-ghost text-error">
+                            Cancel
+                        </button>
                         <button
-                            className="btn btn-warning ml-4"
+                            className={`btn ${buttonClass} ml-4`}
                             onClick={(e) => handleEditButton(e, dialogId)}
                         >
                             {loading ? <ButtonLoader /> : <>Update</>}
