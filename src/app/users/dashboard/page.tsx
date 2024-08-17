@@ -68,10 +68,12 @@ const Page = async () => {
                             Category Overview
                         </h1>
                     </div>
-                    <BarChartCompletion datasets={datasets} />
+                    <div>
+                        <BarChartCompletion datasets={datasets} />
+                    </div>
                 </section>
             </main>
-            <aside className="relative flex flex-col justify-start rounded-2xl bg-base-100 p-4">
+            <aside className="relative flex flex-col rounded-2xl bg-base-100 p-4">
                 <div className="mb-2 flex items-center gap-2">
                     <CalendarRange />
                     <h1 className="text-xl font-medium">Calendar</h1>

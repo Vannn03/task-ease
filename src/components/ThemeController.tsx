@@ -3,8 +3,14 @@
 import { ThemeContext } from '@/contexts/ThemeContext'
 import { useContext } from 'react'
 
+interface ThemeControllerProps {
+    theme: string
+    changeTheme: (theme: string) => void
+}
+
 const ThemeController = () => {
-    const { theme, changeTheme }: any = useContext(ThemeContext)
+    const { theme, changeTheme }: ThemeControllerProps =
+        useContext(ThemeContext)
 
     return (
         <label className="swap swap-rotate">

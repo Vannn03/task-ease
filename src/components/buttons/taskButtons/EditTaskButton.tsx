@@ -7,7 +7,7 @@ import { SquarePen } from 'lucide-react'
 import EditModal from '@/components/utilities/Modals/EditModal'
 
 interface EditTaskProps {
-    taskId: string
+    taskId?: string
     dialogId: string
     taskDescription: string
 }
@@ -32,10 +32,10 @@ const EditTaskButton = ({
     return (
         <>
             <button
-                className="btn btn-ghost text-warning"
+                className="w btn btn-warning w-1/2"
                 onClick={() => showModal(dialogId)}
             >
-                <SquarePen className="size-5" />
+                <SquarePen className="size-5" /> Edit
             </button>
             <EditModal
                 dialogId={dialogId}

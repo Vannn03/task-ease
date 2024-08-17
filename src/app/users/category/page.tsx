@@ -36,7 +36,7 @@ const Page = async () => {
                         >
                             <div className="card-body">
                                 <div className="flex items-center justify-between">
-                                    <h2 className="card-title w-full overflow-x-hidden text-ellipsis text-nowrap">
+                                    <h2 className="card-title w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-lg sm:text-xl">
                                         {data.categoryName}
                                     </h2>
 

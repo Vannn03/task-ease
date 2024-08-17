@@ -50,8 +50,10 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                                         'D MMM'
                                     )}
                                 </td>
-                                <td>{data.taskDescription}</td>
-                                <td className="link-hover link">
+                                <td className="max-w-60 overflow-x-hidden text-ellipsis whitespace-nowrap">
+                                    {data.taskDescription}
+                                </td>
+                                <td className="link-hover link max-w-48 overflow-x-hidden text-ellipsis whitespace-nowrap">
                                     <Link href={`category/${data.categoryId}`}>
                                         {data.category.categoryName}
                                     </Link>

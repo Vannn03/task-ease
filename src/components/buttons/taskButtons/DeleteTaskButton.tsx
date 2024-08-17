@@ -6,7 +6,7 @@ import { Trash2 } from 'lucide-react'
 import DeleteModal from '@/components/utilities/Modals/DeleteModal'
 
 interface DeletedTaskProps {
-    taskId: string
+    taskId?: string
     dialogId: string
     taskDescription: string
 }
@@ -21,10 +21,10 @@ const DeleteTaskButton = ({
     return (
         <>
             <button
-                className="btn btn-ghost text-error"
+                className="btn btn-ghost w-1/2 text-error"
                 onClick={() => showModal(dialogId)}
             >
-                <Trash2 className="size-5" />
+                <Trash2 className="size-5" /> Delete
             </button>
 
             <DeleteModal

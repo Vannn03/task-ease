@@ -20,9 +20,10 @@ type MenuDataType = {
 
 interface SidebarProps {
     toggle: boolean
+    setToggle: any
 }
 
-const Sidebar = ({ toggle }: SidebarProps) => {
+const Sidebar = ({ toggle, setToggle }: SidebarProps) => {
     const pathname = usePathname()
     const [isFixed, setIsFixed] = useState(false)
 
@@ -79,7 +80,7 @@ const Sidebar = ({ toggle }: SidebarProps) => {
             className={`h-dvh bg-base-100 transition-all ${isFixed && `fixed ${toggle ? 'left-0' : '-left-28'} top-14 float-none sm:top-[71.5px]`}`}
         >
             <div className={`flex items-center justify-center gap-2 px-4 py-3`}>
-                <button className="btn">
+                <button className="btn btn-ghost">
                     <img src="/logo.svg" alt="TaskEase Logo" className="w-6" />
                     <h1
                         className={`overflow-hidden whitespace-nowrap transition-all ${toggle ? 'w-24' : 'w-0'} text-lg font-semibold`}
@@ -94,6 +95,7 @@ const Sidebar = ({ toggle }: SidebarProps) => {
                         className={`${toggle ? '' : 'tooltip tooltip-right'}`}
                         data-tip={data.menuName}
                         key={index}
+                        onClick={() => setToggle(false)}
                     >
                         <Link
                             href={data.menuLink}

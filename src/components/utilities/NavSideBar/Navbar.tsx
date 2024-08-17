@@ -6,10 +6,12 @@ import { Menu } from 'lucide-react'
 
 interface NavbarProps {
     userImage?: string
+    userName?: string
+    version?: string
     getCharName?: string
 }
 
-const Navbar = ({ userImage, getCharName }: NavbarProps) => {
+const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
     const [toggle, setToggle] = useState(false)
 
     return (
@@ -19,7 +21,7 @@ const Navbar = ({ userImage, getCharName }: NavbarProps) => {
                 onClick={() => setToggle(false)}
             />
             <div className="sticky left-0 top-0 z-50 float-left flex">
-                <Sidebar toggle={toggle} />
+                <Sidebar toggle={toggle} setToggle={setToggle} />
             </div>
 
             <div className="sticky top-0 z-50 flex">
@@ -33,19 +35,27 @@ const Navbar = ({ userImage, getCharName }: NavbarProps) => {
                         <Menu />
                     </button>
 
-                    {userImage == null ? (
-                        <div className="avatar placeholder">
-                            <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">
-                                <span>{getCharName}</span>
-                            </div>
+                    <div className="flex items-center gap-2">
+                        <div className="flex flex-col justify-end">
+                            <h1 className="-translate-x-1 text-sm font-medium sm:text-base">
+                                {userName}
+                            </h1>
+                            <span className="badge text-xs">{version}</span>
                         </div>
-                    ) : (
-                        <div className="avatar">
-                            <div className="w-10 rounded-full sm:w-14">
-                                <img src={userImage} alt="User Avatar" />
+                        {userImage == null ? (
+                            <div className="avatar placeholder">
+                                <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">
+                                    <span>{getCharName}</span>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="avatar">
+                                <div className="w-10 rounded-full sm:w-14">
+                                    <img src={userImage} alt="User Avatar" />
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </nav>
             </div>
         </>

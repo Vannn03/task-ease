@@ -1,16 +1,16 @@
 'use client'
 
-import { getDeadlineColor, getISODateTimeLocale } from '@/utils/datetime'
+import { getISODateTimeLocale } from '@/utils/datetime'
 import { DateCalendar } from '@/libs/mui'
-import { Task } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useState, useEffect } from 'react'
 import { CalendarClock, Clock } from 'lucide-react'
 import LiveClock from '@/components/LiveClock'
-import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
+import TaskDrawer from '../TaskDrawer'
+import { Task } from '@prisma/client'
 
 interface CalendarProps {
-    nearestTaskDB: Task[]
+    nearestTaskDB: any
 }
 
 const Calendar = ({ nearestTaskDB }: CalendarProps) => {
@@ -20,11 +20,11 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
     const [selectedDate, setSelectedDate] = useState<string | null>(
         getISODateTimeLocale(dateNow.toDate(), fullDateFormat)
     )
-    const [dailyTasks, setDailyTasks] = useState<Task[]>([])
+    const [dailyTasks, setDailyTasks] = useState([])
 
     useEffect(() => {
         const filteredTasks = nearestTaskDB.filter(
-            (task) =>
+            (task: Task) =>
                 getISODateTimeLocale(task.deadline, fullDateFormat) ===
                 selectedDate
         )
@@ -38,14 +38,42 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
             )
         }
     }
+    const now = dayjs(dateNow)
+
+    const getDeadlineBorderColor = (deadline: Date) => {
+        const taskTime = dayjs(deadline)
+        const diffInMinutes = taskTime.diff(now, 'minute')
+
+        if (diffInMinutes < 0) {
+            return 'border-error'
+        } else if (diffInMinutes <= 60) {
+            return 'border-warning'
+        } else {
+            return ''
+        }
+    }
+    const getDeadlineTextColor = (deadline: Date) => {
+        const taskTime = dayjs(deadline)
+        const diffInMinutes = taskTime.diff(now, 'minute')
+
+        if (diffInMinutes < 0) {
+            return 'text-error'
+        } else if (diffInMinutes <= 60) {
+            return 'text-warning'
+        } else {
+            return ''
+        }
+    }
 
     return (
         <>
-            <DateCalendar
-                value={dayjs(selectedDate)}
-                onChange={handleDateChange}
-            />
-            <div className="flex flex-col gap-4 border-t pt-4">
+            <div className="sticky top-0">
+                <DateCalendar
+                    value={dayjs(selectedDate)}
+                    onChange={handleDateChange}
+                />
+            </div>
+            <div className="flex w-full flex-col gap-4 border-t pt-4">
                 <div className="flex flex-col items-center justify-center gap-2">
                     <Clock className="size-6" />
                     <LiveClock />
@@ -55,40 +83,37 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                         No task to display.
                     </p>
                 ) : (
-                    dailyTasks.slice(0, 3).map((task) => {
-                        const isPastDeadline = dayjs(task.deadline) < dateNow
-                        return (
-                            <div
-                                key={task.taskId}
-                                className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineColor(
-                                    dateNow.toDate(),
-                                    task.deadline
-                                )}`}
-                            >
-                                <span className="flex gap-2">
-                                    <CalendarClock className="mt-[2px] size-4" />
-                                    <span className="flex flex-col">
-                                        <p className="text-sm font-medium">
-                                            {getISODateTimeLocale(
-                                                task.deadline,
-                                                'HH:mm'
-                                            )}
-                                        </p>
-                                        <p className="text-sm text-base-content">
-                                            {task.taskDescription}
-                                        </p>
-                                    </span>
+                    dailyTasks.slice(0, 3).map((task: any) => (
+                        <div
+                            key={task.taskId}
+                            className={`flex items-center justify-between rounded-lg border p-3 ${getDeadlineBorderColor(task.deadline)}`}
+                        >
+                            <span className="flex gap-2">
+                                <CalendarClock
+                                    className={`mt-[2px] size-4 ${getDeadlineTextColor(task.deadline)}`}
+                                />
+                                <span className="flex flex-col">
+                                    <p
+                                        className={`text-sm font-medium ${getDeadlineTextColor(task.deadline)}`}
+                                    >
+                                        {getISODateTimeLocale(
+                                            task.deadline,
+                                            'HH:mm'
+                                        )}
+                                    </p>
+                                    <p className="max-w-52 overflow-x-hidden text-ellipsis whitespace-nowrap text-sm text-base-content">
+                                        {task.taskDescription}
+                                    </p>
                                 </span>
-                                {isPastDeadline && (
-                                    <DeleteTaskButton
-                                        taskId={task.taskId}
-                                        taskDescription={task.taskDescription}
-                                        dialogId={`deleteTaskModal-${task.taskId}`}
-                                    />
-                                )}
-                            </div>
-                        )
-                    })
+                            </span>
+                            <TaskDrawer
+                                taskId={task.taskId}
+                                taskDescription={task.taskDescription}
+                                deadline={task.deadline}
+                                categoryName={task.category.categoryName}
+                            />
+                        </div>
+                    ))
                 )}
                 {dailyTasks.length > 3 && (
                     <button className="btn">View more</button>

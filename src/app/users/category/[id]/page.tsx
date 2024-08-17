@@ -16,6 +16,9 @@ const Page = async ({ params }: PageProps) => {
     const taskDB = await prisma.task.findMany({
         where: { categoryId: params.id },
         orderBy: { order: 'asc' },
+        include: {
+            category: true,
+        },
     })
 
     const finishedTaskDB = await prisma.task.findMany({
