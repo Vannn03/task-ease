@@ -42,11 +42,11 @@ const EditCategoryButton = ({
                 loading={loading}
             />
 
-            <SuccessfulToast
+            {/* <SuccessfulToast
                 toast={toast}
                 description="Category updated"
                 alertType="alert-warning"
-            />
+            /> */}
         </>
     )
 }

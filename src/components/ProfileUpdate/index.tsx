@@ -7,6 +7,7 @@ import { SingleImageDropzone } from './SingleImageDropzone'
 import axiosInstance from '@/utils/axiosInstance'
 import { updateProfileSchema } from '@/libs/zod'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
+import SuccessfulToast from '../utilities/toasts/SuccessfulToast'
 
 interface ProfileUpdateProps {
     userId?: string
@@ -22,6 +23,7 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState<FormErrors>({})
     const [file, setFile] = useState<File>()
+    const [toast, setToast] = useState(false)
     const { edgestore } = useEdgeStore()
     const router = useRouter()
 
@@ -61,6 +63,10 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
 
             if (response.status === 200) {
                 router.refresh()
+                setToast(true)
+                setTimeout(() => {
+                    setToast(false)
+                }, 3000)
             }
         } catch (error) {
             console.error('Error updating profile:', error)
@@ -109,10 +115,16 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
                         {errors.userNameValidation}
                     </p>
                 )}
-                <button type="submit" className="btn btn-success mt-2">
+                <button type="submit" className="btn btn-primary mt-2">
                     {loading ? <ButtonLoader /> : 'Update profile'}
                 </button>
             </form>
+
+            <SuccessfulToast
+                toast={toast}
+                description="Profile updated"
+                alertType="alert-success"
+            />
         </div>
     )
 }

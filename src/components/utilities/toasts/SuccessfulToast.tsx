@@ -10,7 +10,9 @@ const SuccessfulToast = ({
     alertType,
 }: SuccessfulToastProps) => {
     return (
-        <div className={`${toast ? 'toast' : 'hidden'} toast-center toast-top`}>
+        <div
+            className={`${toast ? 'toast' : 'hidden'} toast-center toast-middle z-50 sm:toast-end sm:toast-bottom`}
+        >
             <div className={`alert ${alertType}`}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

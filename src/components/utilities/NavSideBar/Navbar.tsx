@@ -35,9 +35,9 @@ const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
                         <Menu />
                     </button>
 
-                    <div className="flex items-center gap-2">
-                        <div className="flex flex-col justify-end">
-                            <h1 className="-translate-x-1 text-sm font-medium sm:text-base">
+                    <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-end">
+                            <h1 className="text-sm font-medium sm:text-base">
                                 {userName}
                             </h1>
                             <span className="badge badge-neutral text-xs">
