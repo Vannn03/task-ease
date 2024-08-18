@@ -36,7 +36,7 @@ const Page = async () => {
                 return (
                     <div
                         key={data.categoryId}
-                        className="card w-full bg-base-100 transition-all hover:-translate-y-2 hover:shadow-xl"
+                        className="card w-full bg-base-100"
                     >
                         <div className="card-body">
                             <div className="flex items-center justify-between">

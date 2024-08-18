@@ -73,11 +73,11 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                 <DateCalendar
                     value={dayjs(selectedDate)}
                     onChange={handleDateChange}
-                    className="sticky top-20"
+                    className="glass top-20 md:sticky"
                 />
             </div>
             <div className="flex w-full flex-col gap-4 border-t pt-4">
-                <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex flex-col items-center justify-center gap-2 opacity-75">
                     <Clock className="size-6" />
                     <LiveClock />
                 </div>
@@ -93,7 +93,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                         return (
                             <div
                                 key={task.taskId}
-                                className={`flex items-center justify-between rounded-lg border p-3 ${borderColor}`}
+                                className={`flex items-center justify-between rounded-lg border p-3 ${borderColor} bg-base-100`}
                             >
                                 <span className="flex gap-2">
                                     <CalendarClock

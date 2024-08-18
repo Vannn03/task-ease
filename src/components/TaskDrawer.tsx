@@ -66,10 +66,10 @@ const TaskDrawer = ({
             />
 
             <button
-                className="btn btn-ghost"
+                className="btn btn-ghost btn-sm"
                 onClick={() => setToggleDrawer((prev) => !prev)}
             >
-                <Eye />
+                <Eye className="opacity-50" />
             </button>
 
             <aside

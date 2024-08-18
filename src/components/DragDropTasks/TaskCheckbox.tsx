@@ -46,7 +46,7 @@ const TaskCheckbox = ({
                     >
                         {taskDescription}
                     </p>
-                    <p className="text-sm font-medium opacity-75">
+                    <p className="text-sm opacity-75">
                         {getISODateTimeLocale(deadline, 'D MMM')} |{' '}
                         {getISODateTimeLocale(deadline, 'HH:mm')}
                     </p>

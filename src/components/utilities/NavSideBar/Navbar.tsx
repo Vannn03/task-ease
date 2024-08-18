@@ -4,15 +4,38 @@ import { useState } from 'react'
 import Sidebar from './Sidebar'
 import { Menu } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import Reminder from './Reminder'
+
+interface Task {
+    taskId: string
+    taskDescription: string
+    status: string
+    order: number
+    deadline: Date
+    createdAt: Date
+    updatedAt: Date
+    category: {
+        categoryId: string
+        categoryName: string
+    }
+}
 
 interface NavbarProps {
     userImage?: string
     userName?: string
     version?: string
     getCharName?: string
+    taskDB: Task[]
 }
 
-const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
+const Navbar = ({
+    userImage,
+    userName,
+    version,
+    getCharName,
+    taskDB,
+}: NavbarProps) => {
     const [toggle, setToggle] = useState(false)
     const pathname = usePathname()
 
@@ -41,15 +64,8 @@ const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
                         <Menu />
                     </button>
 
-                    <div className="flex items-center gap-4">
-                        <div className="flex flex-col items-end">
-                            <h1 className="text-sm font-medium sm:text-base">
-                                {userName}
-                            </h1>
-                            <span className="badge badge-neutral text-xs">
-                                {version}
-                            </span>
-                        </div>
+                    <div className="flex items-center gap-6">
+                        <Reminder taskDB={taskDB} />
                         {userImage == null ? (
                             <div className="avatar placeholder">
                                 <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">

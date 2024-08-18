@@ -3,6 +3,8 @@ import DashboardTable from '@/components/data-display/DashboardTable'
 import prisma from '@/libs/prisma'
 import BarChartCompletion from '@/components/data-display/BarChartCompletion'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
+import { Suspense } from 'react'
+import Loading from './loading'
 
 const Page = async () => {
     const user = await authUserSessionServer()
@@ -51,32 +53,34 @@ const Page = async () => {
     )
 
     return (
-        <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
-            <main className="flex w-full flex-col gap-4 sm:gap-6">
-                <section className="relative flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
-                    <div className="flex items-center gap-2">
-                        <h1 className="text-lg font-medium">Latest Task</h1>
+        <Suspense fallback={<Loading />}>
+            <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
+                <main className="flex w-full flex-col gap-4 sm:gap-6">
+                    <section className="relative flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-lg font-medium">Latest Task</h1>
+                        </div>
+                        <DashboardTable userId={loggedUser?.userId} />
+                    </section>
+                    <section className="flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-lg font-medium">
+                                Category Overview
+                            </h1>
+                        </div>
+                        <div>
+                            <BarChartCompletion datasets={datasets} />
+                        </div>
+                    </section>
+                </main>
+                <aside className="relative flex flex-col rounded-2xl bg-base-100 p-4">
+                    <div className="mb-2 flex items-center gap-2">
+                        <h1 className="text-lg font-medium">Calendar</h1>
                     </div>
-                    <DashboardTable userId={loggedUser?.userId} />
-                </section>
-                <section className="flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
-                    <div className="flex items-center gap-2">
-                        <h1 className="text-lg font-medium">
-                            Category Overview
-                        </h1>
-                    </div>
-                    <div>
-                        <BarChartCompletion datasets={datasets} />
-                    </div>
-                </section>
-            </main>
-            <aside className="relative flex flex-col rounded-2xl bg-base-100 p-4">
-                <div className="mb-2 flex items-center gap-2">
-                    <h1 className="text-lg font-medium">Calendar</h1>
-                </div>
-                <Calendar nearestTaskDB={nearestTaskDB} />
-            </aside>
-        </div>
+                    <Calendar nearestTaskDB={nearestTaskDB} />
+                </aside>
+            </div>
+        </Suspense>
     )
 }
 
