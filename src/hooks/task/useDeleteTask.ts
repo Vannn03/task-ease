@@ -1,13 +1,13 @@
 import axiosInstance from '@/utils/axiosInstance'
 import { closeModal} from '@/utils/modal'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const useDeleteTask = (taskId?: string) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    const handleDeleteButton = async (
+    const handleDeleteButton = useCallback(async (
         e: React.MouseEvent<HTMLButtonElement>,
         dialogId: string
     ) => {
@@ -19,12 +19,17 @@ const useDeleteTask = (taskId?: string) => {
             data: { taskId },
         })
 
-        if (response.status === 200) {
-            closeModal(dialogId)
-            router.refresh()
+        try {
+            if (response.status === 200) {
+                closeModal(dialogId)
+                router.refresh()
+            }    
+        } catch (error) {
+            console.error('error deleting task', error)
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
-    }
+    }, [router, taskId])
   return {
     loading, handleDeleteButton
   }

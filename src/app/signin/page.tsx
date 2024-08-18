@@ -1,6 +1,6 @@
 'use client'
 
-import { Alert } from '@/libs/mui'
+import { Alert } from '@mui/material'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

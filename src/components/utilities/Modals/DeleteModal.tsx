@@ -5,7 +5,10 @@ interface DeleteModalProps {
     title: string
     value?: string
     description: string
-    handleDeleteButton: any
+    handleDeleteButton: (
+        e: React.MouseEvent<HTMLButtonElement>,
+        dialogId: string
+    ) => void
     loading: boolean
 }
 

@@ -3,12 +3,15 @@ import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 interface EditModalProps {
     dialogId: string
     title: string
-    handleInputChange: any
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
     value: string
     newTaskDate?: string
     newTaskTime?: string
-    handleEditButton: any
+    handleEditButton: (
+        e: React.MouseEvent<HTMLButtonElement>,
+        dialogId: string
+    ) => void
     loading: boolean
     children?: React.ReactNode
 }

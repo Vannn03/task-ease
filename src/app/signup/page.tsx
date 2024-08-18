@@ -3,7 +3,7 @@
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import { signUpSchema } from '@/libs/zod'
 import axiosInstance from '@/utils/axiosInstance'
-import { Alert } from '@/libs/mui'
+import { Alert } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'

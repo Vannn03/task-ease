@@ -1,13 +1,8 @@
 import { authUserSessionServer } from '@/utils/auth-utils'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 const Home = async () => {
     const user = await authUserSessionServer()
-
-    if (user) {
-        redirect('/users/dashboard')
-    }
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -18,10 +13,16 @@ const Home = async () => {
                         A simple To-Do List website to simplify your life.
                     </p>
                     <Link
+                        href={`${user ? '/users/dashboard' : '/api/auth/signin'}`}
+                        className="btn btn-outline btn-primary btn-wide mt-4"
+                    >
+                        Sign in
+                    </Link>
+                    <Link
                         href={'/signup'}
                         className="btn btn-primary btn-wide mt-4"
                     >
-                        Sign Up
+                        Sign up
                     </Link>
                 </div>
             </div>

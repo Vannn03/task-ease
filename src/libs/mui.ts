@@ -1,6 +1,4 @@
 "use client";
 
-export * from "@mui/material";
-export * from "@mui/x-charts/BarChart";
-export * from "@mui/x-date-pickers";
-export * from '@mui/x-date-pickers/AdapterDayjs'
+export { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+export { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'

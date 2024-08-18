@@ -3,7 +3,7 @@ import { getISODateTime } from '@/utils/datetime'
 import { closeModal } from '@/utils/modal'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface UseEditTaskProps {
     taskId?: string
@@ -30,13 +30,13 @@ const useEditTask = ({taskId, taskDescription, deadline}: UseEditTaskProps) => {
         }
     }, [taskDescription, deadline])
 
-    const handleInputChange =
+    const handleInputChange = useCallback(
         (setter: React.Dispatch<React.SetStateAction<string>>) =>
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setter(e.target.value)
-        }
+        }, [])
 
-    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
+    const handleEditButton = useCallback(async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
         e.preventDefault()
 
         setLoading(true)
@@ -46,21 +46,27 @@ const useEditTask = ({taskId, taskDescription, deadline}: UseEditTaskProps) => {
             taskDescription: newtaskDescription,
             deadline: getISODateTime(newTaskDate, newTaskTime)
         })
+        
+        try {
+            if (response.status === 200) {
+                closeModal(dialogId)
+                setNewTaskDescription('')
+                setNewTaskDate('')
+                setNewTaskTime('')
+                router.refresh()
+                setToast(true)
+                const toastTimer = setTimeout(() => setToast(false), 3000)
 
-        if (response.status === 200) {
-            closeModal(dialogId)
-            setNewTaskDescription('')
-            setNewTaskDate('')
-            setNewTaskTime('')
-            router.refresh()
+                // Cleanup timer on unmount
+                return () => clearTimeout(toastTimer)
+            }
             
-            setToast(true)
-            setTimeout(() => {
-                setToast(false)
-            }, 3000);
+        } catch (error) {
+            console.error('error editing task', error)
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
-    }
+    }, [newTaskDate, newTaskTime, newtaskDescription, router, taskId])
   return {
     newtaskDescription, setNewTaskDescription, newTaskDate, setNewTaskDate, newTaskTime, setNewTaskTime, toast, loading, handleInputChange, handleEditButton
   }

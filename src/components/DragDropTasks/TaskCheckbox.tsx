@@ -1,11 +1,10 @@
 'use client'
 
 import useCheckTask from '@/hooks/task/useCheckTask'
-import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
-import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
 import { getISODateTimeLocale } from '@/utils/datetime'
 import { GripVertical } from 'lucide-react'
-import TaskDrawer from '../TaskDrawer'
+import TaskDrawer from '@/components/TaskDrawer'
+import { DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
 interface TaskCheckboxProps {
     taskId?: string
@@ -14,7 +13,7 @@ interface TaskCheckboxProps {
     deadline: Date
     categoryId?: string
     categoryName?: string
-    dragHandleProps: any
+    dragHandleProps: DraggableProvidedDragHandleProps
 }
 
 const TaskCheckbox = ({

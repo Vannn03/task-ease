@@ -1,26 +1,18 @@
 'use client'
 
-import { BarChart } from '@/libs/mui'
-import { useEffect, useState } from 'react'
+import { BarChart } from '@mui/x-charts'
+import { DatasetType } from '@mui/x-charts/internals'
 
 interface BarChartCompletionProps {
-    datasets: any
+    datasets: DatasetType
 }
 
 const BarChartCompletion = ({ datasets }: BarChartCompletionProps) => {
-    const [dataset, setDataset] = useState<
-        { category: string; completion: number }[]
-    >([])
-
-    useEffect(() => {
-        setDataset(datasets)
-    }, [datasets])
-
     const valueFormatter = (value: number | null) => `${value}%`
 
     return (
         <BarChart
-            dataset={dataset}
+            dataset={datasets}
             series={[
                 {
                     dataKey: 'completion',

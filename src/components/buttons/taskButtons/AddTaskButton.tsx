@@ -11,12 +11,13 @@ interface AddTaskProps {
 const AddTaskButton = ({ categoryId }: AddTaskProps) => {
     const {
         taskDate,
+        setTaskDate,
         taskTime,
+        setTaskTime,
         taskDescription,
+        setTaskDescription,
         toast,
         loading,
-        handleDateChange,
-        handleTimeChange,
         handleInputChange,
         handleAddButton,
     } = useAddTask(categoryId)
@@ -27,21 +28,21 @@ const AddTaskButton = ({ categoryId }: AddTaskProps) => {
                 type="date"
                 placeholder="Type here"
                 className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
-                onChange={handleDateChange}
+                onChange={handleInputChange(setTaskDate)}
                 value={taskDate}
             />
             <input
                 type="time"
                 placeholder="Type here"
                 className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
-                onChange={handleTimeChange}
+                onChange={handleInputChange(setTaskTime)}
                 value={taskTime}
             />
             <input
                 type="text"
                 placeholder="Enter your task..."
                 className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/2"
-                onChange={handleInputChange}
+                onChange={handleInputChange(setTaskDescription)}
                 value={taskDescription}
             />
             <button

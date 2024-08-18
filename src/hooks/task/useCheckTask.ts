@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 import axiosInstance from '@/utils/axiosInstance'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 interface UseCheckTaskProps {
     taskId?: string
@@ -11,7 +11,7 @@ const useCheckTask = ({taskId, status}: UseCheckTaskProps) => {
     const router = useRouter()
     const [isChecked, setIsChecked] = useState(status === 'Completed')
 
-    const handleCheckboxChange = async () => {
+    const handleCheckboxChange = useCallback(async () => {
         const newCheckedStatus = !isChecked
         setIsChecked(!isChecked)
 
@@ -22,10 +22,15 @@ const useCheckTask = ({taskId, status}: UseCheckTaskProps) => {
             status: newStatus,
         })
 
-        if (response.status === 200) {
-            router.refresh()
+        try {
+            if (response.status === 200) {
+                router.refresh()
+            }
+            
+        } catch (error) {
+            console.error('error toggling check task', error)
         }
-    }
+    }, [isChecked, router, taskId])
   return {
     isChecked,
     handleCheckboxChange

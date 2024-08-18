@@ -1,5 +1,3 @@
-const ButtonLoader = () => {
-    return <span className="loading loading-infinity"></span>
-}
+const ButtonLoader = () => <span className="loading loading-infinity"></span>
 
 export default ButtonLoader

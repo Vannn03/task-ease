@@ -4,7 +4,7 @@ import UpgradeButton from '@/components/buttons/UpgradeButton'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { ReactElement } from 'react'
 
-interface SettingsDataProps {
+type SettingsDataProps = {
     title: string | ReactElement
     description: string
     action: ReactElement

@@ -2,7 +2,7 @@
 
 import { useContext } from 'react'
 import { ThemeContext } from './ThemeContext'
-import { ThemeProvider as MuiThemeProvider } from '@/libs/mui'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material'
 
 export default function ClientThemeWrapper({
     children,

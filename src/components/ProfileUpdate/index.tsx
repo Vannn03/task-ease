@@ -2,12 +2,12 @@
 
 import { useEdgeStore } from '@/libs/edgestore'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { SingleImageDropzone } from './SingleImageDropzone'
 import axiosInstance from '@/utils/axiosInstance'
 import { updateProfileSchema } from '@/libs/zod'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
-import SuccessfulToast from '../utilities/toasts/SuccessfulToast'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 
 interface ProfileUpdateProps {
     userId?: string
@@ -19,61 +19,68 @@ type FormErrors = {
 }
 
 const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
-    const [newUserName, setNewUserName] = useState('')
+    const [newUserName, setNewUserName] = useState(userName || '')
     const [loading, setLoading] = useState(false)
     const [errors, setErrors] = useState<FormErrors>({})
-    const [file, setFile] = useState<File>()
+    const [file, setFile] = useState<File | undefined>()
     const [toast, setToast] = useState(false)
     const { edgestore } = useEdgeStore()
     const router = useRouter()
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setNewUserName(e.target.value)
-    }
+    const handleInputChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setNewUserName(e.target.value)
+        },
+        []
+    )
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
+    const handleSubmit = useCallback(
+        async (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault()
+            setLoading(true)
 
-        // Validate input
-        const result = updateProfileSchema.safeParse({ userName: newUserName })
-
-        if (!result.success) {
-            setErrors({
-                userNameValidation: result.error.format().userName?._errors[0],
-            })
-            setLoading(false)
-            return
-        }
-
-        setErrors({})
-
-        try {
-            let userImage
-            if (file) {
-                const res = await edgestore.publicFiles.upload({ file })
-                userImage = res.url
-            }
-
-            const response = await axiosInstance.put('/api/user', {
-                userId,
+            // Validate input
+            const result = updateProfileSchema.safeParse({
                 userName: newUserName,
-                userImage,
             })
 
-            if (response.status === 200) {
-                router.refresh()
-                setToast(true)
-                setTimeout(() => {
-                    setToast(false)
-                }, 3000)
+            if (!result.success) {
+                setErrors({
+                    userNameValidation:
+                        result.error.format().userName?._errors[0],
+                })
+                setLoading(false)
+                return
             }
-        } catch (error) {
-            console.error('Error updating profile:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
+
+            setErrors({})
+
+            try {
+                let userImage
+                if (file) {
+                    const res = await edgestore.publicFiles.upload({ file })
+                    userImage = res.url
+                }
+
+                const response = await axiosInstance.put('/api/user', {
+                    userId,
+                    userName: newUserName,
+                    userImage,
+                })
+
+                if (response.status === 200) {
+                    router.refresh()
+                    setToast(true)
+                    setTimeout(() => setToast(false), 3000)
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error)
+            } finally {
+                setLoading(false)
+            }
+        },
+        [edgestore, file, newUserName, router, userId]
+    )
 
     return (
         <div className="flex flex-col items-center justify-center gap-4">
@@ -91,9 +98,7 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
                 className="flex w-full flex-col gap-2"
             >
                 <label
-                    className={`input input-bordered flex items-center gap-2 ${
-                        errors.userNameValidation ? 'input-error' : ''
-                    }`}
+                    className={`input input-md input-bordered flex items-center gap-2 ${errors.userNameValidation ? 'input-error' : ''}`}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +113,7 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
                         placeholder={userName}
                         className="grow"
                         onChange={handleInputChange}
+                        value={newUserName}
                     />
                 </label>
                 {errors.userNameValidation && (

@@ -10,7 +10,7 @@ import {
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type MenuDataType = {
     menuName: string
@@ -20,7 +20,7 @@ type MenuDataType = {
 
 interface SidebarProps {
     toggle: boolean
-    setToggle: any
+    setToggle: (toggle: boolean) => void
 }
 
 const Sidebar = ({ toggle, setToggle }: SidebarProps) => {
@@ -67,13 +67,14 @@ const Sidebar = ({ toggle, setToggle }: SidebarProps) => {
         },
     ]
 
-    const handleMenuChange = (route: string) => {
-        return pathname == route ? 'active' : ''
-    }
+    const handleMenuChange = useCallback(
+        (route: string) => (pathname === route ? 'active' : ''),
+        [pathname]
+    )
 
-    const handleSignOut = async () => {
+    const handleSignOut = useCallback(async () => {
         await signOut()
-    }
+    }, [])
 
     return (
         <aside

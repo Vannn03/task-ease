@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Sidebar from './Sidebar'
 import { Menu } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 interface NavbarProps {
     userImage?: string
@@ -13,6 +14,11 @@ interface NavbarProps {
 
 const Navbar = ({ userImage, userName, version, getCharName }: NavbarProps) => {
     const [toggle, setToggle] = useState(false)
+    const pathname = usePathname()
+
+    if (!pathname.includes('/users')) {
+        return null
+    }
 
     return (
         <>

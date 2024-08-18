@@ -1,7 +1,7 @@
 import axiosInstance from '@/utils/axiosInstance'
 import { getISODateTime } from '@/utils/datetime'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const useAddTask = (categoryId?: string) => {
     const [taskDate, setTaskDate] = useState('')
@@ -11,57 +11,59 @@ const useAddTask = (categoryId?: string) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTaskDate(e.target.value)
+    const handleInputChange = useCallback(
+        (setter: React.Dispatch<React.SetStateAction<string>>) =>
+            (e: React.ChangeEvent<HTMLInputElement>) => {
+                setter(e.target.value)
+            },
+        []
+    )
+
+    const handleAddButton = useCallback(
+        async (e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault()
+
+            setLoading(true)
+
+            const response = await axiosInstance.post('/api/task', {
+                categoryId,
+                taskDescription,
+                status: 'Incomplete',
+                deadline: getISODateTime(taskDate, taskTime),
+            })
+
+            try {
+                if (response.status === 200) {
+                    setTaskDescription('')
+                    setTaskDate('')
+                    setTaskTime('')
+                    router.refresh()
+                    setToast(true)
+                    const toastTimer = setTimeout(() => setToast(false), 3000)
+
+                    // Cleanup timer on unmount
+                    return () => clearTimeout(toastTimer)
+                }
+            } catch (error) {
+                console.error('error adding task', error)
+            } finally {
+                setLoading(false)
+            }
+        },
+        [categoryId, router, taskDate, taskTime, taskDescription]
+    )
+    return {
+        taskDate,
+        setTaskDate,
+        taskTime,
+        setTaskTime,
+        taskDescription,
+        setTaskDescription,
+        toast,
+        loading,
+        handleInputChange,
+        handleAddButton,
     }
-
-    const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTaskTime(e.target.value)
-    }
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTaskDescription(e.target.value)
-    }
-
-
-
-    const handleAddButton = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-
-        setLoading(true)
-
-        const response = await axiosInstance.post('/api/task', {
-            categoryId,
-            taskDescription,
-            status: 'Incomplete',
-            deadline: getISODateTime(taskDate, taskTime)
-        })
-
-        if (response.status === 200) {
-            setTaskDescription('')
-            setTaskDate('')
-            setTaskTime('')
-            router.refresh()
-            
-            setToast(true)
-            setTimeout(() => {
-                setToast(false)
-            }, 3000);
-        }
-
-        setLoading(false)
-    }
-  return {
-    taskDate,
-    taskTime,
-    taskDescription,
-    toast,
-    loading,
-    handleDateChange,
-    handleTimeChange,
-    handleInputChange,
-    handleAddButton
-  }
 }
 
 export default useAddTask

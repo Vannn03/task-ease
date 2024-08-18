@@ -2,7 +2,7 @@
 
 import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
-import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
+// import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import EditModal from '@/components/utilities/Modals/EditModal'
 
 interface EditCategoryProps {
@@ -18,7 +18,7 @@ const EditCategoryButton = ({
 }: EditCategoryProps) => {
     const {
         newCategoryName,
-        toast,
+        // toast,
         loading,
         handleInputChange,
         handleEditButton,

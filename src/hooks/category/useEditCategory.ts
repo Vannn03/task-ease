@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInstance"
 import { closeModal } from "@/utils/modal"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 interface UseEditCategoryProps {
     categoryId?: string
@@ -20,11 +20,11 @@ const useEditCategory = ({categoryId,  categoryName}: UseEditCategoryProps) => {
         }
     }, [categoryName])
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setNewCategoryName(e.target.value)
-    }
+    }, [])
 
-    const handleEditButton = async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
+    const handleEditButton = useCallback(async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
         e.preventDefault()
         
         setLoading(true)
@@ -34,17 +34,25 @@ const useEditCategory = ({categoryId,  categoryName}: UseEditCategoryProps) => {
             categoryName: newCategoryName,
         })
 
-        if (response.status === 200) { 
-            closeModal(dialogId)  
-            setNewCategoryName('') 
-            router.refresh() 
-            setToast(true)
-            setTimeout(() => {
-                setToast(false)
-            }, 3000)
+        try {
+            
+            if (response.status === 200) { 
+                closeModal(dialogId)  
+                setNewCategoryName('') 
+                router.refresh() 
+                setToast(true)
+                const toastTimer = setTimeout(() => setToast(false), 3000);
+
+                // Cleanup timer on unmount
+                return () => clearTimeout(toastTimer);
+            }
+        } catch (error) {
+            console.error('Error editing category:', error)
+        } finally {
+            setLoading(false)
+
         }
-        setLoading(false)
-    }
+    }, [categoryId, newCategoryName, router])
   return {
     newCategoryName,
     toast,

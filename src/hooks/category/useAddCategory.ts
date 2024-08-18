@@ -1,40 +1,48 @@
-import { useState } from 'react'
-import axiosInstance from '@/utils/axiosInstance'
-import { closeModal } from '@/utils/modal'
-import { useRouter } from 'next/navigation'
+import { useState, useCallback } from 'react';
+import axiosInstance from '@/utils/axiosInstance';
+import { closeModal } from '@/utils/modal';
+import { useRouter } from 'next/navigation';
 
 const useAddCategory = (userId?: string) => {
-    const [categoryName, setCategoryName] = useState('')
-    const [toast, setToast] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const router = useRouter()
+    const [categoryName, setCategoryName] = useState('');
+    const [toast, setToast] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
+    const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCategoryName(e.target.value);
+    }, []);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCategoryName(e.target.value)
-    }
+    const handleAddButton = useCallback(
+        async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
+            e.preventDefault();
 
-    const handleAddButton = async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
-        e.preventDefault()
+            setLoading(true);
 
-        setLoading(true)
+            try {
+                const response = await axiosInstance.post('/api/category', {
+                    userId,
+                    categoryName,
+                });
 
-        const response = await axiosInstance.post('/api/category', {
-            userId,
-            categoryName,
-        })
+                if (response.status === 200) {
+                    closeModal(dialogId);
+                    setCategoryName('');
+                    router.refresh();
+                    setToast(true);
+                    const toastTimer = setTimeout(() => setToast(false), 3000);
 
-        if (response.status === 200) {
-            closeModal(dialogId)
-            setCategoryName('')
-            router.refresh()
-            setToast(true)
-            setTimeout(() => {
-                setToast(false)
-            }, 3000)
-        }
-        setLoading(false)
-    }
+                    // Cleanup timer on unmount
+                    return () => clearTimeout(toastTimer);
+                }
+            } catch (error) {
+                console.error('Error adding category:', error);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [categoryName, userId, router]
+    );
 
     return {
         categoryName,
@@ -42,7 +50,7 @@ const useAddCategory = (userId?: string) => {
         loading,
         handleInputChange,
         handleAddButton,
-    }
-}
+    };
+};
 
-export default useAddCategory
+export default useAddCategory;

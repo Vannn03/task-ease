@@ -1,8 +1,8 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
 import { BookText, Calendar, ClipboardList, Clock, Eye } from 'lucide-react'
 import { useState } from 'react'
-import DeleteTaskButton from './buttons/taskButtons/DeleteTaskButton'
-import EditTaskButton from './buttons/taskButtons/EditTaskButton'
+import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
+import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
 import Link from 'next/link'
 
 interface TaskDrawerProps {
