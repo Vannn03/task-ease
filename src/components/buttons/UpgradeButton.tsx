@@ -1,13 +1,15 @@
 'use client'
 
 import axiosInstance from '@/utils/axiosInstance'
+import { closeModal } from '@/utils/modal'
 import { useEffect } from 'react'
 
 interface UpgradeButtonProps {
     userId?: string
+    version?: string
 }
 
-const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
+const UpgradeButton = ({ userId, version }: UpgradeButtonProps) => {
     useEffect(() => {
         const snapScript = 'https://app.sandbox.midtrans.com/snap/snap.js'
         const clientKey = process.env.NEXT_PUBLIC_CLIENT
@@ -34,6 +36,10 @@ const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
     const upgrade = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
 
+        closeModal(`upgradeModalCategoryUsage-${userId}`)
+        closeModal(`upgradeModaThemeController-${userId}`)
+        closeModal(`upgradeModalReminder-${userId}`)
+
         const response = await axiosInstance.post('/api/token', {
             orderId: userId,
             grossAmount: 50000,
@@ -44,12 +50,21 @@ const UpgradeButton = ({ userId }: UpgradeButtonProps) => {
 
     return (
         <>
-            <button
-                className="btn btn-disabled btn-ghost font-medium text-primary"
-                onClick={upgrade}
-            >
-                Upgrade to Premium
-            </button>
+            {version == 'Premium' ? (
+                <button
+                    className="btn btn-disabled font-medium"
+                    onClick={upgrade}
+                >
+                    Already Premium
+                </button>
+            ) : (
+                <button
+                    className="btn btn-ghost font-medium text-primary"
+                    onClick={upgrade}
+                >
+                    Upgrade to Premium
+                </button>
+            )}
         </>
     )
 }

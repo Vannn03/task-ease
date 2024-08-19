@@ -96,7 +96,10 @@ const Page = async () => {
             <div className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12">
                 <AddCategoryButton
                     userId={loggedUser?.userId}
+                    version={loggedUser?.version}
                     dialogId={`addCategoryModal-${loggedUser?.userId}`}
+                    upgradeDialogId={`upgradeModalCategoryUsage-${loggedUser?.userId}`}
+                    categoryLength={categoryDB.length}
                 />
             </div>
         </div>

@@ -2,16 +2,27 @@
 
 import { useContext, useCallback } from 'react'
 import { ThemeContext } from '@/contexts/ThemeContext'
+import { showModal } from '@/utils/modal'
 
-const ThemeController = () => {
+interface ThemeControllerProps {
+    upgradeDialogId?: string
+    version?: string
+}
+
+const ThemeController = ({
+    upgradeDialogId,
+    version,
+}: ThemeControllerProps) => {
     const { theme, changeTheme } = useContext(ThemeContext)
 
     // Memoize the onChange handler
     const handleChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
-            changeTheme(e.target.checked ? 'dark' : 'light')
+            version == 'Free'
+                ? showModal(upgradeDialogId as string)
+                : changeTheme(e.target.checked ? 'dark' : 'light')
         },
-        [changeTheme]
+        [upgradeDialogId, version, changeTheme]
     )
 
     // Memoized SVGs

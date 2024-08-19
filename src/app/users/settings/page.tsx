@@ -1,6 +1,7 @@
 import ProfileUpdate from '@/components/ProfileUpdate'
 import ThemeController from '@/components/ThemeController'
 import UpgradeButton from '@/components/buttons/UpgradeButton'
+import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { ReactElement } from 'react'
 
@@ -36,12 +37,22 @@ const Page = async () => {
                 </>
             ),
             description: 'Upgrade your account for more features.',
-            action: <UpgradeButton userId={loggedUser?.userId} />,
+            action: (
+                <UpgradeButton
+                    userId={loggedUser?.userId}
+                    version={loggedUser?.version}
+                />
+            ),
         },
         {
             title: 'Interface themes',
             description: 'Select or customize your UI theme.',
-            action: <ThemeController />,
+            action: (
+                <ThemeController
+                    upgradeDialogId={`upgradeModalThemeController-${loggedUser?.userId}`}
+                    version={loggedUser?.version}
+                />
+            ),
         },
     ]
 
@@ -62,6 +73,14 @@ const Page = async () => {
                     {data.action}
                 </section>
             ))}
+
+            <UpgradeModal
+                userId={loggedUser?.userId}
+                version={loggedUser?.version}
+                upgradeDialogId={`upgradeModalThemeController-${loggedUser?.userId}`}
+                title={'Theme customization feature is locked'}
+                description={'This feature is not available on free version'}
+            />
         </main>
     )
 }

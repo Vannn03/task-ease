@@ -23,7 +23,7 @@ interface Task {
 
 interface NavbarProps {
     userImage?: string
-    userName?: string
+    userId?: string
     version?: string
     getCharName?: string
     taskDB: Task[]
@@ -31,7 +31,7 @@ interface NavbarProps {
 
 const Navbar = ({
     userImage,
-    userName,
+    userId,
     version,
     getCharName,
     taskDB,
@@ -65,7 +65,11 @@ const Navbar = ({
                     </button>
 
                     <div className="flex items-center gap-6">
-                        <Reminder taskDB={taskDB} />
+                        <Reminder
+                            taskDB={taskDB}
+                            userId={userId}
+                            version={version}
+                        />
                         {userImage == null ? (
                             <div className="avatar placeholder">
                                 <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">
