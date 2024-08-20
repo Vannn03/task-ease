@@ -1,16 +1,20 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-    important: true,
-    content: [
-        './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-        './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-        './src/contexts/**/*.{js,ts,jsx,tsx,mdx}',
-    ],
-    theme: {
-        extend: {},
-    },
-    plugins: [require('daisyui')],
-    daisyui: {
-        themes: ['light', 'dark'],
-    },
-}
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  important: true,
+  content: [
+    "./src/Components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/App/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/Contexts/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: ["light", "dark"],
+  },
+};
+export default config;
