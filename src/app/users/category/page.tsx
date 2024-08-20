@@ -98,7 +98,7 @@ const Page = async () => {
                     userId={loggedUser?.userId}
                     version={loggedUser?.version}
                     dialogId={`addCategoryModal-${loggedUser?.userId}`}
-                    upgradeDialogId={`upgradeModalCategoryUsage-${loggedUser?.userId}`}
+                    // upgradeDialogId={`upgradeModalCategoryUsage-${loggedUser?.userId}`}
                     categoryLength={categoryDB.length}
                 />
             </div>

@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Bell, X } from 'lucide-react'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
-import UpgradeModal from '../Modals/UpgradeModal'
+// import UpgradeModal from '../Modals/UpgradeModal'
 
 interface Task {
     taskId: string
@@ -21,11 +21,14 @@ interface Task {
 
 interface ReminderProps {
     taskDB: Task[]
-    userId?: string
-    version?: string
+    // userId?: string
+    // version?: string
 }
 
-const Reminder = ({ taskDB, userId, version }: ReminderProps) => {
+const Reminder = ({
+    taskDB,
+    // userId, version
+}: ReminderProps) => {
     const [notifications, setNotifications] = useState<Task[]>([])
 
     useEffect(() => {
@@ -81,68 +84,68 @@ const Reminder = ({ taskDB, userId, version }: ReminderProps) => {
                     <button
                         tabIndex={0}
                         className="btn btn-circle btn-ghost btn-sm"
-                        onClick={() =>
-                            version == 'Free' &&
-                            showModal(`upgradeModalReminder-${userId}`)
-                        }
+                        // onClick={() =>
+                        //     version == 'Free' &&
+                        //     showModal(`upgradeModalReminder-${userId}`)
+                        // }
                     >
                         <Bell />
                     </button>
                 </div>
 
-                {version !== 'Free' && (
-                    <ul
-                        tabIndex={0}
-                        className="menu dropdown-content z-[1] w-72 rounded-box bg-base-100 p-4 shadow-lg"
-                    >
-                        {notifications.length > 0 ? (
-                            notifications.map((task) => (
-                                <div
-                                    key={task.taskId}
-                                    className="flex items-center justify-between gap-2 rounded-lg p-2 transition-colors hover:bg-base-200"
+                {/* {version !== 'Free' && ( */}
+                <ul
+                    tabIndex={0}
+                    className="menu dropdown-content z-[1] w-72 rounded-box bg-base-100 p-4 shadow-lg"
+                >
+                    {notifications.length > 0 ? (
+                        notifications.map((task) => (
+                            <div
+                                key={task.taskId}
+                                className="flex items-center justify-between gap-2 rounded-lg p-2 transition-colors hover:bg-base-200"
+                            >
+                                <Link
+                                    href={`/users/category/${task.category?.categoryId}`}
+                                    className="flex flex-col"
                                 >
-                                    <Link
-                                        href={`/users/category/${task.category?.categoryId}`}
-                                        className="flex flex-col"
-                                    >
-                                        <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
-                                            {task.taskDescription}
-                                        </span>
-                                        <span className="text-xs opacity-75">
-                                            Deadline:{' '}
-                                            {dayjs(task.deadline).format(
-                                                'DD MMM, HH:mm'
-                                            )}
-                                        </span>
-                                    </Link>
-                                    <button
-                                        onClick={() =>
-                                            closeNotification(task.taskId)
-                                        }
-                                        className="btn btn-ghost btn-sm opacity-50"
-                                    >
-                                        <X size={16} />
-                                    </button>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="p-2 text-center">
-                                <span className="text-sm font-medium opacity-75">
-                                    No upcoming tasks
-                                </span>
+                                    <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
+                                        {task.taskDescription}
+                                    </span>
+                                    <span className="text-xs opacity-75">
+                                        Deadline:{' '}
+                                        {dayjs(task.deadline).format(
+                                            'DD MMM, HH:mm'
+                                        )}
+                                    </span>
+                                </Link>
+                                <button
+                                    onClick={() =>
+                                        closeNotification(task.taskId)
+                                    }
+                                    className="btn btn-ghost btn-sm opacity-50"
+                                >
+                                    <X size={16} />
+                                </button>
                             </div>
-                        )}
-                    </ul>
-                )}
+                        ))
+                    ) : (
+                        <div className="p-2 text-center">
+                            <span className="text-sm font-medium opacity-75">
+                                No upcoming tasks
+                            </span>
+                        </div>
+                    )}
+                </ul>
+                {/* )} */}
             </div>
 
-            <UpgradeModal
+            {/* <UpgradeModal
                 userId={userId}
                 version={version}
                 upgradeDialogId={`upgradeModalReminder-${userId}`}
                 title={'Reminder notification feature is locked'}
                 description={'This feature is not available on free version'}
-            />
+            /> */}
         </>
     )
 }

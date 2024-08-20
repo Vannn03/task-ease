@@ -26,8 +26,8 @@ const NavSideBar = async () => {
     return (
         <Navbar
             userImage={loggedUser?.userImage as string}
-            userId={loggedUser?.userId}
-            version={loggedUser?.version}
+            // userId={loggedUser?.userId}
+            // version={loggedUser?.version}
             getCharName={getCharName}
             taskDB={taskDB}
         />

@@ -5,13 +5,13 @@ import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import useAddCategory from '@/hooks/category/useAddCategory'
 import { Plus } from 'lucide-react'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
-import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
+// import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
 
 interface addCategoryProps {
     userId?: string
     version?: string
     dialogId: string
-    upgradeDialogId?: string
+    // upgradeDialogId?: string
     categoryLength: number
 }
 
@@ -19,22 +19,22 @@ const AddCategoryButton = ({
     userId,
     version,
     dialogId,
-    upgradeDialogId,
+    // upgradeDialogId,
     categoryLength,
 }: addCategoryProps) => {
     const { categoryName, toast, loading, handleInputChange, handleAddButton } =
         useAddCategory(userId)
 
     const handleButtonClick = () => {
-        if (version == 'Free') {
-            if (categoryLength == 5) {
-                showModal(upgradeDialogId as string)
-            } else if (categoryLength < 5) {
-                showModal(dialogId)
-            }
-        } else if (version == 'Premium') {
-            showModal(dialogId)
-        }
+        // if (version == 'Free') {
+        //     if (categoryLength == 5) {
+        //         showModal(upgradeDialogId as string)
+        //     } else if (categoryLength < 5) {
+        //         showModal(dialogId)
+        //     }
+        // } else if (version == 'Premium') {
+        showModal(dialogId)
+        // }
     }
 
     return (
@@ -46,13 +46,13 @@ const AddCategoryButton = ({
                 <Plus />
             </button>
 
-            <UpgradeModal
+            {/* <UpgradeModal
                 userId={userId}
                 version={version}
                 upgradeDialogId={upgradeDialogId}
                 title={'Limited category usage'}
                 description={'Your category usage has reached its limit'}
-            />
+            /> */}
 
             <dialog
                 id={dialogId}

@@ -1,7 +1,7 @@
 import ProfileUpdate from '@/components/ProfileUpdate'
 import ThemeController from '@/components/ThemeController'
-import UpgradeButton from '@/components/buttons/UpgradeButton'
-import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
+// import UpgradeButton from '@/components/buttons/UpgradeButton'
+// import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { ReactElement } from 'react'
 
@@ -31,17 +31,18 @@ const Page = async () => {
             title: (
                 <>
                     <p>Version</p>
-                    <span className="badge badge-neutral text-xs">
+                    {/* <span className="badge badge-neutral text-xs">
                         {loggedUser?.version}
-                    </span>
+                    </span> */}
                 </>
             ),
             description: 'Upgrade your account for more features.',
             action: (
-                <UpgradeButton
-                    userId={loggedUser?.userId}
-                    version={loggedUser?.version}
-                />
+                // <UpgradeButton
+                //     userId={loggedUser?.userId}
+                //     version={loggedUser?.version}
+                // />
+                <button className="btn btn-disabled">Coming soon</button>
             ),
         },
         {
@@ -49,8 +50,8 @@ const Page = async () => {
             description: 'Select or customize your UI theme.',
             action: (
                 <ThemeController
-                    upgradeDialogId={`upgradeModalThemeController-${loggedUser?.userId}`}
-                    version={loggedUser?.version}
+                // upgradeDialogId={`upgradeModalThemeController-${loggedUser?.userId}`}
+                // version={loggedUser?.version}
                 />
             ),
         },
@@ -74,13 +75,13 @@ const Page = async () => {
                 </section>
             ))}
 
-            <UpgradeModal
+            {/* <UpgradeModal
                 userId={loggedUser?.userId}
                 version={loggedUser?.version}
                 upgradeDialogId={`upgradeModalThemeController-${loggedUser?.userId}`}
                 title={'Theme customization feature is locked'}
                 description={'This feature is not available on free version'}
-            />
+            /> */}
         </main>
     )
 }
