@@ -3,9 +3,11 @@ import type { Config } from "tailwindcss";
 const config: Config = {
   important: true,
   content: [
-    "./src/Components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/App/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/Contexts/**/*.{js,ts,jsx,tsx,mdx}",
+    "./Components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/contexts/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {},
