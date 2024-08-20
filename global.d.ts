@@ -1,5 +1,5 @@
-interface Window {
-    snap: {
-        pay: (token: string) => void
-    }
-}
+// interface Window {
+//     snap: {
+//         pay: (token: string) => void
+//     }
+// }

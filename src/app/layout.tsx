@@ -35,19 +35,17 @@ export default function RootLayout({
             <body className={poppins.className}>
                 <ThemeProvider>
                     <ClientThemeWrapper>
-                        <div className="">
-                            <LocalizationProvider
-                                dateAdapter={AdapterDayjs}
-                                adapterLocale="en-gb"
-                            >
-                                <NavSideBar />
-                                <div className="min-h-[calc(100dvh-56px)] w-full bg-base-200 sm:min-h-[calc(100dvh-72px)]">
-                                    <EdgeStoreProvider>
-                                        {children}
-                                    </EdgeStoreProvider>
-                                </div>
-                            </LocalizationProvider>
-                        </div>
+                        <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                            adapterLocale="en-gb"
+                        >
+                            <NavSideBar />
+                            <div className="min-h-[calc(100dvh-56px)] w-full bg-base-200 sm:min-h-[calc(100dvh-72px)]">
+                                <EdgeStoreProvider>
+                                    {children}
+                                </EdgeStoreProvider>
+                            </div>
+                        </LocalizationProvider>
                     </ClientThemeWrapper>
                 </ThemeProvider>
             </body>
