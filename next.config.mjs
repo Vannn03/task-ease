@@ -1,13 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    // webpack: (config) => {
-    //     config.module.rules.push({
-    //       test: /\.(html|cs)$/,
-    //       use: 'ignore-loader',
-    //     });
-    
-    //     return config;
-    //   },
-};
+const nextConfig = {}
 
-export default nextConfig;
+export default nextConfig
