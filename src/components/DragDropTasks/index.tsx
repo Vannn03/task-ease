@@ -57,7 +57,7 @@ const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
             <Droppable droppableId="tasks">
                 {(provided) => (
                     <div
-                        className="tasks flex flex-col gap-4"
+                        className="tasks"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
@@ -69,7 +69,7 @@ const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
                             >
                                 {(provided) => (
                                     <div
-                                        className="flex items-center justify-between rounded bg-base-100 px-4 py-3"
+                                        className="flex items-center justify-between rounded px-4 py-3 transition-colors hover:bg-base-100"
                                         {...provided.draggableProps}
                                         ref={provided.innerRef}
                                     >

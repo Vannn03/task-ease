@@ -4,6 +4,7 @@ import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
 // import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import EditModal from '@/components/utilities/Modals/EditModal'
+import { SquarePen } from 'lucide-react'
 
 interface EditCategoryProps {
     dialogId: string
@@ -27,10 +28,10 @@ const EditCategoryButton = ({
     return (
         <>
             <a
-                className="btn btn-ghost btn-sm text-warning"
+                className="btn btn-warning btn-sm w-1/2"
                 onClick={() => showModal(dialogId)}
             >
-                Edit
+                <SquarePen className="size-4" /> Edit
             </a>
             <EditModal
                 dialogId={dialogId}

@@ -66,7 +66,7 @@ const TaskDrawer = ({
             />
 
             <button
-                className="btn btn-ghost btn-sm"
+                className="btn btn-square btn-ghost btn-sm"
                 onClick={() => setToggleDrawer((prev) => !prev)}
             >
                 <Eye className="opacity-50" />

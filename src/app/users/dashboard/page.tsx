@@ -56,13 +56,13 @@ const Page = async () => {
         <Suspense fallback={<Loading />}>
             <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
                 <main className="flex w-full flex-col gap-4 sm:gap-6">
-                    <section className="relative flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
+                    <section className="relative flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
                         <div className="flex items-center gap-2">
                             <h1 className="text-lg font-medium">Latest Task</h1>
                         </div>
                         <DashboardTable userId={loggedUser?.userId} />
                     </section>
-                    <section className="flex flex-col gap-2 rounded-2xl bg-base-100 p-4">
+                    <section className="flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
                         <div className="flex items-center gap-2">
                             <h1 className="text-lg font-medium">
                                 Category Overview
@@ -73,7 +73,7 @@ const Page = async () => {
                         </div>
                     </section>
                 </main>
-                <aside className="relative flex flex-col rounded-2xl bg-base-100 p-4">
+                <aside className="relative flex flex-col rounded bg-base-100 p-4 shadow">
                     <div className="mb-2 flex items-center gap-2">
                         <h1 className="text-lg font-medium">Calendar</h1>
                     </div>

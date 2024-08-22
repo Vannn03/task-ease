@@ -24,7 +24,7 @@ const DeleteTaskButton = ({
                 className="btn btn-ghost w-1/2 text-error"
                 onClick={() => showModal(dialogId)}
             >
-                <Trash2 className="size-5" /> Delete
+                <Trash2 className="size-4" /> Delete
             </button>
 
             <DeleteModal

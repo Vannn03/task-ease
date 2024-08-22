@@ -1,5 +1,6 @@
 'use client'
 
+import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import { Alert } from '@mui/material'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
@@ -71,11 +72,7 @@ const Page = () => {
                     <Alert severity="success">Sign In Successful</Alert>
                 </div>
                 <button type="submit" className="btn btn-primary mt-2">
-                    {loading ? (
-                        <span className="loading loading-infinity loading-lg"></span>
-                    ) : (
-                        <>Sign in</>
-                    )}
+                    {loading ? <ButtonLoader /> : <>Sign in</>}
                 </button>
                 <div className="divider">OR</div>
                 <Link href={'/signup'} className="btn btn-ghost">

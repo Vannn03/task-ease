@@ -1,10 +1,9 @@
 import AddCategoryButton from '@/components/buttons/categoryButtons/AddCategoryButton'
-import DeleteCategoryButton from '@/components/buttons/categoryButtons/DeleteCategoryButton'
-import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
 import { authUserSessionServer, findLoggedUser } from '@/utils/auth-utils'
 import prisma from '@/libs/prisma'
-import { Settings2 } from 'lucide-react'
 import Link from 'next/link'
+import CategoryCollapse from '@/components/CategoryCollapse'
+import { ArrowRight } from 'lucide-react'
 
 const Page = async () => {
     const user = await authUserSessionServer()
@@ -35,59 +34,43 @@ const Page = async () => {
                     : 0
                 return (
                     <div
+                        className="card w-full bg-base-100 shadow"
                         key={data.categoryId}
-                        className="card w-full bg-base-100"
                     >
                         <div className="card-body">
-                            <div className="flex items-center justify-between">
-                                <h2 className="card-title w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-lg sm:text-xl">
-                                    {data.categoryName}
-                                </h2>
-
-                                <div className="dropdown dropdown-end dropdown-bottom">
-                                    <div
-                                        tabIndex={0}
-                                        role="button"
-                                        className="btn btn-ghost m-1"
-                                    >
-                                        <Settings2 />
-                                    </div>
-                                    <ul
-                                        tabIndex={0}
-                                        className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow-xl"
-                                    >
-                                        <EditCategoryButton
-                                            categoryId={data.categoryId}
-                                            categoryName={data.categoryName}
-                                            dialogId={`editCategoryModal-${data.categoryId}`}
-                                        />
-                                        <DeleteCategoryButton
-                                            categoryId={data.categoryId}
-                                            categoryName={data.categoryName}
-                                            dialogId={`deleteCategoryModal-${data.categoryId}`}
-                                        />
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="card-actions mt-4 items-end justify-between">
-                                <div
-                                    className="radial-progress bg-base-200 text-success"
-                                    style={
-                                        {
-                                            '--value': completedTaskPercentage,
-                                            '--thickness': '.5rem',
-                                        } as React.CSSProperties
-                                    }
-                                    role="progressbar"
-                                >
-                                    {completedTaskPercentage.toFixed(0)}%
+                            <div className="flex justify-between">
+                                <div className="flex flex-col gap-1">
+                                    <h2 className="card-title w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-lg sm:text-xl">
+                                        {data.categoryName}
+                                    </h2>
+                                    <p>Total task: {data.tasks.length}</p>
                                 </div>
                                 <Link
                                     href={`category/${data.categoryId}`}
-                                    className="btn"
+                                    className="btn btn-square btn-sm"
                                 >
-                                    View Tasks
+                                    <ArrowRight className="size-5" />
                                 </Link>
+                            </div>
+                            <div className="card-actions mt-2 flex-col items-center">
+                                <CategoryCollapse
+                                    categoryId={data.categoryId}
+                                    categoryName={data.categoryName}
+                                />
+                                <div className="flex w-full flex-col gap-1 border-t pt-2">
+                                    <span className="flex items-center justify-between text-sm">
+                                        <p className="w-full">Progress</p>
+                                        <p>
+                                            {completedTaskPercentage.toFixed(0)}
+                                            %
+                                        </p>
+                                    </span>
+                                    <progress
+                                        className="progress progress-success w-full"
+                                        value={completedTaskPercentage}
+                                        max="100"
+                                    ></progress>
+                                </div>
                             </div>
                         </div>
                     </div>

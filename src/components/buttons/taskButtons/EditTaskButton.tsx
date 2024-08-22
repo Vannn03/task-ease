@@ -35,10 +35,10 @@ const EditTaskButton = ({
     return (
         <>
             <button
-                className="w btn btn-warning w-1/2"
+                className="btn btn-warning w-1/2"
                 onClick={() => showModal(dialogId)}
             >
-                <SquarePen className="size-5" /> Edit
+                <SquarePen className="size-4" /> Edit
             </button>
             <EditModal
                 dialogId={dialogId}
