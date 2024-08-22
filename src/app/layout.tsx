@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
-import '@/styles/globals.css'
+import './globals.css'
 import { EdgeStoreProvider } from '@/libs/edgestore'
 import ClientThemeWrapper from '@/contexts/ClientThemeWrapper'
 import { ThemeProvider } from '@/contexts/ThemeContext'
