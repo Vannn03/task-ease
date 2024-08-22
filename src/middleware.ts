@@ -1,11 +1,11 @@
 export { auth as middleware } from "@/auth"
-import { auth } from '@/auth';
+import NextAuth from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import authConfig from "./auth.config";
 
-export default auth((req) => {
-  if (!req.auth && req.nextUrl.pathname !== "/signin") {
-    const newUrl = new URL("/signin", req.nextUrl.origin)
-    return Response.redirect(newUrl)
-  }
+const { auth } = NextAuth(authConfig)
+export default auth(async function middleware(request: NextRequest) {
+  return NextResponse.redirect(new URL('/signin', request.url))
 })
  
 export const config = {

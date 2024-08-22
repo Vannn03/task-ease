@@ -22,6 +22,7 @@ const NavSideBar = async () => {
         ?.split(' ')
         .map((word) => word.slice(0, 1))
         .join('')
+        .toUpperCase()
 
     return (
         <Navbar
