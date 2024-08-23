@@ -7,10 +7,10 @@ const BackButton = () => {
     const router = useRouter()
     return (
         <button
-            className="btn btn-square btn-warning btn-sm"
+            className="btn btn-circle btn-sm sm:btn-md"
             onClick={() => router.back()}
         >
-            <ChevronLeft className="size-5" />
+            <ChevronLeft className="size-5 sm:size-6" />
         </button>
     )
 }

@@ -1,9 +1,15 @@
 import axiosInstance from '@/utils/axiosInstance'
 import { getISODateTime } from '@/utils/datetime'
+import { closeModal } from '@/utils/modal'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 
-const useAddTask = (categoryId?: string) => {
+interface useAddTaskProps {
+    categoryId?: string
+    dialogId: string
+}
+
+const useAddTask = ({categoryId, dialogId}: useAddTaskProps) => {
     const [taskDate, setTaskDate] = useState('')
     const [taskTime, setTaskTime] = useState('')
     const [taskDescription, setTaskDescription] = useState('')
@@ -34,6 +40,7 @@ const useAddTask = (categoryId?: string) => {
 
             try {
                 if (response.status === 200) {
+                    closeModal(dialogId)
                     setTaskDescription('')
                     setTaskDate('')
                     setTaskTime('')
@@ -50,7 +57,7 @@ const useAddTask = (categoryId?: string) => {
                 setLoading(false)
             }
         },
-        [categoryId, router, taskDate, taskTime, taskDescription]
+        [categoryId, router, taskDate, taskTime, taskDescription, dialogId]
     )
     return {
         taskDate,

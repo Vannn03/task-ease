@@ -89,14 +89,14 @@ const Reminder = ({
                         //     showModal(`upgradeModalReminder-${userId}`)
                         // }
                     >
-                        <Bell />
+                        <Bell className="size-5 sm:size-6" />
                     </button>
                 </div>
 
                 {/* {version !== 'Free' && ( */}
                 <ul
                     tabIndex={0}
-                    className="menu dropdown-content z-[1] w-72 rounded-box bg-base-100 p-4 shadow-lg"
+                    className="menu dropdown-content z-[1] w-64 rounded-box bg-base-100 p-4 shadow-lg sm:w-72"
                 >
                     {notifications.length > 0 ? (
                         notifications.map((task) => (
@@ -122,7 +122,7 @@ const Reminder = ({
                                     onClick={() =>
                                         closeNotification(task.taskId)
                                     }
-                                    className="btn btn-ghost btn-sm opacity-50"
+                                    className="btn btn-square btn-ghost btn-sm opacity-50"
                                 >
                                     <X size={16} />
                                 </button>

@@ -4,10 +4,11 @@ import { getISODateTimeLocale } from '@/utils/datetime'
 import { DateCalendar } from '@/libs/mui'
 import dayjs, { Dayjs } from 'dayjs'
 import { useState, useMemo } from 'react'
-import { CalendarClock, Clock } from 'lucide-react'
+import { CalendarClock, CalendarDays, Clock, Eye } from 'lucide-react'
 import LiveClock from '@/components/LiveClock'
-import TaskDrawer from '@/components/TaskDrawer'
+import TaskDrawer from '@/components/DragDropTasks/TaskDrawer'
 import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 interface Task {
     taskId: string
@@ -24,7 +25,13 @@ interface CalendarProps {
     nearestTaskDB: Task[]
 }
 
+type StatisticType = {
+    title: string
+    value: number
+}
+
 const Calendar = ({ nearestTaskDB }: CalendarProps) => {
+    const [toggleDrawer, setToggleDrawer] = useState(false)
     const pathname = usePathname()
     const dateNow = dayjs()
     const fullDateFormat = 'dddd, D MMMM YYYY'
@@ -67,20 +74,65 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
         return { borderColor: '', textColor: '' }
     }
 
+    const statisticData: StatisticType[] = [
+        {
+            title: 'Total',
+            value: dailyTasks.length,
+        },
+        {
+            title: 'Late',
+            value: dailyTasks.filter((task) => {
+                const taskTime = dayjs(task.deadline)
+                const diffInMinutes = taskTime.diff(dateNow, 'minute')
+                return diffInMinutes < 0
+            }).length,
+        },
+        {
+            title: 'Near',
+            value: dailyTasks.filter((task) => {
+                const taskTime = dayjs(task.deadline)
+                const diffInMinutes = taskTime.diff(dateNow, 'minute')
+                return diffInMinutes > 0 && diffInMinutes <= 60
+            }).length,
+        },
+    ]
+
     return (
         <>
-            <div className="">
-                <DateCalendar
-                    value={dayjs(selectedDate)}
-                    onChange={handleDateChange}
-                    className="glass top-20 md:sticky"
-                />
-            </div>
-            <div className="flex w-full flex-col gap-4 border-t pt-4">
-                <div className="flex flex-col items-center justify-center gap-2 opacity-75">
-                    <Clock className="size-6" />
-                    <LiveClock />
+            <div className="flex flex-col justify-center gap-4 pb-4 sm:flex-row lg:flex-col lg:justify-start">
+                <div className="top-24 lg:sticky">
+                    <DateCalendar
+                        value={dayjs(selectedDate)}
+                        onChange={handleDateChange}
+                        className="rounded border-2 border-base-content/10 bg-base-100"
+                    />
                 </div>
+                {pathname == '/users/calendar' && (
+                    <div className="stats stats-horizontal top-[28rem] rounded sm:stats-vertical lg:stats-horizontal lg:sticky">
+                        {statisticData.map((data, index) => (
+                            <div className="stat" key={index}>
+                                <div className="text-xs opacity-50 sm:text-base">
+                                    {data.title}
+                                </div>
+                                <div
+                                    className={`text-xl font-bold sm:text-3xl ${index == 1 && 'text-error'} ${index == 2 && 'text-warning'}`}
+                                >
+                                    {data.value}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+            <div className="flex w-full flex-col gap-4">
+                {pathname == '/users/dashboard' && (
+                    <div className="flex flex-col items-center justify-center gap-1 opacity-75">
+                        <Clock className="size-4 sm:size-5" />
+                        <div className="font-semibold sm:text-lg">
+                            <LiveClock />
+                        </div>
+                    </div>
+                )}
                 {dailyTasks.length === 0 ? (
                     <p className="text-center font-medium opacity-35">
                         No task to display.
@@ -113,19 +165,31 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                                         </p>
                                     </span>
                                 </span>
+                                <button
+                                    className="btn btn-square btn-ghost btn-sm sm:btn-md"
+                                    onClick={() =>
+                                        setToggleDrawer((prev) => !prev)
+                                    }
+                                >
+                                    <Eye className="size-4 opacity-50 sm:size-5" />
+                                </button>
                                 <TaskDrawer
                                     taskId={task.taskId}
                                     taskDescription={task.taskDescription}
                                     deadline={task.deadline}
                                     categoryId={task.category?.categoryId}
                                     categoryName={task.category?.categoryName}
+                                    toggleDrawer={toggleDrawer}
+                                    setToggleDrawer={setToggleDrawer}
                                 />
                             </div>
                         )
                     })
                 )}
                 {dailyTasks.length > 3 && pathname === '/users/dashboard' && (
-                    <button className="btn">View more</button>
+                    <Link className="btn" href={'/users/calendar'}>
+                        View more
+                    </Link>
                 )}
             </div>
         </>

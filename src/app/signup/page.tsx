@@ -20,6 +20,7 @@ const Page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [successAlert, setSuccessAlert] = useState(false)
     const [errors, setErrors] = useState<FormErrors>({})
     const router = useRouter()
 
@@ -81,6 +82,7 @@ const Page = () => {
             })
 
             if (response.status === 200) {
+                setSuccessAlert(true)
                 router.push('/api/auth/signin')
             }
         } catch (error) {
@@ -150,13 +152,14 @@ const Page = () => {
                         </div>
                     )}
                 </label>
-                {errors.emailTaken && (
-                    <div className="block">
-                        <Alert severity="warning">
-                            Email is already taken!
-                        </Alert>
-                    </div>
-                )}
+                <div
+                    className={`${errors.emailTaken ? 'block w-full' : 'hidden'}`}
+                >
+                    <Alert severity="warning">Email is already taken!</Alert>
+                </div>
+                <div className={`${successAlert ? 'block w-full' : 'hidden'}`}>
+                    <Alert severity="success">Sign In Successful</Alert>
+                </div>
                 <button
                     type="submit"
                     className="btn btn-primary btn-block mt-2"

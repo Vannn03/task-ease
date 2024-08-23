@@ -14,6 +14,11 @@ interface PageProps {
     params: Params
 }
 
+type StatisticType = {
+    title: string
+    value: number
+}
+
 const Page = async ({ params }: PageProps) => {
     const taskDB = await prisma.task.findMany({
         where: { categoryId: params.id },
@@ -32,60 +37,70 @@ const Page = async ({ params }: PageProps) => {
         where: { categoryId: params.id },
     })
 
+    const statisticData: StatisticType[] = [
+        {
+            title: 'Total',
+            value: taskDB.length,
+        },
+        {
+            title: 'Completed',
+            value: taskDB.filter((task) => task.status == 'Completed').length,
+        },
+        {
+            title: 'Incompleted',
+            value: taskDB.filter((task) => task.status == 'Incomplete').length,
+        },
+    ]
+
     return (
         <Suspense fallback={<Loading />}>
-            <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6">
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-center justify-between gap-4">
-                        <BackButton />
+            <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
+                <div className="top-24 z-40 flex h-fit w-full flex-col gap-4 rounded bg-base-100 p-4 shadow xl:sticky xl:w-[40rem]">
+                    <div className="flex items-center gap-4">
+                        <span className="flex items-center justify-between gap-4">
+                            <BackButton />
+                        </span>
+                        <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">
+                            {categoryDB?.categoryName}
+                        </h1>
+                    </div>
+
+                    <div className="stats stats-horizontal">
+                        {statisticData.map((data, index) => (
+                            <div className="stat" key={index}>
+                                <div className="text-xs opacity-50 sm:text-base">
+                                    {data.title}
+                                </div>
+                                <div
+                                    className={`text-xl font-bold sm:text-3xl ${index == 1 && 'text-success'} ${index == 2 && 'text-warning'}`}
+                                >
+                                    {data.value}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex w-full flex-col gap-4">
+                    <div className="z-40 flex items-center justify-between border-b border-base-content/10 bg-base-200 pb-4">
+                        <AddTaskButton
+                            categoryId={categoryDB?.categoryId}
+                            dialogId={`addTaskModal-${categoryDB?.categoryId}`}
+                        />
+
                         <DeleteCompletedTaskButton
                             categoryId={categoryDB?.categoryId}
                             dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
                             finishedTaskLength={finishedTaskDB.length}
                         />
                     </div>
-                    <h1 className="text-xl font-semibold sm:text-2xl lg:text-3xl">
-                        {categoryDB?.categoryName}
-                    </h1>
-                </div>
-
-                <AddTaskButton categoryId={categoryDB?.categoryId} />
-
-                <div role="tablist" className="tabs tabs-bordered relative">
-                    <input
-                        type="radio"
-                        name="my_tabs_1"
-                        role="tab"
-                        className="tab"
-                        aria-label="All"
-                        defaultChecked
-                    />
-                    <div role="tabpanel" className="tab-content py-4">
-                        {taskDB.length == 0 ? (
-                            <p className="text-center font-medium opacity-50">
-                                No task found
-                            </p>
-                        ) : (
-                            <DragDropTasks taskDB={taskDB} />
-                        )}
-                    </div>
-
-                    <input
-                        type="radio"
-                        name="my_tabs_1"
-                        role="tab"
-                        className="tab"
-                        aria-label="Completed"
-                    />
-                    <div role="tabpanel" className="tab-content py-4">
-                        {finishedTaskDB.length == 0 ? (
-                            <p className="text-center font-medium opacity-50">
-                                No completed task found
-                            </p>
-                        ) : (
-                            <DragDropTasks taskDB={finishedTaskDB} />
-                        )}
-                    </div>
+                    {taskDB.length == 0 ? (
+                        <p className="text-center font-medium opacity-50">
+                            No task found
+                        </p>
+                    ) : (
+                        <DragDropTasks taskDB={taskDB} />
+                    )}
                 </div>
             </div>
         </Suspense>

@@ -33,7 +33,7 @@ const DeleteModal = ({
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
-                <h3 className="text-lg font-bold text-base-content">
+                <h3 className="text-lg font-semibold text-base-content">
                     {title} &apos;{slicedValue()}&apos;
                 </h3>
                 <p className="py-4 text-base-content">

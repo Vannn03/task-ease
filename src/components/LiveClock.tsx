@@ -3,13 +3,7 @@
 import Clock from 'react-live-clock'
 
 const LiveClock = () => {
-    return (
-        <Clock
-            format={'HH:mm'}
-            ticking={true}
-            className="text-lg font-semibold"
-        />
-    )
+    return <Clock format={'HH:mm'} ticking={true} />
 }
 
 export default LiveClock

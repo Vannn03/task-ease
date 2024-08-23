@@ -43,17 +43,20 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                         </tr>
                     ) : (
                         limitedTask.map((data: any) => (
-                            <tr key={data.taskId}>
+                            <tr
+                                key={data.taskId}
+                                className="text-xs sm:text-sm"
+                            >
                                 <td>
                                     {getISODateTimeLocale(
                                         data.deadline,
                                         'D MMM'
                                     )}
                                 </td>
-                                <td className="max-w-28 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-60">
+                                <td className="max-w-28 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-48">
                                     {data.taskDescription}
                                 </td>
-                                <td className="link-hover link max-w-20 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-48">
+                                <td className="link-hover link max-w-20 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-40">
                                     <Link href={`category/${data.categoryId}`}>
                                         {data.category.categoryName}
                                     </Link>

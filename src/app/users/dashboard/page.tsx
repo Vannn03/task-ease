@@ -58,24 +58,28 @@ const Page = async () => {
                 <main className="flex w-full flex-col gap-4 sm:gap-6">
                     <section className="relative flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
                         <div className="flex items-center gap-2">
-                            <h1 className="text-lg font-medium">Latest Task</h1>
+                            <h1 className="text-lg font-semibold sm:text-xl">
+                                Latest Task
+                            </h1>
                         </div>
                         <DashboardTable userId={loggedUser?.userId} />
                     </section>
                     <section className="flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
                         <div className="flex items-center gap-2">
-                            <h1 className="text-lg font-medium">
+                            <h1 className="text-lg font-semibold sm:text-xl">
                                 Category Overview
                             </h1>
                         </div>
-                        <div>
+                        <div className="overflow-x-scroll">
                             <BarChartCompletion datasets={datasets} />
                         </div>
                     </section>
                 </main>
                 <aside className="relative flex flex-col rounded bg-base-100 p-4 shadow">
                     <div className="mb-2 flex items-center gap-2">
-                        <h1 className="text-lg font-medium">Calendar</h1>
+                        <h1 className="text-lg font-semibold sm:text-xl">
+                            Calendar
+                        </h1>
                     </div>
                     <Calendar nearestTaskDB={nearestTaskDB} />
                 </aside>

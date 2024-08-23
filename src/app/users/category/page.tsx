@@ -43,7 +43,9 @@ const Page = async () => {
                                     <h2 className="card-title w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-lg sm:text-xl">
                                         {data.categoryName}
                                     </h2>
-                                    <p>Total task: {data.tasks.length}</p>
+                                    <p className="text-sm sm:text-base">
+                                        Total task: {data.tasks.length}
+                                    </p>
                                 </div>
                                 <Link
                                     href={`category/${data.categoryId}`}
@@ -57,7 +59,7 @@ const Page = async () => {
                                     categoryId={data.categoryId}
                                     categoryName={data.categoryName}
                                 />
-                                <div className="flex w-full flex-col gap-1 border-t pt-2">
+                                <div className="flex w-full flex-col gap-1 border-t border-base-content/10 pt-2">
                                     <span className="flex items-center justify-between text-sm">
                                         <p className="w-full">Progress</p>
                                         <p>

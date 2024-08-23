@@ -1,6 +1,5 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { BookText, Calendar, ClipboardList, Clock, Eye } from 'lucide-react'
-import { useState } from 'react'
+import { BookText, Calendar, ClipboardList, Clock } from 'lucide-react'
 import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
 import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
 import Link from 'next/link'
@@ -11,6 +10,8 @@ interface TaskDrawerProps {
     deadline: Date
     categoryId?: string
     categoryName?: string
+    toggleDrawer: boolean
+    setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type TaskDrawerDataType = {
@@ -25,9 +26,9 @@ const TaskDrawer = ({
     deadline,
     categoryId,
     categoryName,
+    toggleDrawer,
+    setToggleDrawer,
 }: TaskDrawerProps) => {
-    const [toggleDrawer, setToggleDrawer] = useState(false)
-
     const taskDrawerData: TaskDrawerDataType[] = [
         {
             icon: <BookText className="size-5" />,
@@ -61,16 +62,9 @@ const TaskDrawer = ({
     return (
         <>
             <div
-                className={`${toggleDrawer ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'} fixed right-0 top-0 z-50 h-full w-full bg-neutral/75 transition-all`}
+                className={`${toggleDrawer ? 'pointer-events-auto opacity-50' : 'pointer-events-none opacity-0'} fixed right-0 top-0 z-50 h-full w-full bg-neutral transition-all`}
                 onClick={() => setToggleDrawer(false)}
             />
-
-            <button
-                className="btn btn-square btn-ghost btn-sm"
-                onClick={() => setToggleDrawer((prev) => !prev)}
-            >
-                <Eye className="opacity-50" />
-            </button>
 
             <aside
                 className={`fixed top-0 z-50 h-full w-[20rem] bg-base-100 sm:w-[28rem] ${toggleDrawer ? 'right-0' : '-right-[28rem]'} p-6 transition-all`}

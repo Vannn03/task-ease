@@ -125,16 +125,12 @@ const ProfileUpdate = ({ userId, userName }: ProfileUpdateProps) => {
                         {errors.userNameValidation}
                     </p>
                 )}
-                <button type="submit" className="btn btn-primary mt-2">
+                <button type="submit" className="btn btn-warning mt-2">
                     {loading ? <ButtonLoader /> : 'Update profile'}
                 </button>
             </form>
 
-            <SuccessfulToast
-                toast={toast}
-                description="Profile updated"
-                alertType="alert-success"
-            />
+            <SuccessfulToast toast={toast} description="Update profile" />
         </div>
     )
 }

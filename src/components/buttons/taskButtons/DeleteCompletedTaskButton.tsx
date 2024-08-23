@@ -2,6 +2,7 @@
 
 import useDeleteCompletedTask from '@/hooks/task/useDeleteCompletedTask'
 import { showModal } from '@/utils/modal'
+import { Trash2 } from 'lucide-react'
 
 interface DeleteCompletedTaskProps {
     categoryId?: string
@@ -19,10 +20,10 @@ const DeleteCompletedTaskButton = ({
     return (
         <>
             <button
-                className={`btn btn-outline btn-sm ${finishedTaskLength == 0 ? 'btn-disabled' : 'btn-error'}`}
+                className={`btn btn-ghost btn-sm sm:btn-md ${finishedTaskLength == 0 ? 'btn-disabled' : 'text-error'}`}
                 onClick={() => showModal(dialogId)}
             >
-                Delete Completed Task
+                <Trash2 className="size-4 sm:size-5" /> Delete Completed Task
             </button>
 
             <dialog

@@ -1,14 +1,14 @@
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 
-interface EditModalProps {
+interface AddModalProps {
     dialogId: string
     title: string
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     placeholder?: string
     value: string
-    newTaskDate?: string
-    newTaskTime?: string
-    handleEditButton: (
+    taskDate?: string
+    taskTime?: string
+    handleAddButton: (
         e: React.MouseEvent<HTMLButtonElement>,
         dialogId: string
     ) => void
@@ -16,53 +16,56 @@ interface EditModalProps {
     children?: React.ReactNode
 }
 
-const EditModal: React.FC<EditModalProps> = ({
+const AddModal: React.FC<AddModalProps> = ({
     dialogId,
     title,
     handleInputChange,
     placeholder,
     value,
-    newTaskDate,
-    newTaskTime,
-    handleEditButton,
+    taskDate,
+    taskTime,
+    handleAddButton,
     loading,
     children,
 }) => {
-    const isTask = !!newTaskDate && !!newTaskTime // Checks if it's a task
-    const isCategory = !newTaskDate && !newTaskTime // Checks if it's a category
+    const isTask = !!taskDate && !!taskTime // Checks if it's a task
+    const isCategory = !taskDate && !taskTime // Checks if it's a category
 
     const isTaskButtonDisabled =
-        isTask && (value === '' || newTaskDate === '' || newTaskTime === '')
+        isTask && (value === '' || taskDate === '' || taskTime === '')
     const isCategoryButtonDisabled =
         isCategory && (value.length < 3 || value.length > 20)
 
     const buttonClass =
         isTaskButtonDisabled || isCategoryButtonDisabled
             ? 'btn-disabled'
-            : 'btn-warning'
+            : 'btn-info'
 
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
                 <h3 className="text-lg font-semibold">{title}</h3>
-                {children}
-                <input
-                    type="text"
-                    className="input input-md input-bordered mt-2 w-full"
-                    onChange={handleInputChange}
-                    placeholder={placeholder}
-                    value={value}
-                />
+                <label className="form-control w-full">
+                    {children}
+                    <input
+                        type="text"
+                        placeholder={placeholder}
+                        className="input input-md input-bordered mt-2 w-full"
+                        onChange={handleInputChange}
+                        value={value}
+                    />
+                </label>
+
                 <div className="modal-action">
                     <form method="dialog" className="flex items-center">
                         <button className="btn btn-ghost text-error">
                             Cancel
                         </button>
                         <button
-                            className={`btn ${buttonClass} ml-4`}
-                            onClick={(e) => handleEditButton(e, dialogId)}
+                            className={`${buttonClass} btn ml-4`}
+                            onClick={(e) => handleAddButton(e, dialogId)}
                         >
-                            {loading ? <ButtonLoader /> : <>Update</>}
+                            {loading ? <ButtonLoader /> : <>Create</>}
                         </button>
                     </form>
                 </div>
@@ -71,4 +74,4 @@ const EditModal: React.FC<EditModalProps> = ({
     )
 }
 
-export default EditModal
+export default AddModal

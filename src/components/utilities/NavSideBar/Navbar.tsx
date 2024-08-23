@@ -56,15 +56,15 @@ const Navbar = ({
             <div className="sticky top-0 z-50 flex">
                 <nav className="float-start flex w-full items-center justify-between bg-base-100 px-4 py-2">
                     <button
-                        className="btn btn-ghost btn-sm md:btn-md"
+                        className="btn btn-square btn-ghost btn-sm md:btn-md"
                         onClick={() => {
                             setToggle((prev) => !prev)
                         }}
                     >
-                        <Menu />
+                        <Menu className="size-5 sm:size-6" />
                     </button>
 
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-4 sm:gap-6">
                         <Reminder
                             taskDB={taskDB}
                             // userId={userId}

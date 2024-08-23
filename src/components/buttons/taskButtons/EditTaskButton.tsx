@@ -67,11 +67,7 @@ const EditTaskButton = ({
                 </div>
             </EditModal>
 
-            <SuccessfulToast
-                toast={toast}
-                description="Task updated"
-                alertType="alert-warning"
-            />
+            <SuccessfulToast toast={toast} description="Update task" />
         </>
     )
 }

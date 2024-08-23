@@ -66,10 +66,12 @@ const Page = async () => {
                     className="flex flex-col justify-between gap-4 border-t py-8 md:flex-row"
                 >
                     <div>
-                        <h1 className="flex items-center gap-2 font-medium">
+                        <h1 className="flex items-center gap-2 text-sm font-medium sm:text-base">
                             {data.title}
                         </h1>
-                        <p className="text-sm opacity-75">{data.description}</p>
+                        <p className="text-xs opacity-75 sm:text-sm">
+                            {data.description}
+                        </p>
                     </div>
                     {data.action}
                 </section>

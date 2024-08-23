@@ -2,7 +2,7 @@
 
 import useEditCategory from '@/hooks/category/useEditCategory'
 import { showModal } from '@/utils/modal'
-// import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
+import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
 import EditModal from '@/components/utilities/Modals/EditModal'
 import { SquarePen } from 'lucide-react'
 
@@ -19,7 +19,7 @@ const EditCategoryButton = ({
 }: EditCategoryProps) => {
     const {
         newCategoryName,
-        // toast,
+        toast,
         loading,
         handleInputChange,
         handleEditButton,
@@ -28,14 +28,14 @@ const EditCategoryButton = ({
     return (
         <>
             <a
-                className="btn btn-warning btn-sm w-1/2"
+                className="btn btn-ghost btn-sm w-1/2 text-warning"
                 onClick={() => showModal(dialogId)}
             >
                 <SquarePen className="size-4" /> Edit
             </a>
             <EditModal
                 dialogId={dialogId}
-                title="Edit category name"
+                title="Edit category"
                 handleInputChange={handleInputChange}
                 placeholder={categoryName}
                 value={newCategoryName}
@@ -43,11 +43,7 @@ const EditCategoryButton = ({
                 loading={loading}
             />
 
-            {/* <SuccessfulToast
-                toast={toast}
-                description="Category updated"
-                alertType="alert-warning"
-            /> */}
+            <SuccessfulToast toast={toast} description="Update category" />
         </>
     )
 }

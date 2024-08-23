@@ -2,13 +2,16 @@
 
 import useAddTask from '@/hooks/task/useAddTask'
 import SuccessfulToast from '@/components/utilities/toasts/SuccessfulToast'
-import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
+import { showModal } from '@/utils/modal'
+import { Plus } from 'lucide-react'
+import AddModal from '@/components/utilities/Modals/AddModal'
 
 interface AddTaskProps {
     categoryId?: string
+    dialogId: string
 }
 
-const AddTaskButton = ({ categoryId }: AddTaskProps) => {
+const AddTaskButton = ({ categoryId, dialogId }: AddTaskProps) => {
     const {
         taskDate,
         setTaskDate,
@@ -20,44 +23,45 @@ const AddTaskButton = ({ categoryId }: AddTaskProps) => {
         loading,
         handleInputChange,
         handleAddButton,
-    } = useAddTask(categoryId)
+    } = useAddTask({ categoryId, dialogId })
 
     return (
-        <div className="flex flex-row flex-wrap items-center gap-2 lg:gap-4">
-            <input
-                type="date"
-                placeholder="Type here"
-                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
-                onChange={handleInputChange(setTaskDate)}
-                value={taskDate}
-            />
-            <input
-                type="time"
-                placeholder="Type here"
-                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/5"
-                onChange={handleInputChange(setTaskTime)}
-                value={taskTime}
-            />
-            <input
-                type="text"
-                placeholder="Enter your task..."
-                className="input input-md input-bordered flex-auto basis-1/3 lg:basis-1/2"
-                onChange={handleInputChange(setTaskDescription)}
-                value={taskDescription}
-            />
+        <>
             <button
-                className={`btn btn-block ${taskDescription == '' || taskDate == '' || taskTime == '' ? 'btn-disabled' : 'btn-outline btn-info'}`}
-                onClick={(e) => handleAddButton(e)}
+                className="btn btn-primary btn-sm sm:btn-md"
+                onClick={() => showModal(dialogId)}
             >
-                {loading ? <ButtonLoader /> : <>Create New Task</>}
+                <Plus className="size-4 sm:size-5" /> Add task
             </button>
+            <AddModal
+                dialogId={dialogId}
+                title="Add new task"
+                handleInputChange={handleInputChange(setTaskDescription)}
+                placeholder={taskDescription}
+                value={taskDescription}
+                taskDate={taskDate}
+                taskTime={taskTime}
+                handleAddButton={handleAddButton}
+                loading={loading}
+            >
+                <div className="flex gap-2">
+                    <input
+                        type="date"
+                        className="input input-md input-bordered mt-2 w-full"
+                        onChange={handleInputChange(setTaskDate)}
+                        value={taskDate}
+                    />
+                    <input
+                        type="time"
+                        className="input input-md input-bordered mt-2 w-full"
+                        onChange={handleInputChange(setTaskTime)}
+                        value={taskTime}
+                    />
+                </div>
+            </AddModal>
 
-            <SuccessfulToast
-                toast={toast}
-                description="Task created"
-                alertType="alert-success"
-            />
-        </div>
+            <SuccessfulToast toast={toast} description="Add task" />
+        </>
     )
 }
 

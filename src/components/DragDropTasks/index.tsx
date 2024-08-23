@@ -6,11 +6,13 @@ import {
     Draggable,
     DropResult,
     DraggableProvidedDragHandleProps,
+    DraggableProvidedDraggableProps,
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import axiosInstance from '@/utils/axiosInstance'
 import TaskCheckbox from './TaskCheckbox'
+import TaskDrawer from './TaskDrawer'
 
 interface Task {
     taskId: string
@@ -28,6 +30,7 @@ interface DragDropTasksProps {
 }
 
 const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
+    const [toggleDrawer, setToggleDrawer] = useState(false)
     const router = useRouter()
     const [tasks, updateTasks] = useState<Task[]>(taskDB)
 
@@ -68,27 +71,36 @@ const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
                                 index={index}
                             >
                                 {(provided) => (
-                                    <div
-                                        className="flex items-center justify-between rounded px-4 py-3 transition-colors hover:bg-base-100"
-                                        {...provided.draggableProps}
-                                        ref={provided.innerRef}
-                                    >
+                                    <div ref={provided.innerRef}>
                                         <TaskCheckbox
-                                            dragHandleProps={
-                                                provided.dragHandleProps as DraggableProvidedDragHandleProps
-                                            }
                                             taskId={data.taskId}
                                             taskDescription={
                                                 data.taskDescription
                                             }
                                             status={data.status}
                                             deadline={data.deadline}
+                                            dragHandleProps={
+                                                provided.dragHandleProps as DraggableProvidedDragHandleProps
+                                            }
+                                            draggableProps={
+                                                provided.draggableProps as DraggableProvidedDraggableProps
+                                            }
+                                            setToggleDrawer={setToggleDrawer}
+                                        />
+                                        <TaskDrawer
+                                            taskId={data.taskId}
+                                            taskDescription={
+                                                data.taskDescription
+                                            }
+                                            deadline={data.deadline}
                                             categoryId={
-                                                data.category?.categoryId
+                                                data?.category?.categoryId
                                             }
                                             categoryName={
-                                                data.category?.categoryName
+                                                data?.category?.categoryName
                                             }
+                                            toggleDrawer={toggleDrawer}
+                                            setToggleDrawer={setToggleDrawer}
                                         />
                                     </div>
                                 )}
