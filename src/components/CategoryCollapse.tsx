@@ -23,7 +23,7 @@ const CategoryCollapse = ({
             onMouseLeave={() => setToggle(false)}
         >
             <div
-                className={`transition-height ${toggle ? 'expand' : ''} flex items-center`}
+                className={`max-h-0 overflow-hidden transition-all duration-500 ${toggle ? 'max-h-52' : ''} flex items-center`}
             >
                 <EditCategoryButton
                     categoryId={categoryId}
@@ -38,7 +38,7 @@ const CategoryCollapse = ({
             </div>
             <div className="flex cursor-pointer justify-center opacity-50">
                 <ChevronDown
-                    className={`size-5 transition-transform ${toggle ? 'rotate-180' : 'rotate-0'}`}
+                    className={`size-5 transition-transform duration-300 ${toggle ? 'rotate-180' : 'rotate-0'}`}
                 />
             </div>
         </div>
