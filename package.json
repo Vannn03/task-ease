@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
-    "prebuild": "npx tailwindcss -i ./src/app/globals.css -o ./src/app/globals.css"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@edgestore/react": "^0.2.2",
