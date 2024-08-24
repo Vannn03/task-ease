@@ -1,5 +1,5 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { BookText, Calendar, ClipboardList, Clock } from 'lucide-react'
+import { BookText, CalendarClock, ClipboardList } from 'lucide-react'
 import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
 import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
 import Link from 'next/link'
@@ -31,7 +31,7 @@ const TaskDrawer = ({
 }: TaskDrawerProps) => {
     const taskDrawerData: TaskDrawerDataType[] = [
         {
-            icon: <BookText className="size-5" />,
+            icon: <BookText className="size-5 opacity-75" />,
             title: 'Category',
             content: (
                 <Link
@@ -43,19 +43,14 @@ const TaskDrawer = ({
             ),
         },
         {
-            icon: <ClipboardList className="size-5" />,
+            icon: <ClipboardList className="size-5 opacity-75" />,
             title: 'Description',
             content: `${taskDescription}`,
         },
         {
-            icon: <Calendar className="size-5" />,
-            title: 'Date',
-            content: `${getISODateTimeLocale(deadline, 'dddd, D MMMM YYYY')}`,
-        },
-        {
-            icon: <Clock className="size-5" />,
-            title: 'Time',
-            content: `${getISODateTimeLocale(deadline, 'HH:mm')}`,
+            icon: <CalendarClock className="size-5 opacity-75" />,
+            title: 'Deadline',
+            content: `${getISODateTimeLocale(deadline, 'ddd, D MMM YYYY')}, ${getISODateTimeLocale(deadline, 'HH:mm')}`,
         },
     ]
 
@@ -74,17 +69,17 @@ const TaskDrawer = ({
                         {taskDrawerData.map((data, index) => (
                             <div
                                 key={index}
-                                className="flex flex-col gap-1 border-t py-4"
+                                className="flex gap-4 border-t py-4"
                             >
-                                <span className="flex items-center gap-2">
-                                    <span>{data.icon}</span>
-                                    <h1 className="font-medium">
+                                {data.icon}
+                                <span className="flex flex-col">
+                                    <h1 className="text-sm font-medium opacity-75">
                                         {data.title}
                                     </h1>
+                                    <p className="break-words">
+                                        {data.content}
+                                    </p>
                                 </span>
-                                <p className="break-words text-sm">
-                                    {data.content}
-                                </p>
                             </div>
                         ))}
                     </div>

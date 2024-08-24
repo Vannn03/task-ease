@@ -1,14 +1,14 @@
 'use client'
 
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { DateCalendar } from '@/libs/mui'
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import { useState, useMemo } from 'react'
-import { CalendarClock, CalendarDays, Clock, Eye } from 'lucide-react'
+import { CalendarClock, Clock, Eye } from 'lucide-react'
 import LiveClock from '@/components/LiveClock'
 import TaskDrawer from '@/components/DragDropTasks/TaskDrawer'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import CalendarDate from './CalendarDate'
 
 interface Task {
     taskId: string
@@ -36,10 +36,12 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
     const dateNow = dayjs()
     const fullDateFormat = 'dddd, D MMMM YYYY'
 
+    // State to store the selected date
     const [selectedDate, setSelectedDate] = useState<string | null>(
         getISODateTimeLocale(dateNow.toDate(), fullDateFormat)
     )
 
+    // Memoized daily tasks filtered by the selected date
     const dailyTasks = useMemo(() => {
         return nearestTaskDB.filter(
             (task) =>
@@ -48,20 +50,14 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
         )
     }, [selectedDate, nearestTaskDB])
 
+    // Filtered tasks based on the current pathname
     const filteredDailyTasks = useMemo(() => {
         return pathname === '/users/dashboard'
             ? dailyTasks.slice(0, 3)
             : dailyTasks
     }, [dailyTasks, pathname])
 
-    const handleDateChange = (newValue: Dayjs | null) => {
-        if (newValue) {
-            setSelectedDate(
-                getISODateTimeLocale(newValue.toDate(), fullDateFormat)
-            )
-        }
-    }
-
+    // Function to determine styles based on task deadline
     const getDeadlineStyles = (deadline: Date) => {
         const taskTime = dayjs(deadline)
         const diffInMinutes = taskTime.diff(dateNow, 'minute')
@@ -101,10 +97,10 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
         <>
             <div className="flex flex-col justify-center gap-4 pb-4 sm:flex-row lg:flex-col lg:justify-start">
                 <div className="top-24 lg:sticky">
-                    <DateCalendar
-                        value={dayjs(selectedDate)}
-                        onChange={handleDateChange}
-                        className="rounded border-2 border-base-content/10 bg-base-100"
+                    <CalendarDate
+                        selectedDate={dayjs(selectedDate)}
+                        setSelectedDate={setSelectedDate}
+                        nearestTaskDB={nearestTaskDB}
                     />
                 </div>
                 {pathname == '/users/calendar' && (
@@ -133,8 +129,8 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                         </div>
                     </div>
                 )}
-                {dailyTasks.length === 0 ? (
-                    <p className="text-center font-medium opacity-35">
+                {filteredDailyTasks.length === 0 ? (
+                    <p className="text-center font-medium opacity-50">
                         No task to display.
                     </p>
                 ) : (

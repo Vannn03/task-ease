@@ -32,7 +32,7 @@ const AddModal: React.FC<AddModalProps> = ({
     const isCategory = !taskDate && !taskTime // Checks if it's a category
 
     const isTaskButtonDisabled =
-        isTask && (value === '' || taskDate === '' || taskTime === '')
+        (isTask && value === '') || taskDate === '' || taskTime === ''
     const isCategoryButtonDisabled =
         isCategory && (value.length < 3 || value.length > 20)
 
@@ -52,7 +52,6 @@ const AddModal: React.FC<AddModalProps> = ({
                         placeholder={placeholder}
                         className="input input-md input-bordered mt-2 w-full"
                         onChange={handleInputChange}
-                        value={value}
                     />
                 </label>
 

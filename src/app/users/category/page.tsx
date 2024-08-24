@@ -20,7 +20,7 @@ const Page = async () => {
     return (
         <div className="grid grid-cols-1 gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {categoryDB.length == 0 && (
-                <p className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-medium opacity-50">
+                <p className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-medium opacity-50">
                     No category to display.
                 </p>
             )}

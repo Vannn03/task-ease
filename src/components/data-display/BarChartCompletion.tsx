@@ -35,7 +35,7 @@ const BarChartCompletion = ({ datasets }: BarChartCompletionProps) => {
                 },
             ]}
             height={375}
-            className="min-w-[48rem] sm:min-w-full"
+            className="w-full"
         />
     )
 }

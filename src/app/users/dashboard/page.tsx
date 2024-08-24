@@ -1,10 +1,10 @@
-import Calendar from '@/components/data-display/Calendar'
 import DashboardTable from '@/components/data-display/DashboardTable'
 import prisma from '@/libs/prisma'
 import BarChartCompletion from '@/components/data-display/BarChartCompletion'
 import { findLoggedUser, authUserSessionServer } from '@/utils/auth-utils'
 import { Suspense } from 'react'
 import Loading from './loading'
+import Calendar from '@/components/data-display/Calendar'
 
 const Page = async () => {
     const user = await authUserSessionServer()
@@ -57,30 +57,22 @@ const Page = async () => {
             <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
                 <main className="flex w-full flex-col gap-4 sm:gap-6">
                     <section className="relative flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-lg font-semibold sm:text-xl">
-                                Latest Task
-                            </h1>
-                        </div>
+                        <h1 className="text-lg font-semibold sm:text-xl">
+                            Latest Task
+                        </h1>
                         <DashboardTable userId={loggedUser?.userId} />
                     </section>
                     <section className="flex flex-col gap-2 rounded bg-base-100 p-4 shadow">
-                        <div className="flex items-center gap-2">
-                            <h1 className="text-lg font-semibold sm:text-xl">
-                                Category Overview
-                            </h1>
-                        </div>
-                        <div className="overflow-x-scroll">
-                            <BarChartCompletion datasets={datasets} />
-                        </div>
+                        <h1 className="text-lg font-semibold sm:text-xl">
+                            Category Overview
+                        </h1>
+                        <BarChartCompletion datasets={datasets} />
                     </section>
                 </main>
                 <aside className="relative flex flex-col rounded bg-base-100 p-4 shadow">
-                    <div className="mb-2 flex items-center gap-2">
-                        <h1 className="text-lg font-semibold sm:text-xl">
-                            Calendar
-                        </h1>
-                    </div>
+                    <h1 className="text-lg font-semibold sm:text-xl">
+                        Calendar
+                    </h1>
                     <Calendar nearestTaskDB={nearestTaskDB} />
                 </aside>
             </div>

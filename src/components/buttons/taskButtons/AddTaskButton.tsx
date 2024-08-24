@@ -37,7 +37,7 @@ const AddTaskButton = ({ categoryId, dialogId }: AddTaskProps) => {
                 dialogId={dialogId}
                 title="Add new task"
                 handleInputChange={handleInputChange(setTaskDescription)}
-                placeholder={taskDescription}
+                placeholder={'Task description'}
                 value={taskDescription}
                 taskDate={taskDate}
                 taskTime={taskTime}

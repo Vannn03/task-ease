@@ -28,7 +28,6 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
             <table className="table table-zebra">
                 <thead>
                     <tr>
-                        <th>Date</th>
                         <th>Task</th>
                         <th>Category</th>
                         <th>Deadline</th>
@@ -37,7 +36,10 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                 <tbody>
                     {limitedTask.length == 0 ? (
                         <tr>
-                            <td colSpan={4} className="text-center">
+                            <td
+                                colSpan={4}
+                                className="text-center font-medium opacity-50"
+                            >
                                 No task to display.
                             </td>
                         </tr>
@@ -47,12 +49,6 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                                 key={data.taskId}
                                 className="text-xs sm:text-sm"
                             >
-                                <td>
-                                    {getISODateTimeLocale(
-                                        data.deadline,
-                                        'D MMM'
-                                    )}
-                                </td>
                                 <td className="max-w-28 overflow-x-hidden text-ellipsis whitespace-nowrap sm:max-w-48">
                                     {data.taskDescription}
                                 </td>
@@ -65,6 +61,11 @@ const DashboardTable = async ({ userId }: DashboardTableProps) => {
                                     {getISODateTimeLocale(
                                         data.deadline,
                                         'HH:mm'
+                                    )}
+                                    ,{' '}
+                                    {getISODateTimeLocale(
+                                        data.deadline,
+                                        'D MMM'
                                     )}
                                 </td>
                             </tr>
