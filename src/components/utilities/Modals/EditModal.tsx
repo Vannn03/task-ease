@@ -44,7 +44,7 @@ const EditModal: React.FC<EditModalProps> = ({
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
-                <h3 className="text-lg font-semibold">{title}</h3>
+                <h3 className="font-semibold sm:text-lg">{title}</h3>
                 {children}
                 <input
                     type="text"

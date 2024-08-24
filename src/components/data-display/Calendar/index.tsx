@@ -2,9 +2,8 @@
 
 import { getISODateTimeLocale } from '@/utils/datetime'
 import dayjs from 'dayjs'
-import { useState, useMemo } from 'react'
-import { CalendarClock, Clock, Eye } from 'lucide-react'
-import LiveClock from '@/components/LiveClock'
+import { useState, useMemo, useEffect } from 'react'
+import { CalendarClock, Eye } from 'lucide-react'
 import TaskDrawer from '@/components/DragDropTasks/TaskDrawer'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -41,14 +40,21 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
         getISODateTimeLocale(dateNow.toDate(), fullDateFormat)
     )
 
+    useEffect(() => {
+        setSelectedDate(getISODateTimeLocale(dateNow.toDate(), fullDateFormat))
+    }, [])
+
     // Memoized daily tasks filtered by the selected date
     const dailyTasks = useMemo(() => {
         return nearestTaskDB.filter(
             (task) =>
                 getISODateTimeLocale(task.deadline, fullDateFormat) ===
-                selectedDate
+                getISODateTimeLocale(
+                    dayjs(selectedDate).toDate(),
+                    fullDateFormat
+                )
         )
-    }, [selectedDate, nearestTaskDB])
+    }, [selectedDate, nearestTaskDB, fullDateFormat])
 
     // Filtered tasks based on the current pathname
     const filteredDailyTasks = useMemo(() => {
@@ -95,7 +101,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
 
     return (
         <>
-            <div className="flex flex-col justify-center gap-4 pb-4 sm:flex-row lg:flex-col lg:justify-start">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row lg:flex-col lg:justify-start">
                 <div className="top-24 lg:sticky">
                     <CalendarDate
                         selectedDate={dayjs(selectedDate)}
@@ -120,19 +126,9 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                     </div>
                 )}
             </div>
-            <div className="flex w-full flex-col gap-4">
-                {pathname == '/users/dashboard' && (
-                    <div className="flex flex-col items-center justify-center gap-1 opacity-75">
-                        <Clock className="size-4 sm:size-5" />
-                        <div className="font-semibold sm:text-lg">
-                            <LiveClock />
-                        </div>
-                    </div>
-                )}
+            <div className="flex h-fit w-full flex-col gap-4 rounded bg-base-100 p-4">
                 {filteredDailyTasks.length === 0 ? (
-                    <p className="text-center font-medium opacity-50">
-                        No task to display.
-                    </p>
+                    <p className="text-center opacity-75">No task to display</p>
                 ) : (
                     filteredDailyTasks.map((task) => {
                         const { borderColor, textColor } = getDeadlineStyles(
@@ -156,7 +152,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                                                 'HH:mm'
                                             )}
                                         </p>
-                                        <p className="max-w-52 overflow-x-hidden text-ellipsis whitespace-nowrap text-sm text-base-content">
+                                        <p className="max-w-52 truncate text-sm text-base-content">
                                             {task.taskDescription}
                                         </p>
                                     </span>

@@ -47,18 +47,18 @@ const TaskCheckbox = ({
                 />
                 <div className="flex flex-col gap-1">
                     <p
-                        className={`${isChecked && 'line-through'} max-w-40 overflow-x-hidden text-ellipsis whitespace-nowrap text-sm sm:max-w-52 sm:text-base md:max-w-96`}
+                        className={`${isChecked && 'line-through'} max-w-40 truncate text-sm sm:max-w-52 sm:text-base md:max-w-96`}
                     >
                         {taskDescription}
                     </p>
-                    <div className="flex items-center gap-1 opacity-75">
+                    <div className="flex items-center gap-2 opacity-75">
                         <span
-                            className={`badge badge-sm sm:badge-md ${isChecked ? 'badge-success' : 'badge-warning'}`}
+                            className={`badge badge-sm rounded sm:badge-md ${isChecked ? 'badge-success' : 'badge-warning'}`}
                         >
-                            {getISODateTimeLocale(deadline, 'D MMM')}
+                            {getISODateTimeLocale(deadline, 'MMMM D, YYYY')}
                         </span>
                         <span
-                            className={`badge badge-sm sm:badge-md ${isChecked ? 'badge-success' : 'badge-warning'}`}
+                            className={`badge badge-sm rounded sm:badge-md ${isChecked ? 'badge-success' : 'badge-warning'}`}
                         >
                             {getISODateTimeLocale(deadline, 'HH:mm')}
                         </span>

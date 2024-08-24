@@ -6,6 +6,7 @@ import useAddCategory from '@/hooks/category/useAddCategory'
 import { Plus } from 'lucide-react'
 import ButtonLoader from '@/components/utilities/Loaders/ButtonLoader'
 import AddModal from '@/components/utilities/Modals/AddModal'
+import { usePathname } from 'next/navigation'
 // import UpgradeModal from '@/components/utilities/Modals/UpgradeModal'
 
 interface addCategoryProps {
@@ -23,6 +24,8 @@ const AddCategoryButton = ({
     // upgradeDialogId,
     categoryLength,
 }: addCategoryProps) => {
+    const pathname = usePathname()
+
     const { categoryName, toast, loading, handleInputChange, handleAddButton } =
         useAddCategory(userId)
 
@@ -41,10 +44,12 @@ const AddCategoryButton = ({
     return (
         <>
             <button
-                className="btn btn-circle btn-primary btn-lg z-40 shadow-lg"
+                className={`btn btn-circle btn-primary z-40 ${pathname == '/users/category' ? 'shadow-lg sm:btn-lg' : 'btn-sm sm:btn-md'}`}
                 onClick={handleButtonClick}
             >
-                <Plus />
+                <Plus
+                    className={`${pathname == '/users/category' ? 'size-5 sm:size-6' : 'size-4 sm:size-5'}`}
+                />
             </button>
 
             {/* <UpgradeModal

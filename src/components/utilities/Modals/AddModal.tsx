@@ -44,7 +44,7 @@ const AddModal: React.FC<AddModalProps> = ({
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
-                <h3 className="text-lg font-semibold">{title}</h3>
+                <h3 className="font-semibold sm:text-lg">{title}</h3>
                 <label className="form-control w-full">
                     {children}
                     <input

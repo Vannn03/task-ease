@@ -20,8 +20,8 @@ const Page = async () => {
     return (
         <div className="grid grid-cols-1 gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {categoryDB.length == 0 && (
-                <p className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-medium opacity-50">
-                    No category to display.
+                <p className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center opacity-75">
+                    No category to display
                 </p>
             )}
             {categoryDB.map((data) => {
@@ -38,21 +38,21 @@ const Page = async () => {
                         key={data.categoryId}
                     >
                         <div className="card-body">
-                            <div className="flex justify-between">
-                                <div className="flex flex-col gap-1">
-                                    <h2 className="card-title w-full overflow-x-hidden text-ellipsis whitespace-nowrap text-lg sm:text-xl">
+                            <div className="flex flex-col">
+                                <div className="flex items-center justify-between gap-2">
+                                    <h2 className="truncate text-lg font-semibold sm:text-xl">
                                         {data.categoryName}
                                     </h2>
-                                    <p className="text-sm sm:text-base">
-                                        Total task: {data.tasks.length}
-                                    </p>
+                                    <Link
+                                        href={`category/${data.categoryId}`}
+                                        className="btn btn-square btn-sm"
+                                    >
+                                        <ArrowRight className="size-5" />
+                                    </Link>
                                 </div>
-                                <Link
-                                    href={`category/${data.categoryId}`}
-                                    className="btn btn-square btn-sm"
-                                >
-                                    <ArrowRight className="size-5" />
-                                </Link>
+                                <p className="text-sm sm:text-base">
+                                    Total task: {data.tasks.length}
+                                </p>
                             </div>
                             <div className="card-actions mt-2 flex-col items-center">
                                 <CategoryCollapse

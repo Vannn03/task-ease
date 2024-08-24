@@ -22,7 +22,8 @@ const ServerDay: React.FC<ServerDayProps> = (props) => {
         <Badge
             key={day.toString()}
             overlap="circular"
-            badgeContent={isTaskDay ? '🌚' : null}
+            badgeContent={!isTaskDay && null}
+            color="warning"
         >
             <PickersDay
                 {...other}
@@ -96,7 +97,7 @@ const CalendarDate = ({
         <DateCalendar
             value={dayjs(selectedDate)}
             onChange={handleDateChange}
-            className="w-fit rounded border-2 border-base-content/10 bg-base-100"
+            className="w-fit rounded-lg bg-base-100"
             onMonthChange={handleMonthChange}
             loading={isLoading}
             renderLoading={() => <DayCalendarSkeleton />}

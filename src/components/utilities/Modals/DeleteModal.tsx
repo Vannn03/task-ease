@@ -33,10 +33,10 @@ const DeleteModal = ({
     return (
         <dialog id={dialogId} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
-                <h3 className="text-lg font-semibold text-base-content">
+                <h3 className="font-semibold text-base-content sm:text-lg">
                     {title} &apos;{slicedValue()}&apos;
                 </h3>
-                <p className="py-4 text-base-content">
+                <p className="pt-2 text-sm text-base-content sm:text-base">
                     Are you sure you want to delete this {description}
                 </p>
                 <div className="modal-action">

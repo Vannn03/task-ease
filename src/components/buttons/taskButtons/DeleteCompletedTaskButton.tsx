@@ -23,7 +23,7 @@ const DeleteCompletedTaskButton = ({
                 className={`btn btn-ghost btn-sm sm:btn-md ${finishedTaskLength == 0 ? 'btn-disabled' : 'text-error'}`}
                 onClick={() => showModal(dialogId)}
             >
-                <Trash2 className="size-4 sm:size-5" /> Delete Completed Task
+                <Trash2 className="size-4 sm:size-5" /> Delete checked task
             </button>
 
             <dialog
@@ -31,9 +31,11 @@ const DeleteCompletedTaskButton = ({
                 className="modal modal-bottom sm:modal-middle"
             >
                 <div className="modal-box">
-                    <h3 className="text-lg font-bold">Delete completed task</h3>
-                    <p className="py-4">
-                        Are you sure you want to delete all completed task?
+                    <h3 className="font-bold sm:text-lg">
+                        Delete checked task
+                    </h3>
+                    <p className="pt-2 text-sm sm:text-base">
+                        Are you sure you want to delete all checked task?
                     </p>
                     <div className="modal-action">
                         <form method="dialog" className="flex items-center">

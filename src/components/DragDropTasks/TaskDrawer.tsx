@@ -31,7 +31,7 @@ const TaskDrawer = ({
 }: TaskDrawerProps) => {
     const taskDrawerData: TaskDrawerDataType[] = [
         {
-            icon: <BookText className="size-5 opacity-75" />,
+            icon: <BookText className="size-4 opacity-75" />,
             title: 'Category',
             content: (
                 <Link
@@ -43,14 +43,14 @@ const TaskDrawer = ({
             ),
         },
         {
-            icon: <ClipboardList className="size-5 opacity-75" />,
+            icon: <ClipboardList className="size-4 opacity-75" />,
             title: 'Description',
             content: `${taskDescription}`,
         },
         {
-            icon: <CalendarClock className="size-5 opacity-75" />,
+            icon: <CalendarClock className="size-4 opacity-75" />,
             title: 'Deadline',
-            content: `${getISODateTimeLocale(deadline, 'ddd, D MMM YYYY')}, ${getISODateTimeLocale(deadline, 'HH:mm')}`,
+            content: `${getISODateTimeLocale(deadline, 'HH:mm')} | ${getISODateTimeLocale(deadline, 'MMMM D, YYYY')}`,
         },
     ]
 
@@ -69,17 +69,17 @@ const TaskDrawer = ({
                         {taskDrawerData.map((data, index) => (
                             <div
                                 key={index}
-                                className="flex gap-4 border-t py-4"
+                                className={`flex flex-col gap-1 ${index > 0 && 'border-t'} py-4`}
                             >
-                                {data.icon}
-                                <span className="flex flex-col">
+                                <span className="flex items-center gap-2">
+                                    {data.icon}
                                     <h1 className="text-sm font-medium opacity-75">
                                         {data.title}
                                     </h1>
-                                    <p className="break-words">
-                                        {data.content}
-                                    </p>
                                 </span>
+                                <p className="break-words text-sm sm:text-base">
+                                    {data.content}
+                                </p>
                             </div>
                         ))}
                     </div>

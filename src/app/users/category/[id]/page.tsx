@@ -56,10 +56,8 @@ const Page = async ({ params }: PageProps) => {
         <Suspense fallback={<Loading />}>
             <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
                 <div className="top-24 z-40 flex h-fit w-full flex-col gap-4 rounded bg-base-100 p-4 shadow xl:sticky xl:w-[40rem]">
-                    <div className="flex items-center gap-4">
-                        <span className="flex items-center justify-between gap-4">
-                            <BackButton />
-                        </span>
+                    <div className="flex items-center gap-2">
+                        <BackButton />
                         <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">
                             {categoryDB?.categoryName}
                         </h1>
