@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState, useMemo } from 'react'
 import { createTheme, Theme, PaletteMode } from '@mui/material'
+import PageLoader from '@/components/utilities/Loaders/PageLoader'
 
 interface ThemeContextType {
     theme: string
@@ -45,11 +46,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     if (!isMounted) {
-        return (
-            <div className="flex h-dvh items-center justify-center">
-                <span className="loading loading-ball loading-lg"></span>
-            </div>
-        )
+        return <PageLoader />
     }
 
     return (

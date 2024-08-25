@@ -15,7 +15,7 @@ type FormErrors = {
     emailTaken?: boolean
 }
 
-const Page = () => {
+const SignUp = () => {
     const [userName, setUserName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -178,4 +178,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default SignUp
