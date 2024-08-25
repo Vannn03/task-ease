@@ -6,7 +6,7 @@ import axiosInstance from '@/utils/axiosInstance'
 import { Alert } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type FormErrors = {
     userName?: string
@@ -91,6 +91,10 @@ const SignUp = () => {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        router.prefetch('/api/auth/signin')
+    }, [router])
 
     return (
         <div className="flex h-dvh w-full items-center justify-center">
