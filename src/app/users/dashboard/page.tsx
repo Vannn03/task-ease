@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import Loading from './loading'
 import Calendar from '@/components/data-display/Calendar'
 import CategoryList from '@/components/data-display/CategoryList'
-import AddCategoryButton from '@/components/buttons/categoryButtons/AddCategoryButton'
+import dayjs from 'dayjs'
 import Link from 'next/link'
 
 const Page = async () => {
@@ -22,68 +22,60 @@ const Page = async () => {
         include: { category: true },
     })
 
-    const categoryDB = await prisma.category.findMany({
-        where: { userId: loggedUser?.userId },
-        orderBy: { createdAt: 'desc' },
+    const taskDB = await prisma.task.findMany({
+        where: {
+            category: { userId: loggedUser?.userId },
+            createdAt: {
+                gte: dayjs().subtract(6, 'day').startOf('day').toDate(),
+            },
+        },
     })
 
     // Prepare data for the chart
-    const datasets = await Promise.all(
-        categoryDB.slice(0, 4).map(async (data) => {
-            const tasks = await prisma.task.findMany({
-                where: { categoryId: data.categoryId },
-            })
+    const datasets = Array.from({ length: 7 }).map((_, index) => {
+        const date = dayjs()
+            .subtract(6 - index, 'day')
+            .startOf('day')
 
-            const completedTasks = tasks.filter(
-                (task) => task.status === 'Completed'
-            ).length
+        const tasksForDay = taskDB.filter((task) =>
+            dayjs(task.createdAt).isSame(date, 'day')
+        )
 
-            const completedTaskPercentage = tasks.length
-                ? (completedTasks * 100) / tasks.length
-                : 0
-
-            return {
-                category: data.categoryName,
-                completion: completedTaskPercentage,
-            }
-        })
-    )
+        return {
+            day: date.format('DD MMM'),
+            created: tasksForDay.length,
+        }
+    })
 
     return (
         <Suspense fallback={<Loading />}>
             <div className="z-40 flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
                 <main className="flex w-full flex-col gap-4 sm:gap-6">
-                    <section className="relative flex flex-col gap-4 rounded-lg bg-base-100 p-4 shadow">
+                    <section className="flex h-fit w-full flex-col gap-4 rounded-lg bg-base-100 p-4 shadow">
                         <div className="flex items-center justify-between">
                             <h1 className="text-lg font-semibold sm:text-xl">
                                 Recent Category
                             </h1>
-                            <AddCategoryButton
-                                userId={loggedUser?.userId}
-                                version={loggedUser?.version}
-                                dialogId={`addCategoryModal-${loggedUser?.userId}`}
-                                // upgradeDialogId={`upgradeModalCategoryUsage-${loggedUser?.userId}`}
-                                categoryLength={categoryDB.length}
-                            />
-                        </div>
-                        <CategoryList categoryDB={categoryDB} />
-                    </section>
-                    <section className="flex flex-col gap-4 rounded-lg bg-base-100 p-4 shadow">
-                        <div className="flex items-center justify-between">
-                            <h1 className="text-lg font-semibold sm:text-xl">
-                                Task Overview
-                            </h1>
                             <Link
                                 href={'/users/category'}
-                                className="btn btn-sm"
+                                className="btn btn-neutral btn-sm"
                             >
                                 View more
                             </Link>
                         </div>
+                        <CategoryList
+                            userId={loggedUser?.userId}
+                            version={loggedUser?.version}
+                        />
+                    </section>
+                    <section className="flex flex-col gap-4 rounded-lg bg-base-100 p-4 shadow">
+                        <h1 className="text-lg font-semibold sm:text-xl">
+                            Task Overview
+                        </h1>
                         <BarChartCompletion datasets={datasets} />
                     </section>
                 </main>
-                <aside className="relative flex flex-col gap-4 rounded-lg bg-base-100 shadow">
+                <aside className="relative flex flex-col gap-4 rounded-lg bg-base-100 shadow sm:min-w-96">
                     <h1 className="px-4 pt-4 text-lg font-semibold sm:text-xl">
                         Calendar
                     </h1>

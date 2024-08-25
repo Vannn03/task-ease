@@ -2,20 +2,27 @@
 
 import useCheckTask from '@/hooks/task/useCheckTask'
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { CalendarClock, Eye, GripVertical } from 'lucide-react'
-import {
-    DraggableProvidedDraggableProps,
-    DraggableProvidedDragHandleProps,
-} from '@hello-pangea/dnd'
+import { Eye, GripVertical } from 'lucide-react'
+
+interface Task {
+    taskId: string
+    taskDescription: string
+    status: string
+    deadline: Date
+    category?: {
+        categoryId: string
+        categoryName: string
+    }
+}
 
 interface TaskCheckboxProps {
     taskId?: string
     taskDescription: string
     status: string
     deadline: Date
-    dragHandleProps: DraggableProvidedDragHandleProps
-    draggableProps: DraggableProvidedDraggableProps
     setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
+    setSelectedTask: (task: Task) => void
+    data: Task
 }
 
 const TaskCheckbox = ({
@@ -23,19 +30,21 @@ const TaskCheckbox = ({
     taskDescription,
     status,
     deadline,
-    dragHandleProps,
-    draggableProps,
     setToggleDrawer,
+    setSelectedTask,
+    data,
 }: TaskCheckboxProps) => {
     const { isChecked, handleCheckboxChange } = useCheckTask({ taskId, status })
 
+    const handleTaskClick = (task: Task) => {
+        setSelectedTask(task)
+        setToggleDrawer(true)
+    }
+
     return (
-        <div
-            className="flex items-center justify-between rounded bg-base-200 px-3 py-2 transition-colors hover:bg-base-100 sm:px-4 sm:py-3"
-            {...draggableProps}
-        >
+        <div className="flex items-center justify-between rounded bg-base-200 px-3 py-2 transition-colors hover:bg-base-100 sm:px-4 sm:py-3">
             <div className="flex items-center gap-4">
-                <div {...dragHandleProps}>
+                <div>
                     <GripVertical className="size-5 cursor-grab opacity-50 sm:size-6" />
                 </div>
                 <input
@@ -67,7 +76,7 @@ const TaskCheckbox = ({
             </div>
             <button
                 className="btn btn-square btn-ghost btn-sm sm:btn-md"
-                onClick={() => setToggleDrawer((prev) => !prev)}
+                onClick={() => handleTaskClick(data)}
             >
                 <Eye className="size-5 opacity-50 sm:size-6" />
             </button>

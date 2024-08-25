@@ -98,6 +98,7 @@ const Reminder = ({
                     tabIndex={0}
                     className="menu dropdown-content z-[1] w-64 rounded-box bg-base-100 p-4 shadow-lg sm:w-72"
                 >
+                    <h1 className="mb-2 font-semibold sm:text-lg">Reminder</h1>
                     {notifications.length > 0 ? (
                         notifications.map((task) => (
                             <div

@@ -44,12 +44,15 @@ const AddCategoryButton = ({
     return (
         <>
             <button
-                className={`btn btn-circle btn-primary z-40 ${pathname == '/users/category' ? 'shadow-lg sm:btn-lg' : 'btn-sm sm:btn-md'}`}
+                className={`btn btn-info z-40 ${pathname == '/users/category' ? 'btn-circle shadow-lg sm:btn-lg' : 'btn-outline'}`}
                 onClick={handleButtonClick}
             >
                 <Plus
                     className={`${pathname == '/users/category' ? 'size-5 sm:size-6' : 'size-4 sm:size-5'}`}
                 />
+                {pathname == '/users/dashboard' && (
+                    <>Create your first category</>
+                )}
             </button>
 
             {/* <UpgradeModal

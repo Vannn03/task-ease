@@ -31,9 +31,15 @@ type StatisticType = {
 
 const Calendar = ({ nearestTaskDB }: CalendarProps) => {
     const [toggleDrawer, setToggleDrawer] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const pathname = usePathname()
     const dateNow = dayjs()
     const fullDateFormat = 'dddd, D MMMM YYYY'
+
+    const handleTaskClick = (task: Task) => {
+        setSelectedTask(task)
+        setToggleDrawer(true)
+    }
 
     // State to store the selected date
     const [selectedDate, setSelectedDate] = useState<string | null>(
@@ -159,31 +165,31 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                                 </span>
                                 <button
                                     className="btn btn-square btn-ghost btn-sm sm:btn-md"
-                                    onClick={() =>
-                                        setToggleDrawer((prev) => !prev)
-                                    }
+                                    onClick={() => handleTaskClick(task)}
                                 >
                                     <Eye className="size-4 opacity-50 sm:size-5" />
                                 </button>
-                                <TaskDrawer
-                                    taskId={task.taskId}
-                                    taskDescription={task.taskDescription}
-                                    deadline={task.deadline}
-                                    categoryId={task.category?.categoryId}
-                                    categoryName={task.category?.categoryName}
-                                    toggleDrawer={toggleDrawer}
-                                    setToggleDrawer={setToggleDrawer}
-                                />
                             </div>
                         )
                     })
                 )}
                 {dailyTasks.length > 3 && pathname === '/users/dashboard' && (
-                    <Link className="btn" href={'/users/calendar'}>
+                    <Link className="btn btn-neutral" href={'/users/calendar'}>
                         View more
                     </Link>
                 )}
             </div>
+            {selectedTask && (
+                <TaskDrawer
+                    taskId={selectedTask.taskId}
+                    taskDescription={selectedTask.taskDescription}
+                    deadline={selectedTask.deadline}
+                    categoryId={selectedTask?.category?.categoryId}
+                    categoryName={selectedTask?.category?.categoryName}
+                    toggleDrawer={toggleDrawer}
+                    setToggleDrawer={setToggleDrawer}
+                />
+            )}
         </>
     )
 }

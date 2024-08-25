@@ -5,8 +5,6 @@ import {
     Droppable,
     Draggable,
     DropResult,
-    DraggableProvidedDragHandleProps,
-    DraggableProvidedDraggableProps,
 } from '@hello-pangea/dnd'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -31,6 +29,7 @@ interface DragDropTasksProps {
 
 const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
     const [toggleDrawer, setToggleDrawer] = useState(false)
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const router = useRouter()
     const [tasks, updateTasks] = useState<Task[]>(taskDB)
 
@@ -56,61 +55,64 @@ const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
     }
 
     return (
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="tasks">
-                {(provided) => (
-                    <div
-                        className="tasks"
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                    >
-                        {tasks.map((data, index) => (
-                            <Draggable
-                                key={data.taskId}
-                                draggableId={data.taskId}
-                                index={index}
-                            >
-                                {(provided) => (
-                                    <div ref={provided.innerRef}>
-                                        <TaskCheckbox
-                                            taskId={data.taskId}
-                                            taskDescription={
-                                                data.taskDescription
-                                            }
-                                            status={data.status}
-                                            deadline={data.deadline}
-                                            dragHandleProps={
-                                                provided.dragHandleProps as DraggableProvidedDragHandleProps
-                                            }
-                                            draggableProps={
-                                                provided.draggableProps as DraggableProvidedDraggableProps
-                                            }
-                                            setToggleDrawer={setToggleDrawer}
-                                        />
-                                        <TaskDrawer
-                                            taskId={data.taskId}
-                                            taskDescription={
-                                                data.taskDescription
-                                            }
-                                            deadline={data.deadline}
-                                            categoryId={
-                                                data?.category?.categoryId
-                                            }
-                                            categoryName={
-                                                data?.category?.categoryName
-                                            }
-                                            toggleDrawer={toggleDrawer}
-                                            setToggleDrawer={setToggleDrawer}
-                                        />
-                                    </div>
-                                )}
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
-        </DragDropContext>
+        <>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="tasks">
+                    {(provided) => (
+                        <div
+                            className="tasks"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                        >
+                            {tasks.map((data, index) => (
+                                <Draggable
+                                    key={data.taskId}
+                                    draggableId={data.taskId}
+                                    index={index}
+                                >
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                        >
+                                            <TaskCheckbox
+                                                taskId={data.taskId}
+                                                taskDescription={
+                                                    data.taskDescription
+                                                }
+                                                status={data.status}
+                                                deadline={data.deadline}
+                                                setToggleDrawer={
+                                                    setToggleDrawer
+                                                }
+                                                setSelectedTask={
+                                                    setSelectedTask
+                                                }
+                                                data={data}
+                                            />
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
+
+            {selectedTask && (
+                <TaskDrawer
+                    taskId={selectedTask.taskId}
+                    taskDescription={selectedTask.taskDescription}
+                    deadline={selectedTask.deadline}
+                    categoryId={selectedTask?.category?.categoryId}
+                    categoryName={selectedTask?.category?.categoryName}
+                    toggleDrawer={toggleDrawer}
+                    setToggleDrawer={setToggleDrawer}
+                />
+            )}
+        </>
     )
 }
 

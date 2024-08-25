@@ -52,6 +52,7 @@ const AddModal: React.FC<AddModalProps> = ({
                         placeholder={placeholder}
                         className="input input-md input-bordered mt-2 w-full"
                         onChange={handleInputChange}
+                        value={value}
                     />
                 </label>
 
