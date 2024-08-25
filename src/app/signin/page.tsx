@@ -6,7 +6,7 @@ import { Alert } from '@mui/material'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useState } from 'react'
 
 const Page = () => {
     const router = useRouter()
@@ -39,10 +39,6 @@ const Page = () => {
         }
         setLoading(false)
     }
-
-    useEffect(() => {
-        router.prefetch('/users/dashboard')
-    }, [router])
 
     return (
         <Suspense fallback={<PageLoader />}>
