@@ -41,7 +41,11 @@ const Page = () => {
     }
 
     useEffect(() => {
-        router.prefetch('/users/dashboard')
+        const timer = setTimeout(() => {
+            router.prefetch('/users/dashboard')
+        }, 500)
+
+        return () => clearTimeout(timer)
     }, [router])
 
     return (

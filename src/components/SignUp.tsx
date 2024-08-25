@@ -93,7 +93,11 @@ const SignUp = () => {
     }
 
     useEffect(() => {
-        router.prefetch('/api/auth/signin')
+        const timer = setTimeout(() => {
+            router.prefetch('/api/auth/signin')
+        }, 500)
+
+        return () => clearTimeout(timer)
     }, [router])
 
     return (
