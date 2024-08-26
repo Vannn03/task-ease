@@ -4,7 +4,6 @@ import authConfig from "./auth.config"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     maxAge: 1 * 24 * 60 * 60,
-    strategy: "jwt",
   },
   ...authConfig,
 })
