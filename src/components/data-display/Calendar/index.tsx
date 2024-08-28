@@ -14,10 +14,6 @@ interface Task {
     taskDescription: string
     status: string
     deadline: Date
-    category?: {
-        categoryId: string
-        categoryName: string
-    }
 }
 
 interface CalendarProps {
@@ -61,13 +57,6 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                 )
         )
     }, [selectedDate, nearestTaskDB, fullDateFormat])
-
-    // Filtered tasks based on the current pathname
-    const filteredDailyTasks = useMemo(() => {
-        return pathname === '/users/dashboard'
-            ? dailyTasks.slice(0, 3)
-            : dailyTasks
-    }, [dailyTasks, pathname])
 
     // Function to determine styles based on task deadline
     const getDeadlineStyles = (deadline: Date) => {
@@ -133,10 +122,10 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                 )}
             </div>
             <div className="flex h-fit w-full flex-col gap-4 rounded-lg bg-base-100 p-4">
-                {filteredDailyTasks.length === 0 ? (
+                {dailyTasks.length === 0 ? (
                     <p className="text-center opacity-75">No task to display</p>
                 ) : (
-                    filteredDailyTasks.map((task) => {
+                    dailyTasks.map((task) => {
                         const { borderColor, textColor } = getDeadlineStyles(
                             task.deadline
                         )
@@ -184,8 +173,6 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                     taskId={selectedTask.taskId}
                     taskDescription={selectedTask.taskDescription}
                     deadline={selectedTask.deadline}
-                    categoryId={selectedTask?.category?.categoryId}
-                    categoryName={selectedTask?.category?.categoryName}
                     toggleDrawer={toggleDrawer}
                     setToggleDrawer={setToggleDrawer}
                 />

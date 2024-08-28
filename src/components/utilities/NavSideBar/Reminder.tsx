@@ -1,4 +1,3 @@
-import { showModal } from '@/utils/modal'
 import dayjs from 'dayjs'
 import { Bell, X } from 'lucide-react'
 import Link from 'next/link'
@@ -8,15 +7,8 @@ import { useCallback, useEffect, useState } from 'react'
 interface Task {
     taskId: string
     taskDescription: string
-    status: string
-    order: number
     deadline: Date
-    createdAt: Date
-    updatedAt: Date
-    category: {
-        categoryId: string
-        categoryName: string
-    }
+    categoryId: string
 }
 
 interface ReminderProps {
@@ -106,7 +98,7 @@ const Reminder = ({
                                 className="flex items-center justify-between gap-2 rounded-lg p-2 transition-colors hover:bg-base-200"
                             >
                                 <Link
-                                    href={`/users/category/${task.category?.categoryId}`}
+                                    href={`/users/category/${task.categoryId}`}
                                     className="flex flex-col"
                                 >
                                     <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">

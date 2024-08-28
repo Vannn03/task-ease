@@ -1,5 +1,5 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { BookText, CalendarClock, ClipboardList } from 'lucide-react'
+import { CalendarClock, ClipboardList } from 'lucide-react'
 import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
 import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
 import Link from 'next/link'
@@ -8,8 +8,6 @@ interface TaskDrawerProps {
     taskId?: string
     taskDescription: string
     deadline: Date
-    categoryId?: string
-    categoryName?: string
     toggleDrawer: boolean
     setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -24,24 +22,10 @@ const TaskDrawer = ({
     taskId,
     taskDescription,
     deadline,
-    categoryId,
-    categoryName,
     toggleDrawer,
     setToggleDrawer,
 }: TaskDrawerProps) => {
     const taskDrawerData: TaskDrawerDataType[] = [
-        {
-            icon: <BookText className="size-4 opacity-75" />,
-            title: 'Category',
-            content: (
-                <Link
-                    href={`/users/category/${categoryId}`}
-                    className="link-hover link"
-                >
-                    {categoryName}
-                </Link>
-            ),
-        },
         {
             icon: <ClipboardList className="size-4 opacity-75" />,
             title: 'Description',

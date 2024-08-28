@@ -13,15 +13,24 @@ const Page = async () => {
 
     const loggedUser = await findLoggedUser(user)
 
+    console.time('CALENDAR DASHBOARD')
     const nearestTaskDB = await prisma.task.findMany({
         where: {
             category: { userId: loggedUser?.userId },
             status: 'Incomplete',
         },
+        select: {
+            taskId: true,
+            taskDescription: true,
+            status: true,
+            deadline: true,
+        },
         orderBy: { deadline: 'asc' },
-        include: { category: true },
+        take: 3,
     })
+    console.timeEnd('CALENDAR DASHBOARD')
 
+    console.time('BARCHART DASHBOARD')
     const taskDB = await prisma.task.findMany({
         where: {
             category: { userId: loggedUser?.userId },
@@ -29,7 +38,11 @@ const Page = async () => {
                 gte: dayjs().subtract(6, 'day').startOf('day').toDate(),
             },
         },
+        select: {
+            createdAt: true,
+        },
     })
+    console.timeEnd('BARCHART DASHBOARD')
 
     // Prepare data for the chart
     const datasets = Array.from({ length: 7 }).map((_, index) => {

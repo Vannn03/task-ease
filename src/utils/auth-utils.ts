@@ -16,5 +16,13 @@ export const authUserSessionServer = async () => {
 export const findLoggedUser = async (user: User | undefined) => {
     return await prisma.user.findFirst({
         where: { email: user?.email as string },
+        select: {
+            userId: true,
+            userImage: true,
+            userName: true,
+            email: true,
+            password: true,
+            version: true
+        }
     })
 }

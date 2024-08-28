@@ -9,12 +9,21 @@ interface CategoryListProps {
 }
 
 const CategoryList = async ({ userId, version }: CategoryListProps) => {
+    console.time('CATEGORY LIST')
     const categoryDB = await prisma.category.findMany({
         where: { userId: userId },
-        include: {
-            tasks: true,
+        select: {
+            categoryId: true,
+            categoryName: true,
+            tasks: {
+                select: {
+                    status: true,
+                },
+            },
         },
+        take: 4,
     })
+    console.timeEnd('CATEGORY LIST')
 
     return (
         <>
@@ -28,7 +37,7 @@ const CategoryList = async ({ userId, version }: CategoryListProps) => {
                 />
             ) : (
                 <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-2">
-                    {categoryDB.slice(0, 4).map((data) => {
+                    {categoryDB.map((data) => {
                         const completedTasks = data.tasks.filter(
                             (task) => task.status === 'Completed'
                         ).length

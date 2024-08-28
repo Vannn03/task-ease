@@ -9,7 +9,7 @@ const Page = async () => {
 
     const loggedUser = await findLoggedUser(user)
 
-    console.time()
+    console.time('CALENDAR PAGE')
     const nearestTaskDB = await prisma.task.findMany({
         where: {
             category: {
@@ -17,14 +17,17 @@ const Page = async () => {
             },
             status: 'Incomplete',
         },
+        select: {
+            taskId: true,
+            taskDescription: true,
+            status: true,
+            deadline: true,
+        },
         orderBy: {
             deadline: 'asc',
         },
-        include: {
-            category: true,
-        },
     })
-    console.timeEnd()
+    console.timeEnd('CALENDAR PAGE')
 
     return (
         <Suspense fallback={<Loading />}>

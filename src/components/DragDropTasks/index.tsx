@@ -17,10 +17,6 @@ interface Task {
     taskDescription: string
     status: string
     deadline: Date
-    category?: {
-        categoryId: string
-        categoryName: string
-    }
 }
 
 interface DragDropTasksProps {
@@ -106,8 +102,6 @@ const DragDropTasks = ({ taskDB }: DragDropTasksProps) => {
                     taskId={selectedTask.taskId}
                     taskDescription={selectedTask.taskDescription}
                     deadline={selectedTask.deadline}
-                    categoryId={selectedTask?.category?.categoryId}
-                    categoryName={selectedTask?.category?.categoryName}
                     toggleDrawer={toggleDrawer}
                     setToggleDrawer={setToggleDrawer}
                 />
