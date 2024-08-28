@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
-import { createClient } from '@libsql/client'
+import { createClient } from '@libsql/client';
 
 const libsql = createClient({
   url: process.env.TURSO_DATABASE_URL as string,
@@ -9,18 +9,16 @@ const libsql = createClient({
 
 const adapter = new PrismaLibSQL(libsql);
 
-const prismaClientSingleton = () => {
-  return new PrismaClient({ adapter });
-};
+// Declare a global type for PrismaClient, but only for development and testing environments.
+declare global {
+  var prisma: PrismaClient | undefined;
+}
 
-declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
-} & typeof global;
-
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+// Create a singleton Prisma Client instance
+const prisma = global.prisma || new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== 'production') {
-  globalThis.prismaGlobal = prisma;
+  global.prisma = prisma;
 }
 
 export default prisma;

@@ -116,7 +116,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                     />
                 </div>
                 {pathname == '/users/calendar' && (
-                    <div className="stats stats-horizontal top-[28rem] rounded sm:stats-vertical lg:stats-horizontal lg:sticky">
+                    <div className="stats stats-horizontal top-[28rem] rounded-lg sm:stats-vertical lg:stats-horizontal lg:sticky">
                         {statisticData.map((data, index) => (
                             <div className="stat" key={index}>
                                 <div className="text-xs opacity-50 sm:text-base">
@@ -132,7 +132,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                     </div>
                 )}
             </div>
-            <div className="flex h-fit w-full flex-col gap-4 rounded bg-base-100 p-4">
+            <div className="flex h-fit w-full flex-col gap-4 rounded-lg bg-base-100 p-4">
                 {filteredDailyTasks.length === 0 ? (
                     <p className="text-center opacity-75">No task to display</p>
                 ) : (
