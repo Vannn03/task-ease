@@ -12,12 +12,20 @@ const Page = async () => {
 
     const loggedUser = await findLoggedUser(user)
 
+    console.time('CATEGORY PAGE')
     const categoryDB = await prisma.category.findMany({
         where: { userId: loggedUser?.userId },
-        include: {
-            tasks: true,
+        select: {
+            categoryId: true,
+            categoryName: true,
+            tasks: {
+                select: {
+                    status: true,
+                },
+            },
         },
     })
+    console.timeEnd('CATEGORY PAGE')
 
     return (
         <Suspense fallback={<Loading />}>

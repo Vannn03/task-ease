@@ -39,10 +39,6 @@ interface Task {
     taskDescription: string
     status: string
     deadline: Date
-    category?: {
-        categoryId: string
-        categoryName: string
-    }
 }
 
 interface CalendarDateProps {

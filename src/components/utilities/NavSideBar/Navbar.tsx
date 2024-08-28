@@ -10,15 +10,8 @@ import Reminder from './Reminder'
 interface Task {
     taskId: string
     taskDescription: string
-    status: string
-    order: number
     deadline: Date
-    createdAt: Date
-    updatedAt: Date
-    category: {
-        categoryId: string
-        categoryName: string
-    }
+    categoryId: string
 }
 
 interface NavbarProps {

@@ -9,14 +9,19 @@ const NavSideBar = async () => {
 
     const loggedUser = await findLoggedUser(user)
 
+    console.time('REMINDER')
     const taskDB = await prisma.task.findMany({
         where: {
             category: { userId: loggedUser?.userId },
         },
-        include: {
-            category: true,
+        select: {
+            taskId: true,
+            taskDescription: true,
+            deadline: true,
+            categoryId: true,
         },
     })
+    console.timeEnd('REMINDER')
 
     const getCharName = loggedUser?.userName
         ?.split(' ')

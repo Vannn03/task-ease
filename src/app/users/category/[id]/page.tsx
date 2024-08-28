@@ -20,18 +20,28 @@ type StatisticType = {
 }
 
 const Page = async ({ params }: PageProps) => {
+    console.time('STATISTIC DETAIL CATEGORY')
     const taskDB = await prisma.task.findMany({
         where: { categoryId: params.id },
-        orderBy: { order: 'asc' },
-        include: {
-            category: true,
+        select: {
+            taskId: true,
+            taskDescription: true,
+            status: true,
+            deadline: true,
         },
-    })
-
-    const finishedTaskDB = await prisma.task.findMany({
-        where: { categoryId: params.id, status: 'Completed' },
         orderBy: { order: 'asc' },
     })
+    console.timeEnd('STATISTIC DETAIL CATEGORY')
+
+    // console.time('FINISHED TASK DETAIL CATEGORY')
+    // const finishedTaskDB = await prisma.task.findMany({
+    //     where: { categoryId: params.id, status: 'Completed' },
+    //     select: {
+    //         taskId: true,
+    //     },
+    //     orderBy: { order: 'asc' },
+    // })
+    // console.timeEnd('FINISHED TASK DETAIL CATEGORY')
 
     const categoryDB = await prisma.category.findFirst({
         where: { categoryId: params.id },
@@ -86,11 +96,11 @@ const Page = async ({ params }: PageProps) => {
                             dialogId={`addTaskModal-${categoryDB?.categoryId}`}
                         />
 
-                        <DeleteCompletedTaskButton
+                        {/* <DeleteCompletedTaskButton
                             categoryId={categoryDB?.categoryId}
                             dialogId={`deleteCompletedTaskModal-${categoryDB?.categoryId}`}
                             finishedTaskLength={finishedTaskDB.length}
-                        />
+                        /> */}
                     </div>
                     {taskDB.length == 0 ? (
                         <p className="text-center font-medium opacity-50">

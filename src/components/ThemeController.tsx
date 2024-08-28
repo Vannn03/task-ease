@@ -2,7 +2,6 @@
 
 import { useContext, useCallback } from 'react'
 import { ThemeContext } from '@/contexts/ThemeContext'
-import { showModal } from '@/utils/modal'
 
 // interface ThemeControllerProps {
 //     upgradeDialogId?: string
