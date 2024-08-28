@@ -8,6 +8,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext'
 import { LocalizationProvider, AdapterDayjs } from '@/libs/mui'
 import NavSideBar from '@/components/utilities/NavSideBar'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/react'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -45,6 +46,7 @@ export default function RootLayout({
                             <div className="min-h-[calc(100dvh-56px)] w-full bg-base-200 sm:min-h-[calc(100dvh-72px)]">
                                 <EdgeStoreProvider>
                                     {children}
+                                    <Analytics />
                                     <SpeedInsights />
                                 </EdgeStoreProvider>
                             </div>
