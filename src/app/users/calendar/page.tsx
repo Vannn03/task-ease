@@ -9,6 +9,7 @@ const Page = async () => {
 
     const loggedUser = await findLoggedUser(user)
 
+    console.time()
     const nearestTaskDB = await prisma.task.findMany({
         where: {
             category: {
@@ -23,6 +24,7 @@ const Page = async () => {
             category: true,
         },
     })
+    console.timeEnd()
 
     return (
         <Suspense fallback={<Loading />}>
