@@ -2,9 +2,9 @@ const Loading = () => {
     return (
         <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 lg:flex-row">
             {/* Skeleton for the Calendar Date */}
-            <div className="flex flex-col justify-center gap-4 sm:flex-row lg:flex-col lg:justify-start">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:flex-col lg:justify-start">
                 <div className="top-24 lg:sticky">
-                    <div className="skeleton h-96 w-full rounded-lg"></div>
+                    <div className="skeleton h-72 w-72 rounded-lg sm:h-80 sm:w-80"></div>
                 </div>
                 <div className="stats stats-horizontal top-[28rem] rounded sm:stats-vertical lg:stats-horizontal lg:sticky">
                     <div className="stat">

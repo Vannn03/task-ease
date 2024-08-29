@@ -158,7 +158,7 @@ const SignUp = () => {
                     <Alert severity="warning">Email is already taken!</Alert>
                 </div>
                 <div className={`${successAlert ? 'block w-full' : 'hidden'}`}>
-                    <Alert severity="success">Sign In Successful</Alert>
+                    <Alert severity="success">Sign Up Successful</Alert>
                 </div>
                 <button
                     type="submit"

@@ -9,14 +9,19 @@ interface DeletedTaskProps {
     taskId?: string
     dialogId: string
     taskDescription: string
+    setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const DeleteTaskButton = ({
     taskId,
     dialogId,
     taskDescription,
+    setToggleDrawer,
 }: DeletedTaskProps) => {
-    const { loading, handleDeleteButton } = useDeleteTask(taskId)
+    const { loading, handleDeleteButton } = useDeleteTask({
+        taskId,
+        setToggleDrawer,
+    })
 
     return (
         <>

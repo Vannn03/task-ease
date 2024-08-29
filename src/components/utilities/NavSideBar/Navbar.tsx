@@ -16,6 +16,7 @@ interface Task {
 
 interface NavbarProps {
     userImage?: string
+    userName?: string
     // userId?: string
     // version?: string
     getCharName?: string
@@ -24,6 +25,7 @@ interface NavbarProps {
 
 const Navbar = ({
     userImage,
+    userName,
     // userId,
     // version,
     getCharName,
@@ -57,25 +59,36 @@ const Navbar = ({
                         <Menu className="size-5 sm:size-6" />
                     </button>
 
-                    <div className="flex items-center gap-4 sm:gap-6">
+                    <div className="flex items-center gap-2 sm:gap-4">
                         <Reminder
                             taskDB={taskDB}
                             // userId={userId}
                             // version={version}
                         />
-                        {userImage == null ? (
-                            <div className="avatar placeholder">
-                                <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-14">
-                                    <span>{getCharName}</span>
+                        <Link
+                            href={'/users/settings'}
+                            className="flex cursor-pointer items-center gap-3 rounded-full px-3 py-1 transition-colors hover:bg-base-200"
+                        >
+                            <p className="hidden text-base font-medium sm:flex">
+                                {userName}
+                            </p>
+                            {userImage == null ? (
+                                <div className="avatar placeholder">
+                                    <div className="w-10 rounded-full bg-neutral text-neutral-content sm:w-12">
+                                        <span>{getCharName}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ) : (
-                            <div className="avatar">
-                                <div className="w-10 rounded-full sm:w-14">
-                                    <img src={userImage} alt="User Avatar" />
+                            ) : (
+                                <div className="avatar">
+                                    <div className="w-10 rounded-full sm:w-12">
+                                        <img
+                                            src={userImage}
+                                            alt="User Avatar"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </Link>
                     </div>
                 </nav>
             </div>

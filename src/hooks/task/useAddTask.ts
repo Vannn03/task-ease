@@ -1,6 +1,7 @@
 import axiosInstance from '@/utils/axiosInstance'
 import { getISODateTime } from '@/utils/datetime'
 import { closeModal } from '@/utils/modal'
+import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 
@@ -10,8 +11,9 @@ interface useAddTaskProps {
 }
 
 const useAddTask = ({categoryId, dialogId}: useAddTaskProps) => {
-    const [taskDate, setTaskDate] = useState('')
-    const [taskTime, setTaskTime] = useState('')
+    const dateNow = dayjs()
+    const [taskDate, setTaskDate] = useState(dateNow.format('YYYY-MM-DD'))
+    const [taskTime, setTaskTime] = useState(dateNow.format('HH:mm'))
     const [taskDescription, setTaskDescription] = useState('')
     const [toast, setToast] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -42,8 +44,6 @@ const useAddTask = ({categoryId, dialogId}: useAddTaskProps) => {
                 if (response.status === 200) {
                     closeModal(dialogId)
                     setTaskDescription('')
-                    setTaskDate('')
-                    setTaskTime('')
                     router.refresh()
                     setToast(true)
                     const toastTimer = setTimeout(() => setToast(false), 3000)

@@ -1,8 +1,7 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { CalendarClock, ClipboardList } from 'lucide-react'
+import { CalendarClock, ListTodo } from 'lucide-react'
 import DeleteTaskButton from '@/components/buttons/taskButtons/DeleteTaskButton'
 import EditTaskButton from '@/components/buttons/taskButtons/EditTaskButton'
-import Link from 'next/link'
 
 interface TaskDrawerProps {
     taskId?: string
@@ -27,8 +26,8 @@ const TaskDrawer = ({
 }: TaskDrawerProps) => {
     const taskDrawerData: TaskDrawerDataType[] = [
         {
-            icon: <ClipboardList className="size-4 opacity-75" />,
-            title: 'Description',
+            icon: <ListTodo className="size-4 opacity-75" />,
+            title: 'Task',
             content: `${taskDescription}`,
         },
         {
@@ -74,11 +73,13 @@ const TaskDrawer = ({
                             taskDescription={taskDescription}
                             deadline={deadline}
                             dialogId={`editTaskModal-${taskId}`}
+                            setToggleDrawer={setToggleDrawer}
                         />
                         <DeleteTaskButton
                             taskId={taskId}
                             taskDescription={taskDescription}
                             dialogId={`deleteTaskModal-${taskId}`}
+                            setToggleDrawer={setToggleDrawer}
                         />
                     </div>
                 </div>
