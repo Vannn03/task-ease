@@ -1,8 +1,8 @@
 'use client'
 
 import {
-    CalendarRange,
-    ChartColumnStacked,
+    CalendarDays,
+    ClipboardList,
     LayoutDashboard,
     LogOut,
     Settings,
@@ -52,12 +52,12 @@ const Sidebar = ({ toggle, setToggle }: SidebarProps) => {
         },
         {
             menuName: 'Category',
-            menuIcon: <ChartColumnStacked className="size-5 md:size-6" />,
+            menuIcon: <ClipboardList className="size-5 md:size-6" />,
             menuLink: '/users/category',
         },
         {
             menuName: 'Calendar',
-            menuIcon: <CalendarRange className="size-5 md:size-6" />,
+            menuIcon: <CalendarDays className="size-5 md:size-6" />,
             menuLink: '/users/calendar',
         },
         {

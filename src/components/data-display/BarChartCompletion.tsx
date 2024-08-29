@@ -8,7 +8,10 @@ interface BarChartCompletionProps {
 }
 
 const BarChartCompletion = ({ datasets }: BarChartCompletionProps) => {
-    const valueFormatter = (value: number | null) => `${value}`
+    const valueFormatter = (value: number | null) => {
+        if (value === null || isNaN(value)) return '0%'
+        return `${value.toFixed(2)}%` // Format to 2 decimal places
+    }
 
     return (
         <BarChart
@@ -16,26 +19,28 @@ const BarChartCompletion = ({ datasets }: BarChartCompletionProps) => {
             colors={blueberryTwilightPalette}
             series={[
                 {
-                    dataKey: 'created',
-                    label: 'Task Created / Day',
+                    dataKey: 'completionPercentage',
+                    label: 'Completion %',
                     valueFormatter,
                 },
             ]}
             xAxis={[
                 {
-                    label: 'Last 7 days',
+                    label: 'Last 5 days',
                     scaleType: 'band',
                     dataKey: 'day',
+                    tickPlacement: 'middle',
+                    tickLabelPlacement: 'middle',
                 },
             ]}
             yAxis={[
                 {
-                    label: 'Total tasks',
+                    label: 'Completion Percentage',
                     min: 0,
-                    max: 50,
+                    max: 100,
                 },
             ]}
-            height={325}
+            height={315}
             className="w-full"
         />
     )

@@ -3,17 +3,20 @@ import axiosInstance from '@/utils/axiosInstance'
 import { closeModal } from '@/utils/modal'
 import { useRouter } from 'next/navigation'
 
-const useDeleteCategory = (categoryId?: string) => {
+const useDeleteCategory = (selectedCategories: string[]) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
     const handleDeleteButton = useCallback(async (e: React.MouseEvent<HTMLButtonElement>, dialogId: string) => {
         e.preventDefault()
+        
+        if (selectedCategories.length === 0) return
 
         setLoading(true)
 
+
         const response = await axiosInstance.delete('/api/category', {
-            data: { categoryId },
+            data: { categoryId: selectedCategories },
         })
 
         try {
@@ -27,7 +30,7 @@ const useDeleteCategory = (categoryId?: string) => {
             setLoading(false)
 
         }
-    }, [categoryId, router])
+    }, [router, selectedCategories])
 
     return {
         loading,

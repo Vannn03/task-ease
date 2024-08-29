@@ -9,9 +9,10 @@ interface UseEditTaskProps {
     taskId?: string
     taskDescription: string
     deadline?: Date
+    setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const useEditTask = ({taskId, taskDescription, deadline}: UseEditTaskProps) => {
+const useEditTask = ({ taskId, taskDescription, deadline, setToggleDrawer }: UseEditTaskProps) => {
     const [newtaskDescription, setNewTaskDescription] = useState('')
     const [newTaskDate, setNewTaskDate] = useState('')
     const [newTaskTime, setNewTaskTime] = useState('')
@@ -53,6 +54,7 @@ const useEditTask = ({taskId, taskDescription, deadline}: UseEditTaskProps) => {
                 setNewTaskDescription('')
                 setNewTaskDate('')
                 setNewTaskTime('')
+                setToggleDrawer(false)
                 router.refresh()
                 setToast(true)
                 const toastTimer = setTimeout(() => setToast(false), 3000)
@@ -66,7 +68,7 @@ const useEditTask = ({taskId, taskDescription, deadline}: UseEditTaskProps) => {
         } finally {
             setLoading(false)
         }
-    }, [newTaskDate, newTaskTime, newtaskDescription, router, taskId])
+    }, [newTaskDate, newTaskTime, newtaskDescription, router, taskId, setToggleDrawer])
   return {
     newtaskDescription, setNewTaskDescription, newTaskDate, setNewTaskDate, newTaskTime, setNewTaskTime, toast, loading, handleInputChange, handleEditButton
   }

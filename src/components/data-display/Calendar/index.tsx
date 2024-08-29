@@ -3,10 +3,9 @@
 import { getISODateTimeLocale } from '@/utils/datetime'
 import dayjs from 'dayjs'
 import { useState, useMemo, useEffect } from 'react'
-import { CalendarClock, Eye } from 'lucide-react'
+import { CalendarClock, Settings2 } from 'lucide-react'
 import TaskDrawer from '@/components/DragDropTasks/TaskDrawer'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
 import CalendarDate from './CalendarDate'
 
 interface Task {
@@ -73,7 +72,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
 
     const statisticData: StatisticType[] = [
         {
-            title: 'Total',
+            title: 'Tasks',
             value: dailyTasks.length,
         },
         {
@@ -96,7 +95,7 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
 
     return (
         <>
-            <div className="flex flex-col justify-center gap-4 sm:flex-row lg:flex-col lg:justify-start">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row lg:flex-col lg:justify-start">
                 <div className="top-24 lg:sticky">
                     <CalendarDate
                         selectedDate={dayjs(selectedDate)}
@@ -104,28 +103,26 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                         nearestTaskDB={nearestTaskDB}
                     />
                 </div>
-                {pathname == '/users/calendar' && (
-                    <div className="stats stats-horizontal top-[28rem] rounded-lg sm:stats-vertical lg:stats-horizontal lg:sticky">
-                        {statisticData.map((data, index) => (
-                            <div className="stat" key={index}>
-                                <div className="text-xs opacity-50 sm:text-base">
-                                    {data.title}
-                                </div>
-                                <div
-                                    className={`text-xl font-bold sm:text-3xl ${index == 1 && 'text-error'} ${index == 2 && 'text-warning'}`}
-                                >
-                                    {data.value}
-                                </div>
+                <div className="stats stats-horizontal top-[28rem] w-full rounded-lg sm:stats-vertical lg:stats-horizontal sm:w-fit lg:sticky lg:w-full">
+                    {statisticData.map((data, index) => (
+                        <div className="stat" key={index}>
+                            <div className="text-xs opacity-50 sm:text-base">
+                                {data.title}
                             </div>
-                        ))}
-                    </div>
-                )}
+                            <div
+                                className={`text-2xl font-bold sm:text-3xl ${index == 1 && 'text-error'} ${index == 2 && 'text-warning'}`}
+                            >
+                                {data.value}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="flex h-fit w-full flex-col gap-4 rounded-lg bg-base-100 p-4">
                 {dailyTasks.length === 0 ? (
                     <p className="text-center opacity-75">No task to display</p>
                 ) : (
-                    dailyTasks.map((task) => {
+                    dailyTasks.slice(0, 3).map((task) => {
                         const { borderColor, textColor } = getDeadlineStyles(
                             task.deadline
                         )
@@ -156,16 +153,11 @@ const Calendar = ({ nearestTaskDB }: CalendarProps) => {
                                     className="btn btn-square btn-ghost btn-sm sm:btn-md"
                                     onClick={() => handleTaskClick(task)}
                                 >
-                                    <Eye className="size-4 opacity-50 sm:size-5" />
+                                    <Settings2 className="size-4 opacity-50 sm:size-5" />
                                 </button>
                             </div>
                         )
                     })
-                )}
-                {dailyTasks.length > 3 && pathname === '/users/dashboard' && (
-                    <Link className="btn btn-neutral" href={'/users/calendar'}>
-                        View more
-                    </Link>
                 )}
             </div>
             {selectedTask && (

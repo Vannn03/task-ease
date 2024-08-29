@@ -1,11 +1,9 @@
 import AddCategoryButton from '@/components/buttons/categoryButtons/AddCategoryButton'
 import { authUserSessionServer, findLoggedUser } from '@/utils/auth-utils'
 import prisma from '@/libs/prisma'
-import Link from 'next/link'
-import CategoryCollapse from '@/components/CategoryCollapse'
-import { ArrowRight } from 'lucide-react'
 import { Suspense } from 'react'
 import Loading from './loading'
+import CategoryList from '@/components/data-display/CategoryList'
 
 const Page = async () => {
     const user = await authUserSessionServer()
@@ -35,62 +33,10 @@ const Page = async () => {
                         No category to display
                     </p>
                 )}
-                {categoryDB.map((data) => {
-                    const completedTasks = data.tasks.filter(
-                        (task) => task.status === 'Completed'
-                    ).length
-
-                    const completedTaskPercentage = data.tasks.length
-                        ? (completedTasks * 100) / data.tasks.length
-                        : 0
-                    return (
-                        <div
-                            className="card w-full bg-base-100 shadow"
-                            key={data.categoryId}
-                        >
-                            <div className="card-body">
-                                <div className="flex flex-col">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <h2 className="truncate text-lg font-semibold sm:text-xl">
-                                            {data.categoryName}
-                                        </h2>
-                                        <Link
-                                            href={`category/${data.categoryId}`}
-                                            className="btn btn-square btn-sm"
-                                        >
-                                            <ArrowRight className="size-5" />
-                                        </Link>
-                                    </div>
-                                    <p className="text-sm sm:text-base">
-                                        Total task: {data.tasks.length}
-                                    </p>
-                                </div>
-                                <div className="card-actions mt-2 flex-col items-center">
-                                    <CategoryCollapse
-                                        categoryId={data.categoryId}
-                                        categoryName={data.categoryName}
-                                    />
-                                    <div className="flex w-full flex-col gap-1 border-t border-base-content/10 pt-2">
-                                        <span className="flex items-center justify-between text-sm">
-                                            <p className="w-full">Progress</p>
-                                            <p>
-                                                {completedTaskPercentage.toFixed(
-                                                    0
-                                                )}
-                                                %
-                                            </p>
-                                        </span>
-                                        <progress
-                                            className="progress progress-success w-full"
-                                            value={completedTaskPercentage}
-                                            max="100"
-                                        ></progress>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
+                <CategoryList
+                    categoryDB={categoryDB}
+                    userId={loggedUser?.userId}
+                />
                 <div className="fixed bottom-8 right-8 sm:bottom-12 sm:right-12">
                     <AddCategoryButton
                         userId={loggedUser?.userId}

@@ -30,11 +30,19 @@ export async function DELETE(request: NextRequest) {
     const { categoryId } = await request.json()
 
     const deleteAllTask = await prisma.task.deleteMany({
-        where: {categoryId: categoryId}
+        where: {
+            categoryId: {
+                in: categoryId,
+            },
+        },
     })
 
-    const deleteCategory = await prisma.category.delete({
-        where: {categoryId: categoryId}
+    const deleteCategory = await prisma.category.deleteMany({
+        where: {
+            categoryId: {
+                in: categoryId,
+            },
+        },
     })
 
     if (!deleteAllTask && !deleteCategory)

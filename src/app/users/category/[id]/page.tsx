@@ -1,10 +1,10 @@
-import BackButton from '@/components/buttons/BackButton'
 import DragDropTasks from '@/components/DragDropTasks'
 import AddTaskButton from '@/components/buttons/taskButtons/AddTaskButton'
-import DeleteCompletedTaskButton from '@/components/buttons/taskButtons/DeleteCompletedTaskButton'
 import prisma from '@/libs/prisma'
 import { Suspense } from 'react'
 import Loading from './loading'
+import EditCategoryButton from '@/components/buttons/categoryButtons/EditCategoryButton'
+import Link from 'next/link'
 
 interface Params {
     id: string
@@ -49,15 +49,11 @@ const Page = async ({ params }: PageProps) => {
 
     const statisticData: StatisticType[] = [
         {
-            title: 'Total',
-            value: taskDB.length,
-        },
-        {
             title: 'Completed',
             value: taskDB.filter((task) => task.status == 'Completed').length,
         },
         {
-            title: 'Incompleted',
+            title: 'Incomplete',
             value: taskDB.filter((task) => task.status == 'Incomplete').length,
         },
     ]
@@ -65,12 +61,26 @@ const Page = async ({ params }: PageProps) => {
     return (
         <Suspense fallback={<Loading />}>
             <div className="flex flex-col gap-4 p-4 sm:gap-6 sm:p-6 xl:flex-row">
-                <div className="top-24 z-40 flex h-fit w-full flex-col gap-4 rounded bg-base-100 p-4 shadow xl:sticky xl:w-[40rem]">
-                    <div className="flex items-center gap-2">
-                        <BackButton />
-                        <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">
-                            {categoryDB?.categoryName}
-                        </h1>
+                <div className="top-24 z-40 flex h-fit w-full flex-col gap-4 rounded-lg bg-base-100 p-4 shadow xl:sticky xl:w-[40rem]">
+                    <div className="breadcrumbs text-sm">
+                        <ul>
+                            <li>
+                                <Link href={'/users/category'}>Category</Link>
+                            </li>
+                            <li className="opacity-75">Detail</li>
+                        </ul>
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-2">
+                            <h1 className="text-lg font-semibold sm:text-xl lg:text-2xl">
+                                {categoryDB?.categoryName}
+                            </h1>
+                        </span>
+                        <EditCategoryButton
+                            categoryId={categoryDB?.categoryId}
+                            categoryName={categoryDB?.categoryName}
+                            dialogId={`editCategoryModal-${categoryDB?.categoryId}`}
+                        />
                     </div>
 
                     <div className="stats stats-horizontal">
@@ -80,7 +90,7 @@ const Page = async ({ params }: PageProps) => {
                                     {data.title}
                                 </div>
                                 <div
-                                    className={`text-xl font-bold sm:text-3xl ${index == 1 && 'text-success'} ${index == 2 && 'text-warning'}`}
+                                    className={`text-xl font-bold sm:text-3xl ${index == 0 && 'text-success'} ${index == 1 && 'text-warning'}`}
                                 >
                                     {data.value}
                                 </div>

@@ -7,32 +7,30 @@ import { Trash2 } from 'lucide-react'
 
 interface DeleteCategoryProps {
     dialogId: string
-    categoryId?: string
-    categoryName?: string
+    selectedCategories: string[]
 }
 
 const DeleteCategoryButton = ({
-    categoryId,
     dialogId,
-    categoryName,
+    selectedCategories,
 }: DeleteCategoryProps) => {
-    const { loading, handleDeleteButton } = useDeleteCategory(categoryId)
+    const { loading, handleDeleteButton } =
+        useDeleteCategory(selectedCategories)
 
     return (
         <>
             <button
-                className="btn btn-ghost btn-sm w-1/2 text-error"
+                className={`btn btn-circle btn-error fixed bottom-24 right-8 z-40 shadow-lg sm:btn-lg sm:bottom-32 sm:right-12 ${selectedCategories.length == 0 ? 'pointer-events-none opacity-0' : 'pointer-events-auto opacity-100'} transition-all`}
                 onClick={() => showModal(dialogId)}
             >
-                <Trash2 className="size-4" /> Delete
+                <Trash2 className="size-5 sm:size-6" />
             </button>
 
             <DeleteModal
                 dialogId={dialogId}
-                title="Delete category"
-                value={categoryName}
+                title="Delete checked categories"
                 description={
-                    'category? All tasks in this category will also be deleted.'
+                    'many categories? All tasks in the categories will also be deleted.'
                 }
                 handleDeleteButton={handleDeleteButton}
                 loading={loading}

@@ -1,88 +1,112 @@
-import prisma from '@/libs/prisma'
-import { ArrowRight } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
-import AddCategoryButton from '../buttons/categoryButtons/AddCategoryButton'
+import DeleteCategoryButton from '../buttons/categoryButtons/DeleteCategoryButton'
+import { usePathname } from 'next/navigation'
+
+interface Category {
+    categoryId: string
+    categoryName: string
+    tasks: {
+        status: string
+    }[]
+}
 
 interface CategoryListProps {
     userId?: string
-    version?: string
+    categoryDB: Category[]
 }
 
-const CategoryList = async ({ userId, version }: CategoryListProps) => {
-    console.time('CATEGORY LIST')
-    const categoryDB = await prisma.category.findMany({
-        where: { userId: userId },
-        select: {
-            categoryId: true,
-            categoryName: true,
-            tasks: {
-                select: {
-                    status: true,
-                },
-            },
-        },
-        take: 4,
-    })
-    console.timeEnd('CATEGORY LIST')
+const CategoryList = ({ userId, categoryDB }: CategoryListProps) => {
+    const pathname = usePathname()
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+
+    const handleCheckboxChange = (
+        categoryId: string,
+        event: React.MouseEvent
+    ) => {
+        event.stopPropagation() // Prevent the Link from being triggered
+
+        setSelectedCategories((prevSelected) =>
+            prevSelected.includes(categoryId)
+                ? prevSelected.filter((id) => id !== categoryId)
+                : [...prevSelected, categoryId]
+        )
+    }
 
     return (
         <>
-            {categoryDB.length == 0 ? (
-                <AddCategoryButton
-                    userId={userId}
-                    version={version}
-                    dialogId={`addCategoryModal-${userId}`}
-                    // upgradeDialogId={`upgradeModalCategoryUsage-${loggedUser?.userId}`}
-                    categoryLength={categoryDB.length}
+            {pathname == '/users/category' && (
+                <DeleteCategoryButton
+                    selectedCategories={selectedCategories}
+                    dialogId={`deleteCategoryModal-${userId}`}
                 />
-            ) : (
-                <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-2">
-                    {categoryDB.map((data) => {
-                        const completedTasks = data.tasks.filter(
-                            (task) => task.status === 'Completed'
-                        ).length
+            )}
+            {categoryDB.map((data) => {
+                const completedTasks = data.tasks.filter(
+                    (task) => task.status === 'Completed'
+                ).length
 
-                        const completedTaskPercentage = data.tasks.length
-                            ? (completedTasks * 100) / data.tasks.length
-                            : 0
-                        return (
-                            <div
-                                className="card w-full rounded bg-base-200/50"
-                                key={data.categoryId}
-                            >
-                                <div className="px-5 py-4 sm:card-body">
-                                    <span className="flex items-center justify-between gap-2">
-                                        <h2 className="truncate font-medium sm:text-lg">
+                const completedTaskPercentage = data.tasks.length
+                    ? (completedTasks * 100) / data.tasks.length
+                    : 0
+
+                return (
+                    <div
+                        key={data.categoryId}
+                        className="card w-full rounded-lg bg-base-100 shadow transition-all hover:-translate-y-2 hover:shadow-lg"
+                    >
+                        <Link href={`category/${data.categoryId}`}>
+                            <div className="card-body">
+                                <div className="flex flex-col">
+                                    <div className="flex items-center justify-between gap-2">
+                                        <h2 className="truncate text-lg font-semibold sm:text-xl">
                                             {data.categoryName}
                                         </h2>
-                                        <Link
-                                            href={`/users/category/${data.categoryId}`}
-                                            className="btn btn-square btn-ghost btn-sm opacity-50"
-                                        >
-                                            <ArrowRight className="size-5 sm:size-6" />
-                                        </Link>
-                                    </span>
-                                    <div className="card-actions pt-2">
-                                        <span className="flex w-full flex-col gap-1">
-                                            <p className="text-sm sm:text-base">
+                                        {pathname == '/users/category' && (
+                                            <input
+                                                type="checkbox"
+                                                className="checkbox-error checkbox"
+                                                checked={selectedCategories.includes(
+                                                    data.categoryId
+                                                )}
+                                                onClick={(e) =>
+                                                    handleCheckboxChange(
+                                                        data.categoryId,
+                                                        e
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </div>
+                                    <p className="text-sm opacity-75 sm:text-base">
+                                        Total task: {data.tasks.length}
+                                    </p>
+                                </div>
+                                <div className="card-actions mt-2 flex-col items-center">
+                                    <div className="flex w-full flex-col gap-1 pt-2">
+                                        <span className="flex items-center justify-between text-sm">
+                                            <p className="w-full">Progress</p>
+                                            <p>
                                                 {completedTaskPercentage.toFixed(
                                                     0
                                                 )}
                                                 %
                                             </p>
-                                            <progress
-                                                className="progress progress-success w-full"
-                                                value={completedTaskPercentage}
-                                                max="100"
-                                            ></progress>
                                         </span>
+                                        <progress
+                                            className="progress progress-success w-full"
+                                            value={completedTaskPercentage}
+                                            max="100"
+                                        ></progress>
                                     </div>
                                 </div>
                             </div>
-                        )
-                    })}
-                </div>
-            )}
+                        </Link>
+                    </div>
+                )
+            })}
         </>
     )
 }

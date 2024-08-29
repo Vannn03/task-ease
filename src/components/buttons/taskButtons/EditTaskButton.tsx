@@ -11,6 +11,7 @@ interface EditTaskProps {
     dialogId: string
     taskDescription: string
     deadline: Date
+    setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const EditTaskButton = ({
@@ -18,6 +19,7 @@ const EditTaskButton = ({
     dialogId,
     taskDescription,
     deadline,
+    setToggleDrawer,
 }: EditTaskProps) => {
     const {
         newtaskDescription,
@@ -30,7 +32,7 @@ const EditTaskButton = ({
         loading,
         handleInputChange,
         handleEditButton,
-    } = useEditTask({ taskId, taskDescription, deadline })
+    } = useEditTask({ taskId, taskDescription, deadline, setToggleDrawer })
 
     return (
         <>

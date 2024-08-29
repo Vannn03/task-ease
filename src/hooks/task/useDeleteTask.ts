@@ -3,7 +3,12 @@ import { closeModal} from '@/utils/modal'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 
-const useDeleteTask = (taskId?: string) => {
+interface UseDeleteTaskProps {
+    taskId?: string
+    setToggleDrawer: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const useDeleteTask = ({taskId, setToggleDrawer}:  UseDeleteTaskProps) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
 
@@ -22,6 +27,7 @@ const useDeleteTask = (taskId?: string) => {
         try {
             if (response.status === 200) {
                 closeModal(dialogId)
+                setToggleDrawer(false)
                 router.refresh()
             }    
         } catch (error) {
@@ -29,7 +35,7 @@ const useDeleteTask = (taskId?: string) => {
         } finally {
             setLoading(false)
         }
-    }, [router, taskId])
+    }, [router, taskId, setToggleDrawer])
   return {
     loading, handleDeleteButton
   }

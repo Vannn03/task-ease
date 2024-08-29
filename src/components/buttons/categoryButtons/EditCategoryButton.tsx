@@ -28,10 +28,10 @@ const EditCategoryButton = ({
     return (
         <>
             <a
-                className="btn btn-ghost btn-sm w-1/2 text-warning"
+                className="btn btn-circle btn-warning btn-sm sm:btn-md"
                 onClick={() => showModal(dialogId)}
             >
-                <SquarePen className="size-4" /> Edit
+                <SquarePen className="size-4 sm:size-5" />
             </a>
             <EditModal
                 dialogId={dialogId}

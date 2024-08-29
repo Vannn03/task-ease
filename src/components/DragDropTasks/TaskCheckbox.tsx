@@ -2,7 +2,7 @@
 
 import useCheckTask from '@/hooks/task/useCheckTask'
 import { getISODateTimeLocale } from '@/utils/datetime'
-import { Eye, GripVertical } from 'lucide-react'
+import { GripVertical, Settings2 } from 'lucide-react'
 
 interface Task {
     taskId: string
@@ -78,7 +78,7 @@ const TaskCheckbox = ({
                 className="btn btn-square btn-ghost btn-sm sm:btn-md"
                 onClick={() => handleTaskClick(data)}
             >
-                <Eye className="size-5 opacity-50 sm:size-6" />
+                <Settings2 className="size-5 opacity-50 sm:size-6" />
             </button>
         </div>
     )

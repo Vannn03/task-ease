@@ -5,18 +5,20 @@ const Loading = () => {
             {Array(4)
                 .fill(0)
                 .map((_, index) => (
-                    <div className="card w-full bg-base-100 shadow" key={index}>
+                    <div
+                        className="card w-full rounded-lg bg-base-100 shadow"
+                        key={index}
+                    >
                         <div className="card-body">
                             <div className="flex flex-col">
                                 <div className="flex items-center justify-between gap-2">
                                     <div className="skeleton h-6 w-32 rounded"></div>
-                                    <div className="skeleton h-8 w-8 rounded-full"></div>
+                                    <div className="skeleton h-8 w-8 rounded-xl"></div>
                                 </div>
                                 <div className="skeleton mt-2 h-4 w-20 rounded"></div>
                             </div>
                             <div className="card-actions mt-2 flex-col items-center">
-                                <div className="skeleton mb-2 h-8 w-full rounded"></div>
-                                <div className="flex w-full flex-col gap-1 border-t border-base-content/10 pt-2">
+                                <div className="flex w-full flex-col gap-1 pt-2">
                                     <span className="flex items-center justify-between gap-60 text-sm">
                                         <p className="skeleton h-4 w-16 rounded"></p>
                                         <p className="skeleton h-4 w-8 rounded"></p>
