@@ -38,6 +38,9 @@ model Task {
 
   category   Category @relation(fields: [categoryId], references: [categoryId], onUpdate: Cascade, onDelete: Cascade)
   categoryId String
+
+  @@index([order])
+  @@index([deadline])
 }
 
 model Category {
